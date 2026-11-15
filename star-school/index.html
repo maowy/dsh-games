@@ -1,0 +1,2779 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data: blob:; media-src data: blob:; font-src data:; style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src 'none'; form-action 'none'">
+<title>小狐狸星星课堂</title>
+<style>html,body{margin:0;width:100%;height:100%;height:100dvh;overflow:hidden;background:#000;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;overscroll-behavior:none}canvas{display:block;width:100vw;height:100vh;height:100dvh;touch-action:none;outline:none;-webkit-tap-highlight-color:transparent}</style></head><body><canvas id="game" tabindex="0"></canvas>
+<script>window.addEventListener("keydown",function(e){if(e.key==="Escape")try{parent.postMessage({type:"dsh-wall-escape"},"*")}catch(_){}});window.GAME={"title":"小狐狸星星课堂","rules":{"questionsPerRound":8,"optionCount":3,"maxNumber":5,"speech":true,"sound":true,"autoMode":"","debugKind":"","debugView":"","debugWrong":"","debugSeedWrong":"","debugReview":"","debugSeedWeek":""},"slots":{"hero":{"tile":false,"custom":false},"pickup":{"tile":false,"custom":false},"background":{"tile":false,"custom":false}},"assets":{"hero":"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTYgMjU2IiB3aWR0aD0iMjU2IiBoZWlnaHQ9IjI1NiI+CiAgPCEtLSBMaXR0bGUgcm91bmQgYWR2ZW50dXJlciwgZmFjaW5nIHRoZSB2aWV3ZXIuIEZsYXQgY2FydG9vbiwgZGFyayBvdXRsaW5lLiAtLT4KICA8IS0tIEdyb3VuZCBzaGFkb3cgLS0+CiAgPGVsbGlwc2UgY3g9IjEyOCIgY3k9IjIyOCIgcng9IjU4IiByeT0iMTYiIGZpbGw9IiMxZjRkMmUiIG9wYWNpdHk9IjAuMzUiLz4KICA8IS0tIEJhY2twYWNrIC0tPgogIDxyZWN0IHg9IjU2IiB5PSIxMjAiIHdpZHRoPSI0MCIgaGVpZ2h0PSI1MiIgcng9IjEyIiBmaWxsPSIjZThhMTNjIiBzdHJva2U9IiMyYjFiMTIiIHN0cm9rZS13aWR0aD0iOCIvPgogIDxwYXRoIGQ9Ik01NiAxMzJoNDAiIHN0cm9rZT0iIzJiMWIxMiIgc3Ryb2tlLXdpZHRoPSI2Ii8+CiAgPCEtLSBMZWdzIC0tPgogIDxyZWN0IHg9Ijg2IiB5PSIxNjgiIHdpZHRoPSIyNiIgaGVpZ2h0PSI0NCIgcng9IjEyIiBmaWxsPSIjMmY2YjRmIiBzdHJva2U9IiMyYjFiMTIiIHN0cm9rZS13aWR0aD0iOCIvPgogIDxyZWN0IHg9IjEzNCIgeT0iMTY4IiB3aWR0aD0iMjYiIGhlaWdodD0iNDQiIHJ4PSIxMiIgZmlsbD0iIzJmNmI0ZiIgc3Ryb2tlPSIjMmIxYjEyIiBzdHJva2Utd2lkdGg9IjgiLz4KICA8IS0tIEJvb3RzIC0tPgogIDxyZWN0IHg9Ijc4IiB5PSIxOTgiIHdpZHRoPSI0MiIgaGVpZ2h0PSIyMiIgcng9IjEwIiBmaWxsPSIjN2E0YTJiIiBzdHJva2U9IiMyYjFiMTIiIHN0cm9rZS13aWR0aD0iOCIvPgogIDxyZWN0IHg9IjEyOCIgeT0iMTk4IiB3aWR0aD0iNDIiIGhlaWdodD0iMjIiIHJ4PSIxMCIgZmlsbD0iIzdhNGEyYiIgc3Ryb2tlPSIjMmIxYjEyIiBzdHJva2Utd2lkdGg9IjgiLz4KICA8IS0tIEJvZHkgLS0+CiAgPHBhdGggZD0iTTc2IDk2YzAtMjYgMjAtNDYgNDYtNDZoMTJjMjYgMCA0NiAyMCA0NiA0NnY2MmMwIDIyLTE2IDQwLTM4IDQyaC0yOGMtMjItMi0zOC0yMC0zOC00MnoiIGZpbGw9IiNlODVkM2QiIHN0cm9rZT0iIzJiMWIxMiIgc3Ryb2tlLXdpZHRoPSI4Ii8+CiAgPCEtLSBCZWx0IC0tPgogIDxyZWN0IHg9Ijc2IiB5PSIxNTAiIHdpZHRoPSIxMDQiIGhlaWdodD0iMTQiIGZpbGw9IiMyYjFiMTIiLz4KICA8cmVjdCB4PSIxMTgiIHk9IjE0OCIgd2lkdGg9IjIwIiBoZWlnaHQ9IjE4IiByeD0iNCIgZmlsbD0iI2YyYzE0ZSIgc3Ryb2tlPSIjMmIxYjEyIiBzdHJva2Utd2lkdGg9IjYiLz4KICA8IS0tIFNjYXJmIGtub3QgLS0+CiAgPHBhdGggZD0iTTk2IDk4YzggOCAyMCAxMiAzMiAxMnMyNC00IDMyLTEybC0xMCAxOGMtNiA2LTE2IDgtMjIgOHMtMTYtMi0yMi04eiIgZmlsbD0iIzNmOGY1YSIgc3Ryb2tlPSIjMmIxYjEyIiBzdHJva2Utd2lkdGg9IjciLz4KICA8IS0tIEFybXMgLS0+CiAgPHJlY3QgeD0iNDQiIHk9IjEwOCIgd2lkdGg9IjMwIiBoZWlnaHQ9IjU0IiByeD0iMTUiIGZpbGw9IiNlODVkM2QiIHN0cm9rZT0iIzJiMWIxMiIgc3Ryb2tlLXdpZHRoPSI4Ii8+CiAgPHJlY3QgeD0iMTgyIiB5PSIxMDgiIHdpZHRoPSIzMCIgaGVpZ2h0PSI1NCIgcng9IjE1IiBmaWxsPSIjZTg1ZDNkIiBzdHJva2U9IiMyYjFiMTIiIHN0cm9rZS13aWR0aD0iOCIvPgogIDxjaXJjbGUgY3g9IjU5IiBjeT0iMTcwIiByPSIxNCIgZmlsbD0iI2Y3ZDlhOCIgc3Ryb2tlPSIjMmIxYjEyIiBzdHJva2Utd2lkdGg9IjgiLz4KICA8Y2lyY2xlIGN4PSIxOTciIGN5PSIxNzAiIHI9IjE0IiBmaWxsPSIjZjdkOWE4IiBzdHJva2U9IiMyYjFiMTIiIHN0cm9rZS13aWR0aD0iOCIvPgogIDwhLS0gSGVhZCAtLT4KICA8Y2lyY2xlIGN4PSIxMjgiIGN5PSI4MiIgcj0iNDIiIGZpbGw9IiNmN2Q5YTgiIHN0cm9rZT0iIzJiMWIxMiIgc3Ryb2tlLXdpZHRoPSI4Ii8+CiAgPCEtLSBFeWVzIC0tPgogIDxlbGxpcHNlIGN4PSIxMTIiIGN5PSI3OCIgcng9IjYiIHJ5PSI4IiBmaWxsPSIjMmIxYjEyIi8+CiAgPGVsbGlwc2UgY3g9IjE0NiIgY3k9Ijc4IiByeD0iNiIgcnk9IjgiIGZpbGw9IiMyYjFiMTIiLz4KICA8Y2lyY2xlIGN4PSIxMTQiIGN5PSI3NSIgcj0iMi40IiBmaWxsPSIjZmZmZmZmIi8+CiAgPGNpcmNsZSBjeD0iMTQ4IiBjeT0iNzUiIHI9IjIuNCIgZmlsbD0iI2ZmZmZmZiIvPgogIDwhLS0gQ2hlZWtzIC0tPgogIDxjaXJjbGUgY3g9Ijk4IiBjeT0iOTIiIHI9IjciIGZpbGw9IiNmMDhhNmUiIG9wYWNpdHk9IjAuOCIvPgogIDxjaXJjbGUgY3g9IjE1OCIgY3k9IjkyIiByPSI3IiBmaWxsPSIjZjA4YTZlIiBvcGFjaXR5PSIwLjgiLz4KICA8IS0tIE1vdXRoIC0tPgogIDxwYXRoIGQ9Ik0xMTggOTZjNCA1IDE2IDUgMjAgMCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMmIxYjEyIiBzdHJva2Utd2lkdGg9IjYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgogIDwhLS0gSGF0IC0tPgogIDxwYXRoIGQ9Ik04NCA2NmMwLTIwIDE2LTM2IDM2LTM2aDE2YzIwIDAgMzYgMTYgMzYgMzZ2MTRIODR6IiBmaWxsPSIjM2Y4ZjVhIiBzdHJva2U9IiMyYjFiMTIiIHN0cm9rZS13aWR0aD0iOCIvPgogIDxyZWN0IHg9Ijc4IiB5PSI3MiIgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxNiIgcng9IjgiIGZpbGw9IiMyZjZiNGYiIHN0cm9rZT0iIzJiMWIxMiIgc3Ryb2tlLXdpZHRoPSI4Ii8+Cjwvc3ZnPgo=","pickup":"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTYgMjU2IiB3aWR0aD0iMjU2IiBoZWlnaHQ9IjI1NiI+CiAgPCEtLSBHbG93aW5nIHBhcGVyIGxhbnRlcm4uIEZsYXQgY2FydG9vbiwgZGFyayBvdXRsaW5lLiAtLT4KICA8IS0tIFNvZnQgZ2xvdyAtLT4KICA8Y2lyY2xlIGN4PSIxMjgiIGN5PSIxNDIiIHI9Ijg0IiBmaWxsPSIjZmZkNjZiIiBvcGFjaXR5PSIwLjI4Ii8+CiAgPGNpcmNsZSBjeD0iMTI4IiBjeT0iMTQyIiByPSI2MCIgZmlsbD0iI2ZmYzk0ZCIgb3BhY2l0eT0iMC40Ii8+CiAgPCEtLSBIYW5naW5nIHN0cmluZyAtLT4KICA8bGluZSB4MT0iMTI4IiB5MT0iMTYiIHgyPSIxMjgiIHkyPSI0NiIgc3Ryb2tlPSIjMmIxYjEyIiBzdHJva2Utd2lkdGg9IjgiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgogIDwhLS0gVG9wIGNhcCAtLT4KICA8cmVjdCB4PSI5MiIgeT0iNDQiIHdpZHRoPSI3MiIgaGVpZ2h0PSIxOCIgcng9IjgiIGZpbGw9IiNlODVkM2QiIHN0cm9rZT0iIzJiMWIxMiIgc3Ryb2tlLXdpZHRoPSI4Ii8+CiAgPCEtLSBSaWJzIC0tPgogIDxwYXRoIGQ9Ik0xMTIgNjBjMCA0MiAxNiA2OCAxNiA5NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZDk4YTJiIiBzdHJva2Utd2lkdGg9IjYiLz4KICA8cGF0aCBkPSJNMTQ0IDYwYzAgNDItMTYgNjgtMTYgOTQiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2Q5OGEyYiIgc3Ryb2tlLXdpZHRoPSI2Ii8+CiAgPHBhdGggZD0iTTEyOCA2MHY5NiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZDk4YTJiIiBzdHJva2Utd2lkdGg9IjYiLz4KICA8IS0tIExhbnRlcm4gYm9keSAtLT4KICA8cGF0aCBkPSJNODggNjJjMCA1NCAxOCA4NCA0MCA4NHM0MC0zMCA0MC04NGMwLTYtOC0xMi0yMC0xMmgtNDBjLTEyIDAtMjAgNi0yMCAxMnoiIGZpbGw9IiNmZmM5NGQiIHN0cm9rZT0iIzJiMWIxMiIgc3Ryb2tlLXdpZHRoPSI4Ii8+CiAgPHBhdGggZD0iTTg4IDY2aDgwIiBzdHJva2U9IiMyYjFiMTIiIHN0cm9rZS13aWR0aD0iOCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CiAgPHBhdGggZD0iTTkyIDE0NmMwIDggOCAxMiAxNCAxMmg0NGM2IDAgMTQtNCAxNC0xMiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMmIxYjEyIiBzdHJva2Utd2lkdGg9IjgiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgogIDwhLS0gQm90dG9tIGNhcCAtLT4KICA8cmVjdCB4PSI5NCIgeT0iMTUwIiB3aWR0aD0iNjgiIGhlaWdodD0iMTYiIHJ4PSI4IiBmaWxsPSIjZTg1ZDNkIiBzdHJva2U9IiMyYjFiMTIiIHN0cm9rZS13aWR0aD0iOCIvPgogIDwhLS0gVGFzc2VsIC0tPgogIDxsaW5lIHgxPSIxMjgiIHkxPSIxNjYiIHgyPSIxMjgiIHkyPSIxOTIiIHN0cm9rZT0iI2U4NWQzZCIgc3Ryb2tlLXdpZHRoPSI4IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICA8cGF0aCBkPSJNMTIwIDE5MmM0IDEyIDEyIDEyIDE2IDB6IiBmaWxsPSIjZTg1ZDNkIiBzdHJva2U9IiMyYjFiMTIiIHN0cm9rZS13aWR0aD0iNiIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgogIDwhLS0gSW5uZXIgZ2xvdyAtLT4KICA8ZWxsaXBzZSBjeD0iMTI4IiBjeT0iMTE2IiByeD0iMjIiIHJ5PSIzMCIgZmlsbD0iI2ZmZjNjNCIgb3BhY2l0eT0iMC45Ii8+Cjwvc3ZnPgo=","background":"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI3NjgiIGhlaWdodD0iMTM2NiIgdmlld0JveD0iMCAwIDc2OCAxMzY2Ij48IS0tIFBsYWNlaG9sZGVyIGZvciAi5qOu5p6X6IOM5pmvIjsgZHJhdyBvdmVyIHRoaXMgZmlsZSBvciBnZW5lcmF0ZSBhcnQgZm9yIHRoZSBzbG90LiAtLT48cmVjdCB3aWR0aD0iNzY4IiBoZWlnaHQ9IjEzNjYiIGZpbGw9ImhzbCgyMDMgMzAlIDc4JSkiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZG9taW5hbnQtYmFzZWxpbmU9ImNlbnRyYWwiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iNzAwIiBmb250LXNpemU9IjI3NiIgZmlsbD0iaHNsKDIwMyA0NSUgMjIlKSI+5qOuPC90ZXh0Pjwvc3ZnPgo="}};</script>
+<script>/* 小狐狸星星课堂 — 5 岁孩子的识字 / 数学 / 英语 三合一闯关游戏
+ * 纯 Canvas 绘制，不依赖任何外部素材；触摸、鼠标、键盘都能玩。
+ * 为 Game Studio 的 playtest 暴露 window.__gameState / __autoplay / __renderSlots。
+ *
+ * 设计原则（给 5 岁）：
+ *   1. 没有倒计时、没有失败、没有惩罚 —— 答错只是"再试一次"。
+ *   2. 每题只有 3 个选项，选项卡片足够大（整行可点）。
+ *   3. 每题都有语音朗读（Web Speech，可关），不识字也能独立玩。
+ *   4. 识字走"图 → 音 → 字"，数学走"实物 → 数字"，英语走"听 → 图"。
+ *   5. 一轮 8 题，约 3~5 分钟，符合 5 岁注意力时长。
+ */
+(function () {
+  'use strict';
+
+  var GAME = (typeof window !== 'undefined' && window.GAME) || {};
+  var TITLE = GAME.title || '小狐狸星星课堂';
+  var RULES = GAME.rules || {};
+
+  /* ============================================================
+   * 0. 小工具
+   * ============================================================ */
+  function num(v, d) { var n = Number(v); return isFinite(n) ? n : d; }
+  function clamp(v, a, b) { return v < a ? a : (v > b ? b : v); }
+  function randInt(a, b) { return a + Math.floor(Math.random() * (b - a + 1)); }
+  function pick(a) { return a[Math.floor(Math.random() * a.length)]; }
+  function shuffle(a) {
+    var s = a.slice();
+    for (var i = s.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = s[i]; s[i] = s[j]; s[j] = t;
+    }
+    return s;
+  }
+  function sample(a, n) { return shuffle(a).slice(0, n); }
+  function cnNum(n) {
+    var m = ['零', '一', '二', '三', '四', '五', '六', '七', '八', '九', '十'];
+    return m[n] || String(n);
+  }
+
+  /* ============================================================
+   * 1. 主题
+   * ============================================================ */
+  var C = {
+    ink: '#4A3626',
+    inkSoft: '#8A7461',
+    inkFaint: '#B9A793',
+    cream: '#FFFDF7',
+    paper: '#FFFFFF',
+    line: '#F1E3D0',
+    orange: '#F08A4B',
+    orangeDeep: '#D96E2E',
+    blue: '#4FA9DE',
+    green: '#6FBE84',
+    gold: '#F2B33D',
+    goldDeep: '#D99A22',
+    pink: '#F7A6B8',
+    mint: '#DDF3E4',
+    shadow: 'rgba(124, 82, 40, 0.15)'
+  };
+  var FAMILY = '"Yuanti SC","PingFang SC","Hiragino Sans GB","Source Han Sans SC","Microsoft YaHei",system-ui,-apple-system,sans-serif';
+  var FAMILY_EN = '"Arial Rounded MT Bold","Nunito","Trebuchet MS",system-ui,sans-serif';
+  var FAMILY_EMOJI = '"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
+
+  var MODES = {
+    lit: { key: 'lit', name: '识字', emoji: '📖', color: C.orange, tint: '#FFE9D8' },
+    pinyin: { key: 'pinyin', name: '拼音', emoji: '🅰️', color: '#7A6BD6', tint: '#ECE7FB' },
+    math: { key: 'math', name: '数学', emoji: '🔢', color: C.blue, tint: '#DDF0FB' },
+    en: { key: 'en', name: '英语', emoji: '🔤', color: C.green, tint: '#E2F5E7' },
+    poem: { key: 'poem', name: '唐诗', emoji: '🏯', color: '#C05A54', tint: '#FBE6E3' },
+    rhyme: { key: 'rhyme', name: '儿歌', emoji: '🎵', color: '#D98324', tint: '#FDEAD3' },
+    color: { key: 'color', name: '颜色', emoji: '🎨', color: '#3FA79B', tint: '#DFF4F1' },
+    time: { key: 'time', name: '时间', emoji: '⏰', color: '#5E8C61', tint: '#E5F1E5' },
+    mix: { key: 'mix', name: '全都来', emoji: '⭐', color: C.gold, tint: '#FFF2D2' },
+    review: { key: 'review', name: '复习', emoji: '🔁', color: '#B4574F', tint: '#FBE7E5' }
+  };
+  var SHAPE_ZH = { circle: '圆形', square: '正方形', triangle: '三角形', star: '星星', heart: '爱心' };
+
+  /* ============================================================
+   * 2. 规则（可由 game.json 覆盖）
+   * ============================================================ */
+  var NQ = clamp(Math.round(num(RULES.questionsPerRound, 8)), 3, 12);
+  var OPTIONS = clamp(Math.round(num(RULES.optionCount, 3)), 2, 4);
+  var maxNumber = num(RULES.maxNumber, 5) >= 10 ? 10 : 5;
+  var DEBUG_KIND = RULES.debugKind ? String(RULES.debugKind) : '';
+  var speechOn = RULES.speech !== false;
+  var soundOn = RULES.sound !== false;
+
+  /* ============================================================
+   * 3. 音效 + 语音
+   * ============================================================ */
+  var ac = null;
+  function ensureAudio() {
+    if (!soundOn) return;
+    if (ac) { if (ac.state === 'suspended' && ac.resume) ac.resume().catch(function () {}); return; }
+    try {
+      var AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return;
+      ac = new AC();
+    } catch (e) { ac = null; }
+  }
+  function tone(freq, dur, vol, type, delay) {
+    if (!ac || !soundOn) return;
+    try {
+      var t0 = ac.currentTime + (delay || 0);
+      var osc = ac.createOscillator();
+      var g = ac.createGain();
+      osc.type = type || 'sine';
+      osc.frequency.setValueAtTime(freq, t0);
+      g.gain.setValueAtTime(0.0001, t0);
+      g.gain.exponentialRampToValueAtTime(vol || 0.05, t0 + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+      osc.connect(g); g.connect(ac.destination);
+      osc.start(t0); osc.stop(t0 + dur + 0.03);
+    } catch (e) { /* ignore */ }
+  }
+  function sfxTap() { tone(560, 0.05, 0.035, 'sine', 0); }
+  function sfxCorrect() {
+    tone(659, 0.10, 0.045, 'sine', 0);
+    tone(880, 0.12, 0.045, 'sine', 0.10);
+    tone(1046, 0.18, 0.04, 'sine', 0.22);
+  }
+  function sfxWrong() { tone(320, 0.10, 0.035, 'sine', 0); tone(262, 0.14, 0.03, 'sine', 0.10); }
+  function sfxWin() {
+    var seq = [523, 659, 784, 1046];
+    for (var i = 0; i < seq.length; i++) tone(seq[i], 0.22, 0.045, 'sine', i * 0.13);
+  }
+
+  var voices = [];
+  function loadVoices() {
+    try { voices = window.speechSynthesis ? (window.speechSynthesis.getVoices() || []) : []; } catch (e) { voices = []; }
+  }
+  if (window.speechSynthesis) {
+    loadVoices();
+    try { window.speechSynthesis.onvoiceschanged = loadVoices; } catch (e) {}
+  }
+  function voiceFor(lang) {
+    if (!voices.length) loadVoices();
+    var exact = null, loose = null;
+    for (var i = 0; i < voices.length; i++) {
+      var v = voices[i], l = (v.lang || '').replace('_', '-');
+      if (l === lang) { if (!exact) exact = v; }
+      else if (l.indexOf(lang.split('-')[0]) === 0 && !loose) loose = v;
+    }
+    return exact || loose;
+  }
+  var lastSay = '';
+  function say(text, lang, force) {
+    if (!speechOn || !text) return;
+    if (!window.speechSynthesis || typeof window.SpeechSynthesisUtterance !== 'function') return;
+    if (!force && text === lastSay) return;
+    lastSay = text;
+    try {
+      window.speechSynthesis.cancel();
+      var u = new window.SpeechSynthesisUtterance(text);
+      u.lang = lang || 'zh-CN';
+      u.rate = 0.88;
+      u.pitch = 1.18;
+      u.volume = 1;
+      var v = voiceFor(u.lang);
+      if (v) u.voice = v;
+      window.speechSynthesis.speak(u);
+    } catch (e) { /* 语音不可用就算了，文字仍然在 */ }
+  }
+
+  /* ============================================================
+   * 4. 题库
+   * ============================================================ */
+  /* 生词表：字|拼音|组词|分类|级别|配图（由 data/vocab.py 生成，改了 CSV 就重跑脚本）
+   * 390 字，按「启蒙 / 大班 / 幼小衔接」三级，覆盖统编版一年级上册识字表的主干。 */
+var CHARS_RAW = "一|yī|一个|数字|1|;二|èr|二月|数字|1|;三|sān|三天|数字|1|;四|sì|四个|数字|1|;五|wǔ|五个|数字|1|;六|liù|六月|数字|1|;七|qī|七天|数字|1|;八|bā|八个|数字|1|;九|jiǔ|九个|数字|1|;十|shí|十个|数字|1|;百|bǎi|一百|数字|1|;千|qiān|一千|数字|1|;万|wàn|一万|数字|1|;大|dà|大人|大小方位|1|;小|xiǎo|小鸟|大小方位|1|;多|duō|很多|大小方位|1|;少|shǎo|很少|大小方位|1|;高|gāo|高山|大小方位|1|⛰️;低|dī|低头|大小方位|1|;长|cháng|长头发|大小方位|1|;短|duǎn|短裤|大小方位|1|;上|shàng|上面|大小方位|1|;下|xià|下面|大小方位|1|;左|zuǒ|左边|大小方位|1|;右|yòu|右边|大小方位|1|;前|qián|前面|大小方位|1|;后|hòu|后面|大小方位|1|;里|lǐ|里面|大小方位|1|;外|wài|外面|大小方位|1|;中|zhōng|中间|大小方位|1|;间|jiān|房间|大小方位|1|;东|dōng|东方|大小方位|1|;西|xī|西瓜|大小方位|1|🍉;南|nán|南方|大小方位|1|;北|běi|北方|大小方位|1|;人|rén|大人|家人|1|;你|nǐ|你好|家人|1|;我|wǒ|我们|家人|1|;他|tā|他们|家人|1|;她|tā|她们|家人|1|;们|men|我们|家人|1|;爸|bà|爸爸|家人|1|👨;妈|mā|妈妈|家人|1|👩;爷|yé|爷爷|家人|1|🧓;奶|nǎi|奶奶|家人|1|👵;哥|gē|哥哥|家人|1|👦;姐|jiě|姐姐|家人|1|👧;弟|dì|弟弟|家人|1|;妹|mèi|妹妹|家人|1|;儿|ér|儿子|家人|1|;女|nǚ|女孩|家人|1|;男|nán|男孩|家人|1|;子|zǐ|孩子|家人|1|;孩|hái|孩子|家人|1|;宝|bǎo|宝宝|家人|1|👶;家|jiā|家里|家人|1|🏠;口|kǒu|开口|身体|1|👄;耳|ěr|耳朵|身体|1|👂;目|mù|目光|身体|1|👁️;手|shǒu|小手|身体|1|✋;足|zú|足球|身体|1|⚽;牙|yá|牙齿|身体|1|🦷;头|tóu|头发|身体|1|;眼|yǎn|眼睛|身体|1|;心|xīn|开心|身体|1|❤️;身|shēn|身体|身体|1|;面|miàn|面条|身体|1|🍜;皮|pí|皮球|身体|1|;毛|máo|羊毛|身体|1|;脚|jiǎo|小脚|身体|1|🦶;嘴|zuǐ|嘴巴|身体|1|;脸|liǎn|笑脸|身体|1|😊;鼻|bí|鼻子|身体|1|👃;日|rì|日出|自然|1|☀️;月|yuè|月亮|自然|1|🌙;水|shuǐ|喝水|自然|1|💧;火|huǒ|火苗|自然|1|🔥;山|shān|高山|自然|1|⛰️;石|shí|石头|自然|1|🪨;田|tián|田地|自然|1|;禾|hé|禾苗|自然|1|🌾;天|tiān|天空|自然|1|;地|dì|大地|自然|1|;云|yún|白云|自然|1|☁️;雨|yǔ|下雨|自然|1|🌧️;风|fēng|大风|自然|1|🌬️;雪|xuě|雪花|自然|1|❄️;雷|léi|打雷|自然|1|⚡;电|diàn|闪电|自然|1|⚡;花|huā|花朵|自然|1|🌸;草|cǎo|小草|自然|1|🌿;木|mù|木头|自然|1|🪵;树|shù|大树|自然|1|🌳;林|lín|树林|自然|1|🌲;森|sēn|森林|自然|1|🌲;果|guǒ|水果|自然|1|🍎;叶|yè|树叶|自然|1|🍃;星|xīng|星星|自然|1|⭐;光|guāng|阳光|自然|1|☀️;空|kōng|天空|自然|1|;江|jiāng|长江|自然|1|;河|hé|小河|自然|1|;海|hǎi|大海|自然|1|🌊;湖|hú|湖水|自然|1|;沙|shā|沙子|自然|1|;土|tǔ|泥土|自然|1|🟫;苗|miáo|禾苗|自然|1|🌱;竹|zhú|竹子|自然|1|🎋;松|sōng|松树|自然|1|🌲;柳|liǔ|柳树|自然|1|🌿;桃|táo|桃子|自然|1|🍑;杏|xìng|杏子|自然|1|;莲|lián|莲花|自然|1|🪷;霜|shuāng|白霜|自然|1|;虹|hóng|彩虹|自然|1|🌈;鸟|niǎo|小鸟|动物|1|🐦;虫|chóng|虫子|动物|1|🐛;马|mǎ|小马|动物|1|🐴;牛|niú|奶牛|动物|1|🐮;羊|yáng|山羊|动物|1|🐑;猫|māo|小猫|动物|1|🐱;狗|gǒu|小狗|动物|1|🐶;兔|tù|兔子|动物|1|🐰;鸡|jī|小鸡|动物|1|🐔;鸭|yā|鸭子|动物|1|🦆;猪|zhū|小猪|动物|1|🐷;鱼|yú|小鱼|动物|1|🐟;鹅|é|白鹅|动物|1|🦢;蛙|wā|青蛙|动物|1|🐸;虎|hǔ|老虎|动物|1|🐯;象|xiàng|大象|动物|1|🐘;蜂|fēng|蜜蜂|动物|1|🐝;蝶|dié|蝴蝶|动物|1|🦋;猴|hóu|猴子|动物|1|🐵;鹿|lù|小鹿|动物|1|🦌;龙|lóng|龙|动物|1|🐉;鼠|shǔ|老鼠|动物|1|🐭;红|hóng|红色|颜色|1|🔴;黄|huáng|黄色|颜色|1|🟡;蓝|lán|蓝色|颜色|1|🔵;白|bái|白色|颜色|1|⚪;黑|hēi|黑色|颜色|1|⚫;绿|lǜ|绿色|颜色|1|🟢;青|qīng|青草|颜色|1|🌿;紫|zǐ|紫色|颜色|1|🟣;灰|huī|灰色|颜色|1|;粉|fěn|粉色|颜色|1|🌸;色|sè|颜色|颜色|1|🎨;车|chē|汽车|生活用品|2|🚗;门|mén|大门|生活用品|2|🚪;窗|chuāng|窗户|生活用品|2|🪟;床|chuáng|小床|生活用品|2|🛏️;桌|zhuō|桌子|生活用品|2|🪑;椅|yǐ|椅子|生活用品|2|🪑;书|shū|书本|生活用品|2|📖;笔|bǐ|铅笔|生活用品|2|✏️;纸|zhǐ|白纸|生活用品|2|📄;包|bāo|书包|生活用品|2|🎒;尺|chǐ|尺子|生活用品|2|📏;刀|dāo|小刀|生活用品|2|🔪;杯|bēi|水杯|生活用品|2|🥤;碗|wǎn|小碗|生活用品|2|🍚;勺|sháo|勺子|生活用品|2|🥄;伞|sǎn|雨伞|生活用品|2|☂️;灯|dēng|台灯|生活用品|2|💡;钟|zhōng|时钟|生活用品|2|⏰;镜|jìng|镜子|生活用品|2|🪞;衣|yī|衣服|生活用品|2|👕;鞋|xié|鞋子|生活用品|2|👟;帽|mào|帽子|生活用品|2|🎩;裙|qún|裙子|生活用品|2|👗;裤|kù|裤子|生活用品|2|👖;袜|wà|袜子|生活用品|2|🧦;房|fáng|房子|生活用品|2|🏠;屋|wū|屋子|生活用品|2|🏠;桥|qiáo|小桥|生活用品|2|;路|lù|马路|生活用品|2|;楼|lóu|楼房|生活用品|2|;饭|fàn|米饭|食物|2|🍚;菜|cài|白菜|食物|2|🥬;肉|ròu|牛肉|食物|2|🥩;蛋|dàn|鸡蛋|食物|2|🥚;米|mǐ|大米|食物|2|🍚;瓜|guā|西瓜|食物|2|🍉;糖|táng|糖果|食物|2|🍬;饼|bǐng|饼干|食物|2|🍪;苹|píng|苹果|食物|2|🍎;汤|tāng|喝汤|食物|2|🍲;橙|chéng|橙子|食物|2|🍊;梨|lí|梨子|食物|2|🍐;莓|méi|草莓|食物|2|🍓;年|nián|过年|时间|2|🎉;岁|suì|五岁|时间|2|;昨|zuó|昨天|时间|2|;今|jīn|今天|时间|2|;明|míng|明天|时间|2|;早|zǎo|早上|时间|2|🌅;午|wǔ|中午|时间|2|🌞;晚|wǎn|晚上|时间|2|🌙;夜|yè|夜晚|时间|2|🌙;时|shí|时间|时间|2|⏰;分|fēn|分钟|时间|2|;秒|miǎo|秒钟|时间|2|;春|chūn|春天|时间|2|🌱;夏|xià|夏天|时间|2|🌞;秋|qiū|秋天|时间|2|🍂;冬|dōng|冬天|时间|2|⛄;吃|chī|吃饭|动作|2|🍚;喝|hē|喝水|动作|2|🥤;走|zǒu|走路|动作|2|🚶;跑|pǎo|跑步|动作|2|🏃;跳|tiào|跳高|动作|2|🤸;坐|zuò|坐下|动作|2|🪑;站|zhàn|站立|动作|2|🧍;看|kàn|看书|动作|2|👀;听|tīng|听话|动作|2|👂;说|shuō|说话|动作|2|🗣️;读|dú|读书|动作|2|📖;写|xiě|写字|动作|2|✍️;画|huà|画画|动作|2|🎨;笑|xiào|微笑|动作|2|😄;哭|kū|哭了|动作|2|😭;唱|chàng|唱歌|动作|2|🎤;飞|fēi|飞机|动作|2|✈️;开|kāi|开门|动作|2|🚪;关|guān|关门|动作|2|;拿|ná|拿东西|动作|2|;放|fàng|放学|动作|2|;打|dǎ|打球|动作|2|⚽;找|zhǎo|找朋友|动作|2|;洗|xǐ|洗手|动作|2|🧼;睡|shuì|睡觉|动作|2|😴;穿|chuān|穿衣|动作|2|👕;买|mǎi|买东西|动作|2|🛍️;卖|mài|卖东西|动作|2|;来|lái|过来|动作|2|;去|qù|回去|动作|2|;回|huí|回家|动作|2|🏠;出|chū|出去|动作|2|;入|rù|进入|动作|2|;起|qǐ|起来|动作|2|;立|lì|站立|动作|2|;爬|pá|爬山|动作|2|;抱|bào|抱抱|动作|2|🤗;推|tuī|推车|动作|2|;拉|lā|拉手|动作|2|;好|hǎo|好人|形容词|3|;坏|huài|坏了|形容词|3|;快|kuài|快跑|形容词|3|💨;慢|màn|慢走|形容词|3|🐢;新|xīn|新书|形容词|3|✨;旧|jiù|旧衣服|形容词|3|;美|měi|美丽|形容词|3|🌸;甜|tián|甜甜的|形容词|3|🍬;香|xiāng|花香|形容词|3|🌸;冷|lěng|很冷|形容词|3|❄️;热|rè|很热|形容词|3|🔥;暖|nuǎn|暖和|形容词|3|☀️;亮|liàng|明亮|形容词|3|💡;暗|àn|黑暗|形容词|3|🌑;净|jìng|干净|形容词|3|✨;脏|zāng|脏了|形容词|3|;对|duì|对错|形容词|3|✅;错|cuò|错了|形容词|3|❌;真|zhēn|真的|形容词|3|;很|hěn|很好|形容词|3|;最|zuì|最好|形容词|3|;不|bù|不是|形容词|3|;有|yǒu|有的|形容词|3|;没|méi|没有|形容词|3|;会|huì|会做|形容词|3|;能|néng|能干|形容词|3|;要|yào|想要|形容词|3|;想|xiǎng|想一想|形容词|3|;爱|ài|爱心|形容词|3|❤️;喜|xǐ|喜欢|形容词|3|;学|xué|学习|学校学习|3|📚;校|xiào|学校|学校学习|3|🏫;老|lǎo|老师|学校学习|3|👴;师|shī|老师|学校学习|3|👩‍🏫;同|tóng|同学|学校学习|3|👦;朋|péng|朋友|学校学习|3|👫;友|yǒu|朋友|学校学习|3|;字|zì|汉字|学校学习|3|🈶;词|cí|词语|学校学习|3|;句|jù|句子|学校学习|3|;文|wén|语文|学校学习|3|📖;数|shù|数学|学校学习|3|🔢;课|kè|上课|学校学习|3|;本|běn|本子|学校学习|3|📓;作|zuò|作业|学校学习|3|✍️;业|yè|作业|学校学习|3|;题|tí|题目|学校学习|3|;班|bān|班级|学校学习|3|;认|rèn|认识|学校学习|3|;远|yuǎn|远方|幼小衔接·一年级上册|3|;近|jìn|近处|幼小衔接·一年级上册|3|;无|wú|无声|幼小衔接·一年级上册|3|;声|shēng|声音|幼小衔接·一年级上册|3|;还|hái|还有|幼小衔接·一年级上册|3|;只|zhī|一只|幼小衔接·一年级上册|3|;边|biān|旁边|幼小衔接·一年级上册|3|;力|lì|力气|幼小衔接·一年级上册|3|;尘|chén|灰尘|幼小衔接·一年级上册|3|;从|cóng|从来|幼小衔接·一年级上册|3|;众|zhòng|众人|幼小衔接·一年级上册|3|;双|shuāng|一双|幼小衔接·一年级上册|3|;条|tiáo|一条鱼|幼小衔接·一年级上册|3|🐟;升|shēng|升起|幼小衔接·一年级上册|3|;国|guó|中国|幼小衔接·一年级上册|3|🇨🇳;旗|qí|国旗|幼小衔接·一年级上册|3|🚩;歌|gē|唱歌|幼小衔接·一年级上册|3|🎤;么|me|什么|幼小衔接·一年级上册|3|;丽|lì|美丽|幼小衔接·一年级上册|3|;棋|qí|下棋|幼小衔接·一年级上册|3|;台|tái|阳台|幼小衔接·一年级上册|3|;气|qì|天气|幼小衔接·一年级上册|3|;了|le|好了|幼小衔接·一年级上册|3|;片|piàn|一片|幼小衔接·一年级上册|3|;个|gè|一个|幼小衔接·一年级上册|3|;的|de|我的|幼小衔接·一年级上册|3|;两|liǎng|两个|幼小衔接·一年级上册|3|;在|zài|现在|幼小衔接·一年级上册|3|;见|jiàn|看见|幼小衔接·一年级上册|3|👀;闪|shǎn|闪亮|幼小衔接·一年级上册|3|✨;可|kě|可以|幼小衔接·一年级上册|3|;采|cǎi|采花|幼小衔接·一年级上册|3|🌸;尖|jiān|笔尖|幼小衔接·一年级上册|3|;弯|wān|弯弯的|幼小衔接·一年级上册|3|;正|zhèng|正在|幼小衔接·一年级上册|3|;反|fǎn|反面|幼小衔接·一年级上册|3|;影|yǐng|影子|幼小衔接·一年级上册|3|;它|tā|它们|幼小衔接·一年级上册|3|;比|bǐ|比赛|幼小衔接·一年级上册|3|;尾|wěi|尾巴|幼小衔接·一年级上册|3|;巴|bā|尾巴|幼小衔接·一年级上册|3|;谁|shéi|是谁|幼小衔接·一年级上册|3|;把|bǎ|一把|幼小衔接·一年级上册|3|;公|gōng|公园|幼小衔接·一年级上册|3|🏞️;诗|shī|古诗|幼小衔接·一年级上册|3|📜;点|diǎn|一点|幼小衔接·一年级上册|3|;过|guò|走过|幼小衔接·一年级上册|3|;给|gěi|给你|幼小衔接·一年级上册|3|;当|dāng|当心|幼小衔接·一年级上册|3|;串|chuàn|一串|幼小衔接·一年级上册|3|;以|yǐ|以后|幼小衔接·一年级上册|3|;成|chéng|成功|幼小衔接·一年级上册|3|;彩|cǎi|彩色|幼小衔接·一年级上册|3|🌈;半|bàn|一半|幼小衔接·一年级上册|3|;问|wèn|问话|幼小衔接·一年级上册|3|;到|dào|到了|幼小衔接·一年级上册|3|;方|fāng|方向|幼小衔接·一年级上册|3|;更|gèng|更好|幼小衔接·一年级上册|3|;那|nà|那里|幼小衔接·一年级上册|3|;吗|ma|好吗|幼小衔接·一年级上册|3|;什|shén|什么|幼小衔接·一年级上册|3|;才|cái|刚才|幼小衔接·一年级上册|3|;候|hòu|时候|幼小衔接·一年级上册|3|;觉|jué|觉得|幼小衔接·一年级上册|3|;得|dé|得到|幼小衔接·一年级上册|3|;自|zì|自己|幼小衔接·一年级上册|3|;己|jǐ|自己|幼小衔接·一年级上册|3|;服|fú|衣服|幼小衔接·一年级上册|3|👕;着|zhe|看着|幼小衔接·一年级上册|3|;向|xiàng|方向|幼小衔接·一年级上册|3|;和|hé|和好|幼小衔接·一年级上册|3|;贝|bèi|贝壳|幼小衔接·一年级上册|3|🐚;娃|wá|娃娃|幼小衔接·一年级上册|3|🧸;挂|guà|挂上|幼小衔接·一年级上册|3|;活|huó|生活|幼小衔接·一年级上册|3|;金|jīn|金色|幼小衔接·一年级上册|3|;群|qún|一群|幼小衔接·一年级上册|3|;用|yòng|有用|幼小衔接·一年级上册|3|;几|jǐ|几个|幼小衔接·一年级上册|3|;步|bù|跑步|幼小衔接·一年级上册|3|;为|wèi|为什么|幼小衔接·一年级上册|3|;参|cān|参加|幼小衔接·一年级上册|3|;加|jiā|加上|幼小衔接·一年级上册|3|;洞|dòng|山洞|幼小衔接·一年级上册|3|🕳️;太|tài|太阳|幼小衔接·一年级上册|3|☀️;阳|yáng|阳光|幼小衔接·一年级上册|3|🌞;是|shì|是的|生活扩展·常用字|3|;也|yě|也是|生活扩展·常用字|3|;都|dōu|都是|生活扩展·常用字|3|;就|jiù|就是|生活扩展·常用字|3|;又|yòu|又来了|生活扩展·常用字|3|;被|bèi|被子|生活扩展·常用字|3|;让|ràng|让开|生活扩展·常用字|3|;跟|gēn|跟我|生活扩展·常用字|3|;呢|ne|你呢|生活扩展·常用字|3|;吧|ba|走吧|生活扩展·常用字|3|;啊|a|好啊|生活扩展·常用字|3|;旁|páng|旁边|生活扩展·常用字|3|;处|chù|到处|生活扩展·常用字|3|;事|shì|事情|生活扩展·常用字|3|;名|míng|名字|生活扩展·常用字|3|🏷️;刚|gāng|刚才|生活扩展·常用字|3|;常|cháng|常常|生活扩展·常用字|3|;先|xiān|先来|生活扩展·常用字|3|;周|zhōu|一周|生活扩展·常用字|3|📅;号|hào|一号|生活扩展·常用字|3|;复|fù|复习|生活扩展·常用字|3|;习|xí|学习|生活扩展·常用字|3|✏️;考|kǎo|考试|生活扩展·常用字|3|;答|dá|回答|生活扩展·常用字|3|;讲|jiǎng|讲话|生活扩展·常用字|3|;图|tú|图画|生活扩展·常用字|3|🖼️;扔|rēng|扔球|动作补充|2|;捡|jiǎn|捡起来|动作补充|2|;摸|mō|摸摸头|动作补充|2|;拍|pāi|拍手|动作补充|2|👏;踢|tī|踢球|动作补充|2|;转|zhuàn|转圈|动作补充|2|;停|tíng|停下来|动作补充|2|;等|děng|等一下|动作补充|2|;追|zhuī|追上来|动作补充|2|;藏|cáng|藏起来|动作补充|2|;躲|duǒ|躲猫猫|动作补充|2|;帮|bāng|帮忙|动作补充|2|;救|jiù|救人|动作补充|2|;算|suàn|算一算|动作补充|2|;搬|bān|搬东西|动作补充|2|;挑|tiāo|挑一个|动作补充|2|;摇|yáo|摇一摇|动作补充|2|;滚|gǔn|滚球|动作补充|2|;吹|chuī|吹泡泡|动作补充|2|🫧;闻|wén|闻一闻|动作补充|2|;尝|cháng|尝一尝|动作补充|2|;指|zhǐ|手指|动作补充|2|👆;晴|qíng|晴天|天气自然|2|☀️;阴|yīn|阴天|天气自然|2|☁️;雾|wù|大雾|天气自然|2|🌫️;露|lù|露水|天气自然|2|💧;冰|bīng|冰块|天气自然|2|🧊;泉|quán|泉水|天气自然|2|⛲;岸|àn|河岸|天气自然|2|;岛|dǎo|小岛|天气自然|2|🏝️;浪|làng|海浪|天气自然|2|🌊;软|ruǎn|软软的|天气自然|2|;硬|yìng|硬硬的|天气自然|2|;圆|yuán|圆形|天气自然|2|⭕;苦|kǔ|苦瓜|天气自然|2|;辣|là|辣椒|天气自然|2|🌶️;酸|suān|酸的|天气自然|2|🍋;怕|pà|害怕|天气自然|2|;急|jí|着急|天气自然|2|;累|lèi|累了|天气自然|2|;张|zhāng|一张纸|量词数词|2|📄;块|kuài|一块糖|量词数词|2|🍬;支|zhī|一支笔|量词数词|2|🖊️;棵|kē|一棵树|量词数词|2|🌳;朵|duǒ|一朵花|量词数词|2|🌸;堆|duī|一堆沙|量词数词|2|;顶|dǐng|一顶帽子|量词数词|2|🎩;钱|qián|硬币|家里与食物|2|🪙;票|piào|车票|家里与食物|2|🎫;报|bào|报纸|家里与食物|2|📰;视|shì|电视|家里与食物|2|📺;脑|nǎo|电脑|家里与食物|2|💻;话|huà|电话|家里与食物|2|📞;网|wǎng|上网|家里与食物|2|🌐;铃|líng|门铃|家里与食物|2|🔔;锁|suǒ|锁门|家里与食物|2|🔒;茶|chá|喝茶|家里与食物|2|🍵;盐|yán|食盐|家里与食物|2|🧂;油|yóu|花生油|家里与食物|2|;粥|zhōu|喝粥|家里与食物|2|🍚;饺|jiǎo|饺子|家里与食物|2|🥟;锅|guō|锅子|家里与食物|2|🍳;豆|dòu|豆子|家里与食物|2|🫘;枣|zǎo|红枣|家里与食物|2|;糕|gāo|蛋糕|家里与食物|2|🍰;腿|tuǐ|小腿|家里与食物|2|🦵;肚|dù|肚子|家里与食物|2|;肩|jiān|肩膀|家里与食物|2|;叔|shū|叔叔|家里与食物|2|;姨|yí|阿姨|家里与食物|2|;客|kè|客人|家里与食物|2|;虾|xiā|小虾|动物补充|2|🦐;蟹|xiè|螃蟹|动物补充|2|🦀;龟|guī|乌龟|动物补充|2|🐢;蚁|yǐ|蚂蚁|动物补充|2|🐜;鸦|yā|乌鸦|动物补充|2|🐦‍⬛;鸽|gē|鸽子|动物补充|2|🕊️;鲸|jīng|鲸鱼|动物补充|2|🐋;熊|xióng|小熊|动物补充|2|🐻;醒|xǐng|醒来|生活扩展·常用字2|3|;排|pái|排队|生活扩展·常用字2|3|;队|duì|排队|生活扩展·常用字2|3|;级|jí|年级|生活扩展·常用字2|3|;座|zuò|座位|生活扩展·常用字2|3|;礼|lǐ|敬礼|生活扩展·常用字2|3|;器|qì|乐器|生活扩展·常用字2|3|🎻;船|chuán|小船|交通场所|3|⛵;机|jī|飞机|交通场所|3|✈️;汽|qì|汽车|交通场所|3|🚗;园|yuán|公园|交通场所|3|;医|yī|医生|交通场所|3|👨‍⚕️;工|gōng|工人|交通场所|3|👷;店|diàn|商店|交通场所|3|;市|shì|城市|交通场所|3|;村|cūn|村子|交通场所|3|";
+var WORDS_RAW = "cat|猫|🐱|动物|1;dog|狗|🐶|动物|1;pig|猪|🐷|动物|1;fox|狐狸|🦊|动物|1;bee|蜜蜂|🐝|动物|1;bird|鸟|🐦|动物|1;fish|鱼|🐟|动物|1;cow|奶牛|🐮|动物|1;duck|鸭子|🦆|动物|1;frog|青蛙|🐸|动物|1;rabbit|兔子|🐰|动物|1;monkey|猴子|🐵|动物|1;tiger|老虎|🐯|动物|1;horse|马|🐴|动物|1;sheep|羊|🐑|动物|1;panda|熊猫|🐼|动物|1;mouse|老鼠|🐭|动物|1;snake|蛇|🐍|动物|1;turtle|乌龟|🐢|动物|1;ant|蚂蚁|🐜|动物|1;butterfly|蝴蝶|🦋|动物|1;lion|狮子|🦁|动物|1;bear|熊|🐻|动物|1;apple|苹果|🍎|食物|1;banana|香蕉|🍌|食物|1;pear|梨|🍐|食物|1;grape|葡萄|🍇|食物|1;peach|桃子|🍑|食物|1;orange|橙子|🍊|食物|1;cake|蛋糕|🍰|食物|1;bread|面包|🍞|食物|1;milk|牛奶|🥛|食物|1;water|水|💧|食物|1;egg|鸡蛋|🥚|食物|1;rice|米饭|🍚|食物|1;noodle|面条|🍜|食物|1;candy|糖果|🍬|食物|1;cookie|饼干|🍪|食物|1;ice cream|冰淇淋|🍦|食物|1;juice|果汁|🧃|食物|1;corn|玉米|🌽|食物|1;carrot|胡萝卜|🥕|食物|1;soup|汤|🍲|食物|1;red|红色|🔴|颜色|2;yellow|黄色|🟡|颜色|2;blue|蓝色|🔵|颜色|2;green|绿色|🟢|颜色|2;black|黑色|⚫|颜色|2;white|白色|⚪|颜色|2;pink|粉色|🌸|颜色|2;purple|紫色|🟣|颜色|2;brown|棕色|🟤|颜色|2;one|一|1️⃣|数字|2;two|二|2️⃣|数字|2;three|三|3️⃣|数字|2;four|四|4️⃣|数字|2;five|五|5️⃣|数字|2;six|六|6️⃣|数字|2;seven|七|7️⃣|数字|2;eight|八|8️⃣|数字|2;nine|九|9️⃣|数字|2;ten|十|🔟|数字|2;hand|手|✋|身体|2;eye|眼睛|👁️|身体|2;ear|耳朵|👂|身体|2;nose|鼻子|👃|身体|2;mouth|嘴巴|👄|身体|2;foot|脚|🦶|身体|2;hair|头发|💇|身体|2;face|脸|😊|身体|2;mother|妈妈|👩|家人|2;father|爸爸|👨|家人|2;sister|姐妹|👧|家人|2;brother|兄弟|👦|家人|2;baby|宝宝|👶|家人|2;grandma|奶奶|👵|家人|2;grandpa|爷爷|🧓|家人|2;family|家庭|👨‍👩‍👧|家人|2;house|房子|🏠|家里|2;door|门|🚪|家里|2;window|窗户|🪟|家里|2;bed|床|🛏️|家里|2;chair|椅子|🪑|家里|2;cup|杯子|🥤|家里|2;book|书|📖|家里|2;ball|球|⚽|家里|2;clock|钟|⏰|家里|2;key|钥匙|🔑|家里|2;lamp|灯|💡|家里|2;car|汽车|🚗|交通|3;bus|公交车|🚌|交通|3;bike|自行车|🚲|交通|3;train|火车|🚂|交通|3;plane|飞机|✈️|交通|3;boat|小船|⛵|交通|3;ship|大船|🚢|交通|3;truck|卡车|🚚|交通|3;sun|太阳|☀️|自然|3;moon|月亮|🌙|自然|3;star|星星|⭐|自然|3;tree|树|🌳|自然|3;flower|花|🌸|自然|3;rain|雨|🌧️|自然|3;snow|雪|❄️|自然|3;cloud|云|☁️|自然|3;sky|天空|🌌|自然|3;grass|草|🌿|自然|3;mountain|山|⛰️|自然|3;river|河|🏞️|自然|3;run|跑|🏃|动作|3;jump|跳|🤸|动作|3;swim|游泳|🏊|动作|3;sing|唱歌|🎤|动作|3;dance|跳舞|💃|动作|3;read|读|📖|动作|3;draw|画画|🎨|动作|3;sleep|睡觉|😴|动作|3;sunny|晴朗的|☀️|天气|2;rainy|下雨的|🌧️|天气|2;snowy|下雪的|❄️|天气|2;windy|刮风的|🌬️|天气|2;cloudy|多云的|☁️|天气|2;hot|热|🔥|天气|2;cold|冷|🧊|天气|2;shirt|衬衫|👕|衣服|2;pants|裤子|👖|衣服|2;dress|连衣裙|👗|衣服|2;coat|外套|🧥|衣服|2;sock|袜子|🧦|衣服|2;balloon|气球|🎈|玩具|2;kite|风筝|🪁|玩具|2;robot|机器人|🤖|玩具|2;doll|娃娃|🪆|玩具|2;puzzle|拼图|🧩|玩具|2;doctor|医生|👨‍⚕️|职业|3;nurse|护士|👩‍⚕️|职业|3;police|警察|👮|职业|3;farmer|农民|👨‍🌾|职业|3;driver|司机|🚗|职业|3;cook|厨师|👨‍🍳|职业|3;park|公园|🏞️|地点|3;shop|商店|🏪|地点|3;zoo|动物园|🦁|地点|3;farm|农场|🚜|地点|3;hospital|医院|🏥|地点|3;open|打开|🚪|动作补充|3;close|关上|🚪|动作补充|3;wash|洗|🧼|动作补充|3;clean|打扫|🧹|动作补充|3;push|推|👉|动作补充|3;school|学校|🏫|学校|3;teacher|老师|👩‍🏫|学校|3;pen|钢笔|🖊️|学校|3;pencil|铅笔|✏️|学校|3;bag|书包|🎒|学校|3;ruler|尺子|📏|学校|3";
+
+  function parseChars(raw) {
+    return raw.split(";").filter(Boolean).map(function (row) {
+      var f = row.split("|");
+      return {
+        char: f[0], pinyin: f[1], word: f[2],
+        cat: f[3] || "其他", level: +f[4] || 1, emoji: f[5] || ""
+      };
+    });
+  }
+  function parseWords(raw) {
+    return raw.split(";").filter(Boolean).map(function (row) {
+      var f = row.split("|");
+      return { word: f[0], zh: f[1], emoji: f[2], cat: f[3] || "其他", level: +f[4] || 1 };
+    });
+  }
+  var CHARS = parseChars(CHARS_RAW);
+  var WORDS = parseWords(WORDS_RAW);
+
+  /* 大小写配对用的字母表：[大写, 小写, 两个易混字母] */
+  var LETTERS = [
+    ["A", "a", ["e", "o"]], ["B", "b", ["d", "p"]], ["C", "c", ["e", "o"]], ["D", "d", ["b", "p"]],
+    ["E", "e", ["a", "c"]], ["F", "f", ["t", "h"]], ["G", "g", ["q", "c"]], ["H", "h", ["n", "k"]],
+    ["I", "i", ["l", "j"]], ["J", "j", ["i", "g"]], ["K", "k", ["h", "x"]], ["L", "l", ["i", "t"]],
+    ["M", "m", ["n", "w"]], ["N", "n", ["m", "h"]], ["O", "o", ["a", "q"]], ["P", "p", ["b", "q"]],
+    ["Q", "q", ["p", "g"]], ["R", "r", ["n", "k"]], ["S", "s", ["z", "c"]], ["T", "t", ["l", "f"]],
+    ["U", "u", ["v", "n"]], ["V", "v", ["u", "y"]], ["W", "w", ["m", "v"]], ["X", "x", ["k", "y"]],
+    ["Y", "y", ["v", "u"]], ["Z", "z", ["s", "x"]]
+  ];
+
+  /* ---------- 拼音 ---------- */
+  var INITIALS = [
+    ["b", "bō", ["d", "p"]], ["p", "pō", ["b", "q"]], ["m", "mō", ["n", "w"]], ["f", "fó", ["t", "h"]],
+    ["d", "dé", ["b", "q"]], ["t", "tè", ["f", "l"]], ["n", "nè", ["m", "h"]], ["l", "lè", ["i", "t"]],
+    ["g", "gē", ["q", "k"]], ["k", "kē", ["h", "x"]], ["h", "hē", ["n", "k"]], ["j", "jī", ["i", "q"]],
+    ["q", "qī", ["p", "j"]], ["x", "xī", ["k", "s"]], ["zh", "zhī", ["ch", "z"]], ["ch", "chī", ["zh", "c"]],
+    ["sh", "shī", ["zh", "s"]], ["r", "rì", ["n", "l"]], ["z", "zī", ["c", "s"]], ["c", "cì", ["z", "s"]],
+    ["s", "sī", ["z", "c"]], ["y", "yī", ["i", "w"]], ["w", "wū", ["u", "y"]]
+  ];
+  /* 韵母：用孩子听得懂的例字发音，避免 TTS 把字母念成英文 */
+  var FINALS = [
+    ["a", "啊", ["o", "e"]], ["o", "喔", ["a", "e"]], ["e", "鹅", ["a", "o"]],
+    ["i", "衣", ["u", "ü"]], ["u", "乌", ["i", "ü"]], ["ü", "迂", ["i", "u"]],
+    ["ai", "哀", ["ei", "ao"]], ["ei", "诶", ["ai", "ou"]], ["ui", "威", ["iu", "ei"]],
+    ["ao", "熬", ["ou", "ai"]], ["ou", "欧", ["ao", "ui"]], ["iu", "优", ["ui", "ie"]],
+    ["ie", "耶", ["üe", "iu"]], ["üe", "约", ["ie", "ui"]], ["er", "儿", ["e", "ei"]],
+    ["an", "安", ["ang", "en"]], ["en", "恩", ["eng", "an"]], ["in", "因", ["ing", "en"]],
+    ["un", "温", ["ün", "in"]], ["ün", "晕", ["un", "ing"]], ["ang", "昂", ["an", "eng"]],
+    ["eng", "鞥", ["en", "ang"]], ["ing", "英", ["in", "eng"]], ["ong", "翁", ["eng", "ang"]]
+  ];
+
+  /* 拼一拼：声母 + 韵母 = 音节 / 例字 */
+  var BLENDS = [
+    ["b", "ā", "bā", "八"], ["b", "ǐ", "bǐ", "笔"], ["m", "ā", "mā", "妈"], ["m", "ǎ", "mǎ", "马"],
+    ["g", "ē", "gē", "哥"], ["g", "ǒu", "gǒu", "狗"], ["h", "uā", "huā", "花"], ["sh", "ū", "shū", "书"],
+    ["y", "ú", "yú", "鱼"], ["n", "iú", "niú", "牛"], ["sh", "uǐ", "shuǐ", "水"], ["sh", "ān", "shān", "山"],
+    ["d", "à", "dà", "大"], ["x", "iǎo", "xiǎo", "小"], ["h", "óng", "hóng", "红"], ["l", "ǜ", "lǜ", "绿"],
+    ["ch", "ūn", "chūn", "春"], ["y", "uè", "yuè", "月"], ["r", "ì", "rì", "日"], ["t", "iān", "tiān", "天"],
+    ["r", "én", "rén", "人"], ["k", "ǒu", "kǒu", "口"], ["sh", "ǒu", "shǒu", "手"], ["ch", "ē", "chē", "车"],
+    ["m", "én", "mén", "门"], ["n", "iǎo", "niǎo", "鸟"], ["d", "ēng", "dēng", "灯"], ["b", "īng", "bīng", "冰"]
+  ];
+  /* 四声：同一个音节的四个调，用孩子熟悉的字 */
+  var TONES = [
+    { tones: ["mā", "má", "mǎ", "mà"], pick: 2, ch: "马", emoji: "🐴", say: "马" },
+    { tones: ["bā", "bá", "bǎ", "bà"], pick: 3, ch: "爸", emoji: "👨", say: "爸爸的爸" },
+    { tones: ["shū", "shú", "shǔ", "shù"], pick: 3, ch: "树", emoji: "🌳", say: "大树的树" },
+    { tones: ["yī", "yí", "yǐ", "yì"], pick: 2, ch: "椅", emoji: "🪑", say: "椅子的椅" },
+    { tones: ["wū", "wú", "wǔ", "wù"], pick: 2, ch: "五", emoji: "5️⃣", say: "五个的五" },
+    { tones: ["yū", "yú", "yǔ", "yù"], pick: 1, ch: "鱼", emoji: "🐟", say: "小鱼的鱼" },
+    { tones: ["jī", "jí", "jǐ", "jì"], pick: 0, ch: "鸡", emoji: "🐔", say: "小鸡的鸡" },
+    { tones: ["qī", "qí", "qǐ", "qì"], pick: 2, ch: "起", emoji: "🙋", say: "起来的起" },
+    { tones: ["xīng", "xíng", "xǐng", "xìng"], pick: 0, ch: "星", emoji: "⭐", say: "星星的星" },
+    { tones: ["dā", "dá", "dǎ", "dà"], pick: 3, ch: "大", emoji: "🧍", say: "大小的大" },
+    { tones: ["tū", "tú", "tǔ", "tù"], pick: 3, ch: "兔", emoji: "🐰", say: "兔子的兔" }
+  ];
+
+  /* ---------- 唐诗 ---------- */
+  var POEMS = [
+    { title: "静夜思", author: "李白", lines: ["床前明月光", "疑是地上霜", "举头望明月", "低头思故乡"],
+      pics: { 0: "🌙", 1: "❄️", 2: "🌙" } },
+    { title: "春晓", author: "孟浩然", lines: ["春眠不觉晓", "处处闻啼鸟", "夜来风雨声", "花落知多少"],
+      pics: { 1: "🐦", 2: "🌧️", 3: "🌸" } },
+    { title: "咏鹅", author: "骆宾王", lines: ["鹅鹅鹅", "曲项向天歌", "白毛浮绿水", "红掌拨清波"],
+      pics: { 0: "🦢", 2: "💧" } },
+    { title: "悯农", author: "李绅", lines: ["锄禾日当午", "汗滴禾下土", "谁知盘中餐", "粒粒皆辛苦"],
+      pics: { 0: "🌾", 1: "💦", 2: "🍚" } },
+    { title: "登鹳雀楼", author: "王之涣", lines: ["白日依山尽", "黄河入海流", "欲穷千里目", "更上一层楼"],
+      pics: { 0: "☀️", 1: "💧", 3: "🏯" } },
+    { title: "画", author: "王维", lines: ["远看山有色", "近听水无声", "春去花还在", "人来鸟不惊"],
+      pics: { 0: "⛰️", 1: "💧", 2: "🌸", 3: "🐦" } },
+    { title: "江雪", author: "柳宗元", lines: ["千山鸟飞绝", "万径人踪灭", "孤舟蓑笠翁", "独钓寒江雪"],
+      pics: { 0: "🐦", 3: "❄️" } },
+    { title: "池上", author: "白居易", lines: ["小娃撑小艇", "偷采白莲回", "不解藏踪迹", "浮萍一道开"],
+      pics: { 0: "👶", 1: "🪷" } },
+    { title: "相思", author: "王维", lines: ["红豆生南国", "春来发几枝", "愿君多采撷", "此物最相思"],
+      pics: { 0: "🔴", 1: "🌱" } },
+    { title: "小池", author: "杨万里", lines: ["泉眼无声惜细流", "树阴照水爱晴柔", "小荷才露尖尖角", "早有蜻蜓立上头"],
+      pics: { 0: "💧", 2: "🪷", 3: "🦋" } },
+    { title: "咏柳", author: "贺知章", lines: ["碧玉妆成一树高", "万条垂下绿丝绦", "不知细叶谁裁出", "二月春风似剪刀"],
+      pics: { 0: "🌳", 2: "🌿", 3: "✂️" } },
+    { title: "赠汪伦", author: "李白", lines: ["李白乘舟将欲行", "忽闻岸上踏歌声", "桃花潭水深千尺", "不及汪伦送我情"],
+      pics: { 0: "🛶", 2: "💧", 3: "👋" } },
+    { title: "望庐山瀑布", author: "李白", lines: ["日照香炉生紫烟", "遥看瀑布挂前川", "飞流直下三千尺", "疑是银河落九天"],
+      pics: { 0: "☀️", 1: "💧", 3: "🌌" } },
+    { title: "绝句", author: "杜甫", lines: ["两个黄鹂鸣翠柳", "一行白鹭上青天", "窗含西岭千秋雪", "门泊东吴万里船"],
+      pics: { 0: "🐦", 2: "❄️", 3: "🛶" } },
+    { title: "游子吟", author: "孟郊", lines: ["慈母手中线", "游子身上衣", "临行密密缝", "意恐迟迟归", "谁言寸草心", "报得三春晖"],
+      pics: { 0: "👩", 1: "👕" } },
+    { title: "鹿柴", author: "王维", lines: ["空山不见人", "但闻人语响", "返景入深林", "复照青苔上"],
+      pics: { 0: "⛰️", 2: "🌳" } },
+    { title: "山行", author: "杜牧", lines: ["远上寒山石径斜", "白云生处有人家", "停车坐爱枫林晚", "霜叶红于二月花"],
+      pics: { 1: "☁️", 3: "🍁" } },
+    { title: "村居", author: "高鼎", lines: ["草长莺飞二月天", "拂堤杨柳醉春烟", "儿童散学归来早", "忙趁东风放纸鸢"],
+      pics: { 0: "🐦", 2: "👦", 3: "🪁" } },
+    { title: "草", author: "白居易", lines: ["离离原上草", "一岁一枯荣", "野火烧不尽", "春风吹又生"],
+      pics: { 0: "🌿", 2: "🔥" } },
+    { title: "夜宿山寺", author: "李白", lines: ["危楼高百尺", "手可摘星辰", "不敢高声语", "恐惊天上人"],
+      pics: { 0: "🏯", 1: "⭐" } }
+  ];
+
+  /* ---------- 儿歌 ---------- */
+  var RHYMES = [
+    { title: "小星星", lines: ["一闪一闪亮晶晶", "满天都是小星星"], subject: ["⭐", "星星"],
+      blank: { text: "一闪一闪亮晶晶，满天都是小__", opts: [["⭐", "星星"], ["🌙", "月亮"], ["☀️", "太阳"]], ans: 0 } },
+    { title: "数鸭子", lines: ["门前大桥下", "游过一群鸭"], subject: ["🦆", "鸭子"],
+      blank: { text: "门前大桥下，游过一群__", opts: [["🦆", "鸭子"], ["🐔", "小鸡"], ["🐟", "小鱼"]], ans: 0 } },
+    { title: "拔萝卜", lines: ["拔萝卜，拔萝卜", "嘿哟嘿哟拔不动"], subject: ["🥕", "萝卜"],
+      blank: { text: "拔萝卜，拔萝卜，嘿哟嘿哟拔__", opts: [["🥕", "萝卜"], ["🍎", "苹果"], ["🌳", "大树"]], ans: 0 } },
+    { title: "两只老虎", lines: ["两只老虎，两只老虎", "跑得快，跑得快"], subject: ["🐯", "老虎"] },
+    { title: "小兔子乖乖", lines: ["小兔子乖乖", "把门儿开开"], subject: ["🐰", "兔子"] },
+    { title: "找朋友", lines: ["找呀找呀找朋友", "找到一个好朋友"], subject: ["👫", "朋友"],
+      blank: { text: "找呀找呀找朋友，找到一个好__", opts: [["👫", "朋友"], ["👩", "妈妈"], ["🏠", "房子"]], ans: 0 } },
+    { title: "世上只有妈妈好", lines: ["世上只有妈妈好", "有妈的孩子像个宝"], subject: ["👩", "妈妈"] },
+    { title: "小燕子", lines: ["小燕子，穿花衣", "年年春天来这里"], subject: ["🐦", "燕子"] },
+    { title: "小毛驴", lines: ["我有一头小毛驴", "我从来也不骑"], subject: ["🐴", "小毛驴"] },
+    { title: "春天在哪里", lines: ["春天在哪里呀", "春天在哪里"], subject: ["🌷", "春天"] },
+    { title: "数高楼", lines: ["路边有栋楼", "一层一层数一数"], subject: ["🏢", "高楼"] },
+    { title: "小螺号", lines: ["小螺号，嘀嘀嘀吹", "海鸥听了展翅飞"], subject: ["🐚", "海螺"] },
+    { title: "一分钱", lines: ["我在马路边", "捡到一分钱"], subject: ["🪙", "硬币"],
+      blank: { text: "我在马路边，捡到一分__", opts: [["🪙", "硬币"], ["🍬", "糖果"], ["🎈", "气球"]], ans: 0 } },
+    { title: "小老鼠上灯台", lines: ["小老鼠，上灯台", "偷油吃，下不来"], subject: ["🐭", "老鼠"] },
+    { title: "大公鸡", lines: ["大公鸡，喔喔叫", "天天叫我早早起"], subject: ["🐓", "公鸡"] },
+    { title: "小蜜蜂", lines: ["嗡嗡嗡，嗡嗡嗡", "飞到西来飞到东"], subject: ["🐝", "蜜蜂"] },
+    { title: "数蛤蟆", lines: ["一只蛤蟆一张嘴", "两只眼睛四条腿"], subject: ["🐸", "蛤蟆"] },
+    { title: "采蘑菇的小姑娘", lines: ["采蘑菇的小姑娘", "背着一个大竹筐"], subject: ["🍄", "蘑菇"] }
+  ];
+
+  /* ---------- 颜色 ---------- */
+  var PAINTS = [
+    { zh: "红色", en: "red", hex: "#E5484D" }, { zh: "黄色", en: "yellow", hex: "#F3B321" },
+    { zh: "蓝色", en: "blue", hex: "#3E8FD8" }, { zh: "绿色", en: "green", hex: "#4CAF6E" },
+    { zh: "白色", en: "white", hex: "#FFFFFF" }, { zh: "黑色", en: "black", hex: "#332E2B" },
+    { zh: "紫色", en: "purple", hex: "#8E5BC9" }, { zh: "橙色", en: "orange", hex: "#F07A28" },
+    { zh: "粉色", en: "pink", hex: "#F49AB8" }, { zh: "灰色", en: "gray", hex: "#9AA0A6" },
+    { zh: "棕色", en: "brown", hex: "#8B5A2B" }
+  ];
+  var COLOR_ITEMS = [
+    ["🍌", "香蕉", "黄色"], ["🍎", "苹果", "红色"], ["🍇", "葡萄", "紫色"], ["🍊", "橘子", "橙色"],
+    ["🌿", "小草", "绿色"], ["☁️", "白云", "白色"], ["❄️", "雪花", "白色"], ["🌊", "大海", "蓝色"],
+    ["🐯", "老虎", "黄色"], ["🐸", "青蛙", "绿色"], ["🍓", "草莓", "红色"], ["🌙", "月亮", "黄色"],
+    ["🥕", "胡萝卜", "橙色"], ["🐘", "大象", "灰色"], ["🍫", "巧克力", "棕色"], ["🌸", "樱花", "粉色"]
+  ];
+
+  /* ---------- 时间 ---------- */
+  var DAY_PARTS = [
+    { q: "什么时候起床？", a: "早上", emoji: "🌤️" },
+    { q: "什么时候上幼儿园？", a: "早上", emoji: "🌤️" },
+    { q: "什么时候吃午饭？", a: "中午", emoji: "☀️" },
+    { q: "什么时候睡觉？", a: "晚上", emoji: "🌙" },
+    { q: "太阳落山了，是什么时候？", a: "晚上", emoji: "🌙" },
+    { q: "吃早饭是什么时候？", a: "早上", emoji: "🌤️" },
+    { q: "幼儿园放学回家，是什么时候？", a: "晚上", emoji: "🌙" }
+  ];
+  var FRUIT = ['🍓', '🍎', '🍪', '🎈', '⭐', '🧁', '🌸', '🐞', '🍊', '🍐'];
+
+  var PRAISE = ['真棒！', '答对啦！', '好厉害！', '就是这样！', '你太聪明了！'];
+
+  function numberOptions(answer, count, lo, hi) {
+    var set = [answer], guard = 0;
+    while (set.length < count && guard++ < 100) {
+      var c = randInt(lo, hi);
+      if (set.indexOf(c) < 0) set.push(c);
+    }
+    var opts = shuffle(set).map(function (v) { return { type: 'number', n: v }; });
+    var idx = 0;
+    for (var i = 0; i < opts.length; i++) if (opts[i].n === answer) idx = i;
+    return { opts: opts, answer: idx };
+  }
+
+  function poolChars() {
+    var lv = state.wordLevel || 2;
+    var pool = CHARS.filter(function (c) { return c.level <= lv; });
+    return pool.length >= 24 ? pool : CHARS;
+  }
+  function poolWords() {
+    var lv = state.wordLevel || 2;
+    var pool = WORDS.filter(function (w) { return w.level <= lv; });
+    return pool.length >= 20 ? pool : WORDS;
+  }
+
+  /* ---------- 识字：看图选字 / 听音选字 / 看字选图 ---------- */
+  function makeLit() {
+    var pool = poolChars();
+    var item = pick(pool);
+    var others = sample(pool.filter(function (c) { return c.char !== item.char; }), OPTIONS - 1);
+    var roll = Math.random();
+    var mode = item.emoji ? (roll < 0.55 ? 'pic' : (roll < 0.8 ? 'listen' : 'word')) : 'listen';
+
+    if (mode === 'word') {
+      var epool = [{ type: 'emoji', emoji: item.emoji }];
+      others.forEach(function (o) { if (o.emoji) epool.push({ type: 'emoji', emoji: o.emoji }); });
+      var usedEm = [item.emoji];
+      epool.forEach(function (o) { usedEm.push(o.emoji); });
+      var guardE = 0;
+      while (epool.length < OPTIONS && guardE++ < 40) {
+        var ce = pick(pool.filter(function (c) { return c.emoji; }));
+        if (usedEm.indexOf(ce.emoji) < 0) { usedEm.push(ce.emoji); epool.push({ type: 'emoji', emoji: ce.emoji }); }
+      }
+      var eopts = shuffle(epool);
+      var eans = 0;
+      for (var j = 0; j < eopts.length; j++) if (eopts[j].emoji === item.emoji) eans = j;
+      return {
+        id: 'lit:' + item.char + ':e',
+        sub: 'lit',
+        prompt: '哪个是「' + item.char + '」？',
+        say: item.char + '。' + item.word + '的' + item.char + '。',
+        card: { type: 'char', char: item.char, pinyin: item.pinyin },
+        options: eopts,
+        answer: eans,
+        tag: { kind: 'char', key: item.char },
+        praise: pick(PRAISE) + ' 这是「' + item.char + '」。'
+      };
+    }
+
+    var cpool = [{ type: 'char', char: item.char, pinyin: item.pinyin }];
+    others.forEach(function (o) { cpool.push({ type: 'char', char: o.char, pinyin: o.pinyin }); });
+    var opts = shuffle(cpool);
+    var ans = 0;
+    for (var i = 0; i < opts.length; i++) if (opts[i].char === item.char) ans = i;
+    var listen = mode === 'listen';
+    return {
+      id: 'lit:' + item.char + ':' + mode,
+      sub: 'lit',
+      prompt: listen ? '听一听，是哪个字？' : '「' + item.char + '」在哪里？',
+      say: listen ? item.char + '。' + item.word + '的' + item.char + '。' : item.char + '。',
+      card: listen ? { type: 'listen' } : { type: 'emoji', emoji: item.emoji },
+      options: opts,
+      answer: ans,
+      tag: { kind: 'char', key: item.char },
+      praise: pick(PRAISE) + ' 这是「' + item.char + '」，' + item.word + '。'
+    };
+  }
+
+  /* ---------- 拼音 ---------- */
+  function makePinyin() {
+    var roll = Math.random();
+    if (roll < 0.28) return makeInitial();
+    if (roll < 0.55) return makeFinal();
+    if (roll < 0.80) return makeBlend();
+    return makeTone();
+  }
+
+  function makeInitial() {
+    var it = pick(INITIALS);
+    var opts = shuffle([
+      { type: 'letter', ch: it[0] },
+      { type: 'letter', ch: it[2][0] },
+      { type: 'letter', ch: it[2][1] }
+    ]);
+    var ans = 0;
+    for (var i = 0; i < opts.length; i++) if (opts[i].ch === it[0]) ans = i;
+    return {
+      id: 'py:init:' + it[0],
+      sub: 'pinyin',
+      prompt: '听一听，哪个声母？',
+      say: it[1],
+      card: { type: 'listen' },
+      options: opts,
+      answer: ans,
+      tag: { kind: 'none' },
+      praise: '对，是声母 ' + it[0] + '。'
+    };
+  }
+
+  function makeBlend() {
+    var b = pick(BLENDS);
+    var pool = poolChars().filter(function (c) { return c.char !== b[3]; });
+    var others = sample(pool, OPTIONS - 1);
+    var opts = shuffle([{ type: 'char', char: b[3], pinyin: b[2] }].concat(
+      others.map(function (o) { return { type: 'char', char: o.char, pinyin: o.pinyin }; })
+    ));
+    var ans = 0;
+    for (var i = 0; i < opts.length; i++) if (opts[i].char === b[3]) ans = i;
+    return {
+      id: 'py:blend:' + b[2],
+      sub: 'pinyin',
+      prompt: '拼一拼，是哪个字？',
+      say: '拼一拼',
+      card: { type: 'blend', s: b[0], y: b[1], out: b[2] },
+      options: opts,
+      answer: ans,
+      tag: { kind: 'none' },
+      praise: '对，' + b[0] + ' 和 ' + b[1] + ' 拼成 ' + b[2] + '，是「' + b[3] + '」。'
+    };
+  }
+
+  function makeFinal() {
+    var f = pick(FINALS);
+    var opts = shuffle([
+      { type: 'letter', ch: f[0] },
+      { type: 'letter', ch: f[2][0] },
+      { type: 'letter', ch: f[2][1] }
+    ]);
+    var ans = 0;
+    for (var i = 0; i < opts.length; i++) if (opts[i].ch === f[0]) ans = i;
+    return {
+      id: 'py:final:' + f[0],
+      sub: 'pinyin',
+      prompt: '听一听，哪个韵母？',
+      say: f[1],
+      card: { type: 'listen' },
+      options: opts,
+      answer: ans,
+      tag: { kind: 'none' },
+      praise: '对，韵母 ' + f[0] + '。'
+    };
+  }
+
+  function makeTone() {
+    var t = pick(TONES);
+    var opts = t.tones.map(function (p) { return { type: 'pinyin', text: p }; });
+    return {
+      id: 'py:tone:' + t.tones[t.pick],
+      sub: 'pinyin',
+      prompt: '哪个拼音是对的？',
+      say: t.say,
+      card: { type: 'emoji', emoji: t.emoji },
+      options: opts,
+      answer: t.pick,
+      tag: { kind: 'none' },
+      praise: '对，' + t.ch + ' 读 ' + t.tones[t.pick] + '。'
+    };
+  }
+
+  /* ---------- 英语 ---------- */
+  function makeLetter() {
+    var L = pick(LETTERS);
+    var up = L[0], low = L[1], conf = L[2];
+    var opts = shuffle([
+      { type: 'letter', ch: low },
+      { type: 'letter', ch: conf[0] },
+      { type: 'letter', ch: conf[1] }
+    ]);
+    var ans = 0;
+    for (var i = 0; i < opts.length; i++) if (opts[i].ch === low) ans = i;
+    return {
+      id: 'en:letter:' + up,
+      sub: 'en',
+      prompt: '找出小写字母',
+      say: '大写 ' + up + '，小写是哪一个？',
+      card: { type: 'letter', up: up },
+      options: opts,
+      answer: ans,
+      tag: { kind: 'none' },
+      praise: '对，大写 ' + up + '，小写 ' + low + '。'
+    };
+  }
+
+  function makeEn() {
+    if (DEBUG_KIND === 'letter') return makeLetter();
+    if (DEBUG_KIND !== 'word' && Math.random() < 0.28) return makeLetter();
+    var pool = poolWords();
+    var item = pick(pool);
+    var others = sample(pool.filter(function (w) { return w.word !== item.word; }), OPTIONS - 1);
+    var opts = shuffle([{ type: 'emoji', emoji: item.emoji, label: item.zh }].concat(
+      others.map(function (o) { return { type: 'emoji', emoji: o.emoji, label: o.zh }; })
+    ));
+    var ans = 0;
+    for (var i = 0; i < opts.length; i++) if (opts[i].emoji === item.emoji) ans = i;
+    return {
+      id: 'en:' + item.word,
+      sub: 'en',
+      prompt: '听一听，是哪一个？',
+      say: item.word + ', ' + item.word,
+      sayLang: 'en-US',
+      card: { type: 'word', word: item.word, zh: item.zh },
+      options: opts,
+      answer: ans,
+      tag: { kind: 'word', key: item.word },
+      praise: 'Yes! ' + item.word + '，' + item.zh + '。'
+    };
+  }
+
+  /* ---------- 数学 ---------- */
+  function makeMath() {
+    var kinds = ['count', 'add', 'compare', 'shape', 'pattern', 'seq'];
+    if (maxNumber > 5) kinds = kinds.concat(['sub', 'add', 'decompose', 'biggest', 'step2']);
+    var kind = pick(kinds);
+    if (DEBUG_KIND && ['count', 'add', 'sub', 'compare', 'shape', 'pattern', 'seq', 'decompose', 'biggest', 'step2'].indexOf(DEBUG_KIND) >= 0) kind = DEBUG_KIND;
+
+    if (kind === 'count') {
+      var n = randInt(2, Math.min(maxNumber, 6));
+      var em = pick(FRUIT);
+      var r1 = numberOptions(n, OPTIONS, 1, Math.max(maxNumber, n + 1));
+      return {
+        id: 'math:count:' + n + ':' + em,
+        sub: 'math',
+        prompt: '数一数，有几个？',
+        say: '数一数，有几个？',
+        card: { type: 'count', emoji: em, n: n },
+        options: r1.opts, answer: r1.answer, tag: { kind: 'none' },
+        praise: pick(PRAISE) + ' 一共有 ' + cnNum(n) + ' 个。'
+      };
+    }
+
+    if (kind === 'add') {
+      var total = randInt(2, maxNumber);
+      var a = randInt(1, total - 1), b = total - a;
+      var em2 = pick(FRUIT);
+      var r2 = numberOptions(total, OPTIONS, 1, Math.max(maxNumber, total + 1));
+      return {
+        id: 'math:add:' + a + '+' + b,
+        sub: 'math',
+        prompt: '加起来是几？',
+        say: cnNum(a) + ' 加 ' + cnNum(b) + '，是几？',
+        card: { type: 'add', emoji: em2, a: a, b: b },
+        options: r2.opts, answer: r2.answer, tag: { kind: 'none' },
+        praise: pick(PRAISE) + ' ' + cnNum(a) + ' 加 ' + cnNum(b) + ' 等于 ' + cnNum(total) + '。'
+      };
+    }
+
+    if (kind === 'sub') {
+      var t2 = randInt(3, Math.min(maxNumber, 9));
+      var eaten = randInt(1, t2 - 1), left = t2 - eaten;
+      var em3 = pick(FRUIT);
+      var r3 = numberOptions(left, OPTIONS, 1, Math.max(maxNumber, t2 + 1));
+      return {
+        id: 'math:sub:' + t2 + '-' + eaten,
+        sub: 'math',
+        prompt: '还剩几个？',
+        say: '一共有 ' + cnNum(t2) + ' 个，吃掉 ' + cnNum(eaten) + ' 个，还剩几个？',
+        card: { type: 'sub', emoji: em3, total: t2, eaten: eaten },
+        options: r3.opts, answer: r3.answer, tag: { kind: 'none' },
+        praise: pick(PRAISE) + ' 还剩 ' + cnNum(left) + ' 个。'
+      };
+    }
+
+    if (kind === 'compare') {
+      var la = randInt(1, Math.min(maxNumber, 9));
+      var lb = randInt(1, Math.min(maxNumber, 9));
+      if (la === lb && Math.random() < 0.6) lb = (lb % Math.min(maxNumber, 9)) + 1;
+      var e1 = pick(FRUIT), e2 = pick(FRUIT.filter(function (x) { return x !== e1; }));
+      var ansC = la > lb ? 0 : (lb > la ? 1 : 2);
+      return {
+        id: 'math:cmp:' + la + ':' + lb,
+        sub: 'math',
+        prompt: '哪一边更多？',
+        say: '哪一边更多？',
+        card: { type: 'groups', left: { emoji: e1, n: la }, right: { emoji: e2, n: lb } },
+        options: [{ type: 'text', text: '左边多' }, { type: 'text', text: '右边多' }, { type: 'text', text: '一样多' }],
+        answer: ansC, tag: { kind: 'none' },
+        praise: ansC === 2 ? '对，一样多！' : '对！' + (ansC === 0 ? '左边' : '右边') + '更多。'
+      };
+    }
+
+    if (kind === 'shape') {
+      var shapes = ['circle', 'square', 'triangle', 'star', 'heart'];
+      var target = pick(shapes);
+      var rest = sample(shapes.filter(function (s) { return s !== target; }), 2);
+      var opts4 = shuffle([{ type: 'shape', shape: target }, { type: 'shape', shape: rest[0] }, { type: 'shape', shape: rest[1] }]);
+      var ans4 = 0;
+      for (var k = 0; k < opts4.length; k++) if (opts4[k].shape === target) ans4 = k;
+      return {
+        id: 'math:shape:' + target + ':' + rest.join(''),
+        sub: 'math',
+        prompt: '哪个是' + SHAPE_ZH[target] + '？',
+        say: '哪个是' + SHAPE_ZH[target] + '？',
+        card: { type: 'none', hint: '👀' },
+        options: opts4, answer: ans4, tag: { kind: 'none' },
+        praise: pick(PRAISE) + ' 这是' + SHAPE_ZH[target] + '。'
+      };
+    }
+
+    if (kind === 'pattern') {
+      var pa = pick(FRUIT);
+      var pb = pick(FRUIT.filter(function (x) { return x !== pa; }));
+      var pc = pick(FRUIT.filter(function (x) { return x !== pa && x !== pb; }));
+      var opts5 = shuffle([{ type: 'emoji', emoji: pa }, { type: 'emoji', emoji: pb }, { type: 'emoji', emoji: pc }]);
+      var ans5 = 0;
+      for (var m = 0; m < opts5.length; m++) if (opts5[m].emoji === pa) ans5 = m;
+      return {
+        id: 'math:pattern:' + pa + pb,
+        sub: 'math',
+        prompt: '接下来是什么？',
+        say: '找规律，接下来是什么？',
+        card: { type: 'pattern', items: [pa, pb, pa, pb] },
+        options: opts5, answer: ans5, tag: { kind: 'none' },
+        praise: pick(PRAISE) + ' 规律是「' + pa + ' ' + pb + '」重复。'
+      };
+    }
+
+    if (kind === 'decompose') {
+      var tt = randInt(3, Math.min(maxNumber, 9));
+      var part = randInt(1, tt - 1);
+      var rest2 = tt - part;
+      var r5 = numberOptions(rest2, OPTIONS, 1, Math.max(maxNumber, tt + 1));
+      return {
+        id: 'math:dec:' + tt + '-' + part,
+        sub: 'math',
+        prompt: '还差几个？',
+        say: tt + ' 可以分成 ' + part + ' 和几？',
+        card: { type: 'decompose', total: tt, part: part },
+        options: r5.opts, answer: r5.answer, tag: { kind: 'none' },
+        praise: pick(PRAISE) + ' ' + tt + ' 可以分成 ' + part + ' 和 ' + rest2 + '。'
+      };
+    }
+
+    if (kind === 'biggest') {
+      var r4 = numberOptions(randInt(1, maxNumber), OPTIONS, 1, maxNumber);
+      var biggest = 0;
+      for (var q2 = 0; q2 < r4.opts.length; q2++) if (r4.opts[q2].n > r4.opts[biggest].n) biggest = q2;
+      var nums = r4.opts.map(function (o) { return o.n; });
+      return {
+        id: 'math:big:' + nums.join(','),
+        sub: 'math',
+        prompt: '哪个数字最大？',
+        say: '哪个数字最大？',
+        card: { type: 'none', hint: '🔍' },
+        options: r4.opts, answer: biggest, tag: { kind: 'none' },
+        praise: pick(PRAISE) + ' ' + cnNum(nums[biggest]) + ' 最大。'
+      };
+    }
+
+    if (kind === 'step2') {
+      var st = randInt(0, 2);
+      var seq = [2 + st * 2, 4 + st * 2, 6 + st * 2];
+      var nx = seq[2] + 2;
+      var r6 = numberOptions(nx, OPTIONS, 1, nx + 3);
+      return {
+        id: 'math:step2:' + st,
+        sub: 'math',
+        prompt: '接下来是几？',
+        say: '两个两个数，接下来是几？',
+        card: { type: 'seq', nums: seq },
+        options: r6.opts, answer: r6.answer, tag: { kind: 'none' },
+        praise: pick(PRAISE) + ' 接下来是 ' + cnNum(nx) + '。'
+      };
+    }
+
+    var start = randInt(1, Math.max(1, maxNumber - 3));
+    var ansN = start + 3;
+    var r7 = numberOptions(ansN, OPTIONS, Math.max(1, start - 1), ansN + 2);
+    return {
+      id: 'math:seq:' + start,
+      sub: 'math',
+      prompt: '接下来是几？',
+      say: cnNum(start) + '，' + cnNum(start + 1) + '，' + cnNum(start + 2) + '，接下来是几？',
+      card: { type: 'seq', nums: [start, start + 1, start + 2] },
+      options: r7.opts, answer: r7.answer, tag: { kind: 'none' },
+      praise: pick(PRAISE) + ' 接下来是 ' + cnNum(ansN) + '。'
+    };
+  }
+
+  /* ---------- 唐诗：听整首诗，找出诗里说的东西 ---------- */
+  function makePoem() {
+    var pool = POEMS.filter(function (p) { return Object.keys(p.pics).length > 0; });
+    var p = pick(pool);
+    var idxs = Object.keys(p.pics).map(Number);
+    var li = pick(idxs);
+    var correct = p.pics[li];
+    var others = [];
+    while (others.length < OPTIONS - 1) {
+      var cand = pick(['🌙', '☀️', '🌸', '🐦', '❄️', '🐟', '🍚', '🏯', '🦢', '👶', '🌱', '💧', '🦋', '⛰️', '🪁']);
+      if (cand !== correct && others.indexOf(cand) < 0) others.push(cand);
+    }
+    var opts = shuffle([{ type: 'emoji', emoji: correct }].concat(
+      others.map(function (o) { return { type: 'emoji', emoji: o }; })
+    ));
+    var ans = 0;
+    for (var i = 0; i < opts.length; i++) if (opts[i].emoji === correct) ans = i;
+    return {
+      id: 'poem:' + p.title + ':' + li,
+      sub: 'poem',
+      prompt: '听诗，选出诗里的东西',
+      say: p.title + '，' + p.author + '。' + p.lines.join('，') + '。这首诗里说到了什么？',
+      card: { type: 'poem', title: p.title, author: p.author, line: p.lines[li] },
+      options: opts,
+      answer: ans,
+      tag: { kind: 'none' },
+      praise: '对！「' + p.lines[li] + '」。'
+    };
+  }
+
+  /* ---------- 儿歌：听懂是哪一首 / 补最后一个词 ---------- */
+  function makeRhyme() {
+    var r = pick(RHYMES);
+    if (r.blank && Math.random() < 0.5) {
+      var b = r.blank;
+      var opts2 = shuffle(b.opts.map(function (o, i) {
+        return { type: 'emoji', emoji: o[0], label: o[1], _i: i };
+      }));
+      var ans2 = 0;
+      for (var i = 0; i < opts2.length; i++) if (opts2[i]._i === b.ans) ans2 = i;
+      return {
+        id: 'rhyme:' + r.title + ':blank',
+        sub: 'rhyme',
+        prompt: '接下去是什么？',
+        say: b.text.replace('__', '……') + '，接下去是什么？',
+        card: { type: 'rhyme', title: r.title, line: b.text, blanked: true },
+        options: opts2,
+        answer: ans2,
+        tag: { kind: 'none' },
+        praise: '对！' + r.lines.join('，') + '。'
+      };
+    }
+    var others = [];
+    while (others.length < OPTIONS - 1) {
+      var cand = pick(RHYMES.filter(function (x) { return x.subject[1] !== r.subject[1]; }));
+      if (others.every(function (o) { return o[1] !== cand.subject[1]; })) others.push(cand.subject);
+    }
+    var opts3 = shuffle([{ type: 'emoji', emoji: r.subject[0], label: r.subject[1] }].concat(
+      others.map(function (o) { return { type: 'emoji', emoji: o[0], label: o[1] }; })
+    ));
+    var ans3 = 0;
+    for (var j = 0; j < opts3.length; j++) if (opts3[j].label === r.subject[1]) ans3 = j;
+    return {
+      id: 'rhyme:' + r.title + ':sub',
+      sub: 'rhyme',
+      prompt: '这首儿歌说的是谁？',
+      say: r.lines.join('，') + '。这首儿歌说的是谁？',
+      card: { type: 'rhyme', title: r.title, line: r.lines.join('，') },
+      options: opts3,
+      answer: ans3,
+      tag: { kind: 'none' },
+      praise: '对！这是《' + r.title + '》。'
+    };
+  }
+
+  /* ---------- 认颜色 ---------- */
+  function swatchOpts(correct, n) {
+    var others = sample(PAINTS.filter(function (p) { return p.zh !== correct.zh; }), n - 1);
+    var opts = shuffle([{ type: 'swatch', hex: correct.hex, label: correct.zh }].concat(
+      others.map(function (o) { return { type: 'swatch', hex: o.hex, label: o.zh }; })
+    ));
+    var ans = 0;
+    for (var i = 0; i < opts.length; i++) if (opts[i].label === correct.zh) ans = i;
+    return { opts: opts, ans: ans };
+  }
+
+  function makeColor() {
+    if (Math.random() < 0.42) {
+      var it = pick(COLOR_ITEMS);
+      var want = PAINTS.filter(function (p) { return p.zh === it[2]; })[0];
+      if (want) {
+        var r2 = swatchOpts(want, OPTIONS);
+        return {
+          id: 'color:item:' + it[1],
+          sub: 'color',
+          prompt: it[1] + '是什么颜色？',
+          say: it[1] + '，是什么颜色？',
+          card: { type: 'emoji', emoji: it[0] },
+          options: r2.opts,
+          answer: r2.ans,
+          tag: { kind: 'none' },
+          praise: '对，' + it[1] + '是' + it[2] + '的。'
+        };
+      }
+    }
+    var target = pick(PAINTS);
+    var r = swatchOpts(target, OPTIONS);
+    return {
+      id: 'color:' + target.zh,
+      sub: 'color',
+      prompt: '哪个是' + target.zh + '？',
+      say: target.zh + '，哪个是' + target.zh + '？',
+      card: { type: 'listen' },
+      options: r.opts,
+      answer: r.ans,
+      tag: { kind: 'none' },
+      praise: pick(PRAISE) + ' 这是' + target.zh + '。'
+    };
+  }
+
+  /* ---------- 认时间 ---------- */
+  function makeTime() {
+    if (Math.random() < 0.45) {
+      var d = pick(DAY_PARTS);
+      var optsD = shuffle([
+        { type: 'text', text: '早上', emoji: '🌤️' },
+        { type: 'text', text: '中午', emoji: '☀️' },
+        { type: 'text', text: '晚上', emoji: '🌙' }
+      ]);
+      var ansD = 0;
+      for (var i = 0; i < optsD.length; i++) if (optsD[i].text === d.a) ansD = i;
+      return {
+        id: 'time:day:' + d.q,
+        sub: 'time',
+        prompt: d.q,
+        say: d.q,
+        card: { type: 'none', hint: d.emoji },
+        options: optsD,
+        answer: ansD,
+        tag: { kind: 'none' },
+        praise: '对，是' + d.a + '。'
+      };
+    }
+    var hour = randInt(1, 12);
+    var set = [hour];
+    while (set.length < OPTIONS) {
+      var c = randInt(1, 12);
+      if (set.indexOf(c) < 0) set.push(c);
+    }
+    var opts2 = shuffle(set.map(function (h) { return { type: 'number', n: h }; }));
+    var ans2 = 0;
+    for (var j = 0; j < opts2.length; j++) if (opts2[j].n === hour) ans2 = j;
+    return {
+      id: 'time:clock:' + hour,
+      sub: 'time',
+      prompt: '现在几点钟？',
+      say: '看看钟，现在几点钟？',
+      card: { type: 'clock', hour: hour },
+      options: opts2,
+      answer: ans2,
+      tag: { kind: 'none' },
+      praise: pick(PRAISE) + ' 现在是 ' + hour + ' 点。'
+    };
+  }
+
+  function makeQuestion(sub) {
+    if (sub === 'lit') return makeLit();
+    if (sub === 'pinyin') return makePinyin();
+    if (sub === 'math') return makeMath();
+    if (sub === 'en') return makeEn();
+    if (sub === 'poem') return makePoem();
+    if (sub === 'rhyme') return makeRhyme();
+    if (sub === 'color') return makeColor();
+    if (sub === 'time') return makeTime();
+    return makeLit();
+  }
+
+  var ALL_SUBJECTS = ['lit', 'pinyin', 'math', 'en', 'poem', 'rhyme', 'color', 'time'];
+
+  function buildRound(mode) {
+    var subs = [];
+    if (mode === 'mix') {
+      var bag = [];
+      while (bag.length < NQ) bag = bag.concat(shuffle(ALL_SUBJECTS));
+      subs = shuffle(bag.slice(0, NQ));
+    } else {
+      for (var i = 0; i < NQ; i++) subs.push(mode);
+    }
+    var out = [], used = {};
+    for (var j = 0; j < subs.length; j++) {
+      var q = null, guard = 0;
+      do { q = makeQuestion(subs[j]); guard++; } while (q && used[q.id] && guard < 30);
+      if (q && !used[q.id]) { used[q.id] = 1; out.push(q); }
+    }
+    return out;
+  }
+
+  var STORAGE = 'starSchool.v2';
+  function emptySave() { return { total: 0, best: 0, learnedChars: {}, learnedWords: {}, wrong: [], days: {} }; }
+  function loadSave() {
+    var s = emptySave();
+    try {
+      var raw = window.localStorage.getItem(STORAGE);
+      if (raw) {
+        var o = JSON.parse(raw);
+        s.total = Math.max(0, Math.round(num(o.total, 0)));
+        s.best = Math.max(0, Math.round(num(o.best, 0)));
+        if (o.learnedChars && typeof o.learnedChars === 'object') s.learnedChars = o.learnedChars;
+        if (o.learnedWords && typeof o.learnedWords === 'object') s.learnedWords = o.learnedWords;
+        if (Array.isArray(o.wrong)) s.wrong = o.wrong.filter(function (w) { return w && w.q; }).slice(0, 40);
+        if (o.days && typeof o.days === 'object') s.days = o.days;
+      }
+    } catch (e) { /* 隐私模式或损坏就当新档 */ }
+    return s;
+  }
+  function writeSave() {
+    try { window.localStorage.setItem(STORAGE, JSON.stringify(save)); } catch (e) {}
+  }
+  function countKeys(o) { var n = 0; for (var k in o) if (o.hasOwnProperty(k)) n++; return n; }
+  function addWrong(q) {
+    for (var i = 0; i < save.wrong.length; i++) {
+      if (save.wrong[i].id === q.id) { save.wrong[i].n = (save.wrong[i].n || 1) + 1; return; }
+    }
+    save.wrong.unshift({ id: q.id, q: q, n: 1, t: Date.now() });
+    if (save.wrong.length > 40) save.wrong.length = 40;
+  }
+  function pad2(n) { return n < 10 ? '0' + n : '' + n; }
+  function dayKey(d) {
+    d = d || new Date();
+    return d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate());
+  }
+  function dayEntry(key) {
+    if (!save.days[key]) save.days[key] = { l: [], w: [], a: 0, c: 0, s: {} };
+    var e = save.days[key];
+    if (!e.l) e.l = [];
+    if (!e.w) e.w = [];
+    if (!e.s) e.s = {};
+    return e;
+  }
+  /* 每次作答记一笔：答了几题、一次答对几题、今天新学会哪些字/词、各科分布 */
+  function recordAnswer(q, firstTry) {
+    var e = dayEntry(dayKey());
+    e.a++;
+    if (firstTry) e.c++;
+    if (q.tag && q.tag.kind === 'char' && !save.learnedChars[q.tag.key] && e.l.indexOf(q.tag.key) < 0) e.l.push(q.tag.key);
+    if (q.tag && q.tag.kind === 'word' && !save.learnedWords[q.tag.key] && e.w.indexOf(q.tag.key) < 0) e.w.push(q.tag.key);
+    e.s[q.sub] = (e.s[q.sub] || 0) + 1;
+    var keys = Object.keys(save.days).sort();
+    while (keys.length > 60) { delete save.days[keys.shift()]; }
+  }
+  function daysBack(n, offset) {
+    var out = [];
+    for (var i = 0; i < n; i++) {
+      var d = new Date();
+      d.setDate(d.getDate() - (offset || 0) - i);
+      out.push(dayKey(d));
+    }
+    return out;
+  }
+  function sumRange(keys) {
+    var r = { a: 0, c: 0, l: [], w: [], s: {}, days: 0 };
+    for (var i = 0; i < keys.length; i++) {
+      var e = save.days[keys[i]];
+      if (!e) continue;
+      r.a += e.a || 0;
+      r.c += e.c || 0;
+      if (e.a) r.days++;
+      (e.l || []).forEach(function (c) { if (r.l.indexOf(c) < 0) r.l.push(c); });
+      (e.w || []).forEach(function (w) { if (r.w.indexOf(w) < 0) r.w.push(w); });
+      for (var k in (e.s || {})) if (e.s.hasOwnProperty(k)) r.s[k] = (r.s[k] || 0) + e.s[k];
+    }
+    return r;
+  }
+
+  function clearWrong(id) {
+    for (var i = 0; i < save.wrong.length; i++) {
+      if (save.wrong[i].id === id) { save.wrong.splice(i, 1); return; }
+    }
+  }
+  var save = loadSave();
+
+  var state = {
+    toast: null,
+    wordLevel: 2,
+    phase: 'title',      // title | playing | won | parent | guide
+    mode: 'mix',
+    questions: [],
+    qi: 0,
+    stars: 0,
+    wrongCount: 0,
+    firstTry: 0,
+    showGuide: false
+  };
+  var cur = null;          // { q, wrong: {}, tries, done, okT, shownT }
+  var pending = null;      // { t, fn }
+  var particles = [];
+  var t = 0, fps = 0, fpsFrames = 0, fpsAccum = 0, lastT = 0;
+  var starPop = 0;
+  var shake = { i: -1, t: 0 };
+
+  /* ============================================================
+   * 6. 画布与布局
+   * ============================================================ */
+  var canvas = document.getElementById('game');
+  if (!canvas) {
+    canvas = document.createElement('canvas');
+    canvas.id = 'game';
+    canvas.tabIndex = 0;
+    canvas.style.display = 'block';
+    canvas.style.outline = 'none';
+    canvas.style.touchAction = 'none';
+    canvas.style.webkitTapHighlightColor = 'transparent';
+    (document.body || document.documentElement).appendChild(canvas);
+  }
+  canvas.style.background = '#FFF6E4';
+  var ctx = canvas.getContext('2d');
+  var dpr = 1;
+  var cssW = 390, cssH = 844;
+  var vx = 0, vy = 0, vw = 390, vh = 844, k = 1;
+
+  var ui = {
+    pad: 16, topH: 88, back: null, foxHud: null, chip: null, pill: null,
+    card: null, opts: [], speaker: null, titleBtns: [], wonBtns: [], parentBtns: [], guideClose: null
+  };
+
+  function computeView() {
+    var w = Math.min(cssW, 520);
+    var h = cssH;
+    if (w / h > 0.62) w = h * 0.62;       // 太宽（横屏 / 桌面）：收成竖屏，但别收成细条
+    if (w / h < 0.34) w = h * 0.34;       // 太窄：给个下限
+    h = Math.min(h, w / 0.40);            // 太矮：按高度配宽
+    vw = w; vh = h;
+    vx = (cssW - vw) / 2;
+    vy = (cssH - vh) / 2;
+    k = vw / 390;
+  }
+
+  function layout() {
+    var pad = Math.round(clamp(vw * 0.045, 14, 22));
+    var topH = Math.round(clamp(vh * 0.105, 68, 96));
+    ui.pad = pad;
+    ui.topH = topH;
+    ui.back = { x: pad, y: Math.round((topH - 44) / 2), w: 44, h: 44 };
+    ui.foxHud = { x: pad + 52, y: Math.round((topH - 52) / 2), w: 52, h: 52 };
+    ui.chip = { x: pad + 108, y: Math.round((topH - 30) / 2), w: 86, h: 30 };
+    ui.pill = { x: vw - pad - 76, y: Math.round((topH - 34) / 2), w: 76, h: 34 };
+    ui.progY = topH + 2;
+    ui.progH = 20;
+
+    var cardBase = clamp(vh * 0.315, 200, 300);
+    if (cur && (cur.q.card.type === 'none' || cur.q.card.type === 'listen')) cardBase = clamp(vh * 0.19, 130, 180);
+    if (cur && cur.q.card.type === 'poem') cardBase = clamp(vh * 0.24, 160, 210);
+    if (cur && cur.q.card.type === 'groups') cardBase = clamp(vh * 0.315, 210, 300);
+    var cardY = topH + 34;
+    var cardX = pad, cardW = vw - pad * 2;
+
+    var optBottom = vh - 16;
+    var gap = Math.round(clamp(vh * 0.017, 10, 16));
+    var n = cur ? cur.q.options.length : 3;
+    var optTop = cardY + cardBase + 16;
+    var optH = (optBottom - optTop - gap * (n - 1)) / n;
+
+    if (optH < 80) {
+      var deficit = (80 - optH) * n;
+      cardBase = Math.max(120, cardBase - deficit);
+      optTop = cardY + cardBase + 14;
+      optH = (optBottom - optTop - gap * (n - 1)) / n;
+    }
+    optH = Math.min(optH, 132);
+
+    ui.card = { x: cardX, y: cardY, w: cardW, h: cardBase };
+    var blockH = n * optH + (n - 1) * gap;
+    var slack = (optBottom - optTop) - blockH;
+    if (slack > 0) optTop += Math.min(slack * 0.45, 22);
+
+    ui.opts = [];
+    for (var i = 0; i < n; i++) {
+      ui.opts.push({ x: pad, y: Math.round(optTop + i * (optH + gap)), w: vw - pad * 2, h: Math.round(optH) });
+    }
+    ui.speaker = null;
+    if (cur && cur.q.card.type === 'word') {
+      ui.speaker = { x: vw / 2 - 58, y: ui.card.y + ui.card.h - 52, w: 116, h: 38 };
+    } else if (cur && (cur.q.card.type === 'listen' || cur.q.card.type === 'poem')) {
+      ui.speaker = { x: ui.card.x, y: ui.card.y, w: ui.card.w, h: ui.card.h };
+    }
+
+    // 首页科目网格 3×3
+    var keys = ['lit', 'pinyin', 'math', 'en', 'poem', 'rhyme', 'color', 'time', 'mix'];
+    var gGap = Math.round(clamp(vw * 0.026, 8, 12));
+    var tileW = (vw - pad * 2 - gGap * 2) / 3;
+    var tileH = Math.round(clamp(vh * 0.125, 64, 108));
+    var gTop = Math.round(vh * 0.185);
+    ui.titleBtns = [];
+    for (var b = 0; b < keys.length; b++) {
+      ui.titleBtns.push({
+        id: keys[b],
+        x: pad + (b % 3) * (tileW + gGap),
+        y: gTop + Math.floor(b / 3) * (tileH + gGap),
+        w: tileW,
+        h: tileH
+      });
+    }
+    var gridBottom = gTop + 3 * tileH + 2 * gGap;
+    ui.reviewBtn = save.wrong.length
+      ? { x: pad, y: gridBottom + 12, w: vw - pad * 2, h: 44 }
+      : null;
+    ui.foxTitle = {
+      x: vw / 2 - 76 * k, y: gridBottom + (ui.reviewBtn ? 64 : 16),
+      w: 152 * k, h: Math.max(0, vh - gridBottom - (ui.reviewBtn ? 88 : 40))
+    };
+
+    // 结算按钮（与 drawWon 的面板共用同一套比例）
+    var wpt = topH + 36, wph = vh - wpt - 26;
+    var wbW = Math.min(vw - pad * 2 - 60, 300);
+    var wbH = Math.round(clamp(vh * 0.072, 52, 64));
+    var wy0 = Math.round(wpt + wph * 0.735);
+    ui.wonBtns = [
+      { id: 'again', x: (vw - wbW) / 2, y: wy0, w: wbW, h: wbH },
+      { id: 'menu', x: (vw - wbW) / 2, y: wy0 + wbH + 14, w: wbW, h: wbH }
+    ];
+    // 家长面板（高度由内容决定）
+    var panelTop = Math.round(clamp(vh * 0.09, 40, 78));
+    var px = pad + 16, pw = vw - pad * 2 - 32;
+    var ph = Math.round(clamp(vh * 0.055, 34, 46));
+    var by0 = panelTop + 248;
+    ui.parentBtns = [
+      { id: 'speech', x: px, y: by0, w: pw / 2 - 6, h: ph },
+      { id: 'sound', x: px + pw / 2 + 6, y: by0, w: pw / 2 - 6, h: ph },
+      { id: 'count', x: px, y: by0 + ph + 10, w: pw / 2 - 6, h: ph },
+      { id: 'level', x: px + pw / 2 + 6, y: by0 + ph + 10, w: pw / 2 - 6, h: ph },
+      { id: 'word', x: px, y: by0 + (ph + 10) * 2, w: pw / 2 - 6, h: ph },
+      { id: 'report', x: px + pw / 2 + 6, y: by0 + (ph + 10) * 2, w: pw / 2 - 6, h: ph },
+      { id: 'review', x: px, y: by0 + (ph + 10) * 3 + 4, w: pw, h: ph },
+      { id: 'close', x: vw / 2 - 72, y: by0 + (ph + 10) * 3 + ph + 20, w: 144, h: 46 }
+    ];
+    ui.panelH = ui.parentBtns[7].y + 46 + 18 - panelTop;
+
+    // 周报页按钮
+    var rbW = (vw - pad * 2 - 24) / 2;
+    ui.reportBtns = [
+      { id: 'save', x: pad + 6, y: vh - 108, w: rbW, h: 46 },
+      { id: 'copy', x: pad + 18 + rbW, y: vh - 108, w: rbW, h: 46 },
+      { id: 'close', x: vw / 2 - 60, y: vh - 52, w: 120, h: 40 }
+    ];
+  }
+
+  function resize() {
+    cssW = window.innerWidth || 390;
+    cssH = window.innerHeight || 844;
+    dpr = Math.min(2, window.devicePixelRatio || 1);
+    canvas.width = Math.round(cssW * dpr);
+    canvas.height = Math.round(cssH * dpr);
+    canvas.style.width = cssW + 'px';
+    canvas.style.height = cssH + 'px';
+    computeView();
+    layout();
+  }
+
+  /* ============================================================
+   * 7. 绘制基础
+   * ============================================================ */
+  function rr(g, x, y, w, h, r) {
+    r = Math.min(r, w / 2, h / 2);
+    g.beginPath();
+    g.moveTo(x + r, y);
+    g.arcTo(x + w, y, x + w, y + h, r);
+    g.arcTo(x + w, y + h, x, y + h, r);
+    g.arcTo(x, y + h, x, y, r);
+    g.arcTo(x, y, x + w, y, r);
+    g.closePath();
+  }
+  function txt(g, s, x, y, size, color, weight, family) {
+    g.font = (weight || 700) + ' ' + Math.round(size) + 'px ' + (family || FAMILY);
+    g.fillStyle = color || C.ink;
+    g.textAlign = 'center';
+    g.textBaseline = 'middle';
+    g.fillText(s, x, y);
+  }
+  function txtLeft(g, s, x, y, size, color, weight, family) {
+    g.font = (weight || 700) + ' ' + Math.round(size) + 'px ' + (family || FAMILY);
+    g.fillStyle = color || C.ink;
+    g.textAlign = 'left';
+    g.textBaseline = 'middle';
+    g.fillText(s, x, y);
+  }
+  function emoji(g, ch, x, y, size) {
+    g.font = Math.round(size) + 'px ' + FAMILY_EMOJI;
+    g.textAlign = 'center';
+    g.textBaseline = 'middle';
+    g.fillText(ch, x, y);
+  }
+  function card(g, x, y, w, h, r, fill, line, shadowA) {
+    g.save();
+    if (shadowA !== 0) {
+      g.shadowColor = 'rgba(124,82,40,' + (shadowA == null ? 0.16 : shadowA) + ')';
+      g.shadowBlur = 14 * k;
+      g.shadowOffsetY = 5 * k;
+    }
+    g.fillStyle = fill;
+    rr(g, x, y, w, h, r);
+    g.fill();
+    g.restore();
+    if (line) {
+      g.strokeStyle = line;
+      g.lineWidth = Math.max(1.5, 2 * k);
+      rr(g, x, y, w, h, r);
+      g.stroke();
+    }
+  }
+  function starPath(g, cx, cy, r) {
+    g.beginPath();
+    for (var i = 0; i < 10; i++) {
+      var ang = -Math.PI / 2 + i * Math.PI / 5;
+      var rad = i % 2 === 0 ? r : r * 0.46;
+      var x = cx + Math.cos(ang) * rad, y = cy + Math.sin(ang) * rad;
+      if (i === 0) g.moveTo(x, y); else g.lineTo(x, y);
+    }
+    g.closePath();
+  }
+  function drawClock(g, cx, cy, rr2, hour) {
+    g.save();
+    g.fillStyle = '#FFFFFF';
+    g.beginPath(); g.arc(cx, cy, rr2, 0, Math.PI * 2); g.fill();
+    g.strokeStyle = '#E2D3C0';
+    g.lineWidth = Math.max(2, rr2 * 0.05);
+    g.beginPath(); g.arc(cx, cy, rr2, 0, Math.PI * 2); g.stroke();
+    // 刻度
+    for (var i = 0; i < 12; i++) {
+      var a = (i / 12) * Math.PI * 2 - Math.PI / 2;
+      var r1 = rr2 * (i % 3 === 0 ? 0.80 : 0.86);
+      g.strokeStyle = i % 3 === 0 ? '#C4B2A0' : '#E6DACB';
+      g.lineWidth = i % 3 === 0 ? Math.max(2, rr2 * 0.045) : Math.max(1.5, rr2 * 0.03);
+      g.beginPath();
+      g.moveTo(cx + Math.cos(a) * r1, cy + Math.sin(a) * r1);
+      g.lineTo(cx + Math.cos(a) * rr2 * 0.93, cy + Math.sin(a) * rr2 * 0.93);
+      g.stroke();
+    }
+    // 数字 12 3 6 9
+    var nums = [[12, 0], [3, 3], [6, 6], [9, 9]];
+    for (var n = 0; n < 4; n++) {
+      var ang = (nums[n][1] / 12) * Math.PI * 2 - Math.PI / 2;
+      txt(g, String(nums[n][0]), cx + Math.cos(ang) * rr2 * 0.70, cy + Math.sin(ang) * rr2 * 0.70, rr2 * 0.18, C.inkSoft, 800);
+    }
+    // 分针指 12
+    g.strokeStyle = '#4A3626';
+    g.lineCap = 'round';
+    g.lineWidth = Math.max(2.4, rr2 * 0.06);
+    g.beginPath();
+    g.moveTo(cx, cy);
+    g.lineTo(cx, cy - rr2 * 0.56);
+    g.stroke();
+    // 时针
+    var ha = ((hour % 12) / 12) * Math.PI * 2 - Math.PI / 2;
+    g.strokeStyle = '#E5484D';
+    g.lineWidth = Math.max(3.4, rr2 * 0.10);
+    g.beginPath();
+    g.moveTo(cx, cy);
+    g.lineTo(cx + Math.cos(ha) * rr2 * 0.38, cy + Math.sin(ha) * rr2 * 0.38);
+    g.stroke();
+    g.fillStyle = '#4A3626';
+    g.beginPath(); g.arc(cx, cy, rr2 * 0.055, 0, Math.PI * 2); g.fill();
+    g.restore();
+  }
+
+  function drawStar(g, cx, cy, r, fill, stroke) {
+    starPath(g, cx, cy, r);
+    if (fill) { g.fillStyle = fill; g.fill(); }
+    if (stroke) { g.strokeStyle = stroke; g.lineWidth = Math.max(1.5, r * 0.14); g.stroke(); }
+  }
+  function drawShape(g, shape, cx, cy, r, color) {
+    g.save();
+    g.fillStyle = color;
+    g.strokeStyle = 'rgba(74,54,38,0.16)';
+    g.lineWidth = Math.max(1.5, r * 0.07);
+    if (shape === 'circle') {
+      g.beginPath(); g.arc(cx, cy, r * 0.92, 0, Math.PI * 2); g.fill(); g.stroke();
+    } else if (shape === 'square') {
+      var s = r * 1.7;
+      rr(g, cx - s / 2, cy - s / 2, s, s, r * 0.16); g.fill(); g.stroke();
+    } else if (shape === 'triangle') {
+      g.beginPath();
+      g.moveTo(cx, cy - r);
+      g.lineTo(cx + r * 0.95, cy + r * 0.78);
+      g.lineTo(cx - r * 0.95, cy + r * 0.78);
+      g.closePath(); g.fill(); g.stroke();
+    } else if (shape === 'star') {
+      drawStar(g, cx, cy, r, color, 'rgba(74,54,38,0.16)');
+    } else {
+      g.beginPath();
+      var top = cy - r * 0.86, bot = cy + r * 0.9;
+      g.moveTo(cx, bot);
+      g.bezierCurveTo(cx - r * 1.35, cy + r * 0.1, cx - r * 0.62, top - r * 0.55, cx, cy - r * 0.28);
+      g.bezierCurveTo(cx + r * 0.62, top - r * 0.55, cx + r * 1.35, cy + r * 0.1, cx, bot);
+      g.closePath(); g.fill(); g.stroke();
+    }
+    g.restore();
+  }
+
+  /* ---------- 小狐狸 ---------- */
+  function drawFoxHead(g, cx, cy, w, mood) {
+    var u = w / 100;
+    g.save();
+    g.translate(cx, cy);
+
+    // 耳朵
+    g.fillStyle = '#F0914F';
+    g.beginPath();
+    g.moveTo(-40 * u, -14 * u);
+    g.lineTo(-38 * u, -58 * u);
+    g.lineTo(-6 * u, -30 * u);
+    g.closePath(); g.fill();
+    g.beginPath();
+    g.moveTo(40 * u, -14 * u);
+    g.lineTo(38 * u, -58 * u);
+    g.lineTo(6 * u, -30 * u);
+    g.closePath(); g.fill();
+    // 耳内
+    g.fillStyle = '#FFD9C8';
+    g.beginPath();
+    g.moveTo(-32 * u, -20 * u);
+    g.lineTo(-31 * u, -46 * u);
+    g.lineTo(-14 * u, -28 * u);
+    g.closePath(); g.fill();
+    g.beginPath();
+    g.moveTo(32 * u, -20 * u);
+    g.lineTo(31 * u, -46 * u);
+    g.lineTo(14 * u, -28 * u);
+    g.closePath(); g.fill();
+
+    // 头
+    g.fillStyle = '#F2914F';
+    g.beginPath();
+    g.arc(0, 8 * u, 40 * u, 0, Math.PI * 2);
+    g.fill();
+
+    // 白脸颊
+    g.fillStyle = '#FFF8F0';
+    g.beginPath();
+    g.ellipse(0, 22 * u, 29 * u, 22 * u, 0, 0, Math.PI * 2);
+    g.fill();
+    g.beginPath();
+    g.ellipse(-27 * u, 12 * u, 11 * u, 15 * u, -0.25, 0, Math.PI * 2);
+    g.fill();
+    g.beginPath();
+    g.ellipse(27 * u, 12 * u, 11 * u, 15 * u, 0.25, 0, Math.PI * 2);
+    g.fill();
+
+    // 眼睛
+    g.fillStyle = '#3E2C1E';
+    if (mood === 'happy') {
+      g.strokeStyle = '#3E2C1E';
+      g.lineWidth = 4.2 * u;
+      g.lineCap = 'round';
+      g.beginPath(); g.arc(-15 * u, -2 * u, 8 * u, Math.PI * 1.12, Math.PI * 1.88); g.stroke();
+      g.beginPath(); g.arc(15 * u, -2 * u, 8 * u, Math.PI * 1.12, Math.PI * 1.88); g.stroke();
+    } else {
+      g.beginPath(); g.ellipse(-15 * u, -2 * u, 4.6 * u, 5.6 * u, 0, 0, Math.PI * 2); g.fill();
+      g.beginPath(); g.ellipse(15 * u, -2 * u, 4.6 * u, 5.6 * u, 0, 0, Math.PI * 2); g.fill();
+      g.fillStyle = 'rgba(255,255,255,0.9)';
+      g.beginPath(); g.arc(-13 * u, -4.5 * u, 1.7 * u, 0, Math.PI * 2); g.fill();
+      g.beginPath(); g.arc(17 * u, -4.5 * u, 1.7 * u, 0, Math.PI * 2); g.fill();
+    }
+
+    // 腮红
+    g.fillStyle = 'rgba(247,150,160,0.42)';
+    g.beginPath(); g.arc(-30 * u, 14 * u, 7 * u, 0, Math.PI * 2); g.fill();
+    g.beginPath(); g.arc(30 * u, 14 * u, 7 * u, 0, Math.PI * 2); g.fill();
+
+    // 鼻子 + 嘴
+    g.fillStyle = '#3E2C1E';
+    g.beginPath();
+    g.moveTo(-6 * u, 12 * u);
+    g.lineTo(6 * u, 12 * u);
+    g.lineTo(0, 20 * u);
+    g.closePath(); g.fill();
+    g.strokeStyle = '#3E2C1E';
+    g.lineWidth = 2.6 * u;
+    g.lineCap = 'round';
+    g.beginPath();
+    if (mood === 'happy') {
+      g.moveTo(-8 * u, 24 * u);
+      g.quadraticCurveTo(0, 33 * u, 8 * u, 24 * u);
+    } else {
+      g.moveTo(-7 * u, 26 * u);
+      g.quadraticCurveTo(0, 30 * u, 7 * u, 26 * u);
+    }
+    g.stroke();
+
+    g.restore();
+  }
+
+  // baseY: 身体底部；h: 整体高度
+  function drawFox(g, cx, baseY, h, mood) {
+    var u = h / 100;
+    var headW = h * 0.66;
+    var headCy = baseY - h * 0.70;
+    g.save();
+    // 尾巴
+    g.fillStyle = '#E97F3F';
+    g.beginPath();
+    g.moveTo(cx + 12 * u, baseY - 20 * u);
+    g.bezierCurveTo(cx + 44 * u, baseY - 34 * u, cx + 50 * u, baseY - 4 * u, cx + 26 * u, baseY + 2 * u);
+    g.bezierCurveTo(cx + 34 * u, baseY - 12 * u, cx + 24 * u, baseY - 22 * u, cx + 12 * u, baseY - 22 * u);
+    g.closePath(); g.fill();
+    g.fillStyle = '#FFF8F0';
+    g.beginPath();
+    g.ellipse(cx + 34 * u, baseY - 6 * u, 8 * u, 7 * u, 0.5, 0, Math.PI * 2);
+    g.fill();
+
+    // 身体
+    g.fillStyle = '#F2914F';
+    g.beginPath();
+    g.ellipse(cx, baseY - 20 * u, 27 * u, 24 * u, 0, 0, Math.PI * 2);
+    g.fill();
+    // 肚皮
+    g.fillStyle = '#FFF8F0';
+    g.beginPath();
+    g.ellipse(cx, baseY - 15 * u, 15 * u, 16 * u, 0, 0, Math.PI * 2);
+    g.fill();
+    // 前爪
+    g.fillStyle = '#FFF8F0';
+    g.beginPath(); g.ellipse(cx - 13 * u, baseY - 3 * u, 8 * u, 5 * u, 0, 0, Math.PI * 2); g.fill();
+    g.beginPath(); g.ellipse(cx + 13 * u, baseY - 3 * u, 8 * u, 5 * u, 0, 0, Math.PI * 2); g.fill();
+
+    drawFoxHead(g, cx, headCy, headW, mood);
+    g.restore();
+  }
+
+  /* ============================================================
+   * 8. 背景
+   * ============================================================ */
+  var bgImg = null;
+  var bgCustom = !!(GAME.slots && GAME.slots.background && GAME.slots.background.custom);
+
+  function drawSky(g) {
+    var grad = g.createLinearGradient(0, 0, 0, cssH);
+    grad.addColorStop(0, '#CFEBFB');
+    grad.addColorStop(0.42, '#EAF6FF');
+    grad.addColorStop(0.66, '#FFF3DE');
+    grad.addColorStop(1, '#FFE6C4');
+    g.fillStyle = grad;
+    g.fillRect(0, 0, cssW, cssH);
+
+    if (bgImg && bgCustom) {
+      var iw = bgImg.naturalWidth || 768, ih = bgImg.naturalHeight || 1366;
+      var sc = Math.max(cssW / iw, cssH / ih);
+      g.drawImage(bgImg, (cssW - iw * sc) / 2, (cssH - ih * sc) / 2, iw * sc, ih * sc);
+      g.fillStyle = 'rgba(255,250,240,0.35)';
+      g.fillRect(0, 0, cssW, cssH);
+      return;
+    }
+
+    // 太阳
+    var sx = cssW * 0.885, sy = cssH * 0.195, sr = Math.min(cssW, cssH) * 0.040;
+    g.save();
+    g.globalAlpha = 0.55;
+    g.fillStyle = '#FFE08A';
+    g.beginPath(); g.arc(sx, sy, sr * 2.1, 0, Math.PI * 2); g.fill();
+    g.globalAlpha = 1;
+    g.fillStyle = '#FFD25E';
+    g.beginPath(); g.arc(sx, sy, sr, 0, Math.PI * 2); g.fill();
+    g.restore();
+
+    // 云
+    cloud(g, cssW * 0.30 + Math.sin(t * 0.06) * 10 * k, cssH * 0.045, 40 * k, 0.8);
+    cloud(g, cssW * 0.66 + Math.sin(t * 0.05 + 2) * 12 * k, cssH * 0.115, 30 * k, 0.7);
+
+    // 远山
+    g.fillStyle = '#CBE7C8';
+    g.beginPath();
+    g.moveTo(0, cssH);
+    g.lineTo(0, cssH * 0.72);
+    g.quadraticCurveTo(cssW * 0.24, cssH * 0.58, cssW * 0.52, cssH * 0.72);
+    g.quadraticCurveTo(cssW * 0.78, cssH * 0.84, cssW, cssH * 0.70);
+    g.lineTo(cssW, cssH);
+    g.closePath();
+    g.fill();
+
+    g.fillStyle = '#A9D9B4';
+    g.beginPath();
+    g.moveTo(0, cssH);
+    g.lineTo(0, cssH * 0.86);
+    g.quadraticCurveTo(cssW * 0.3, cssH * 0.74, cssW * 0.6, cssH * 0.88);
+    g.quadraticCurveTo(cssW * 0.85, cssH * 0.96, cssW, cssH * 0.86);
+    g.lineTo(cssW, cssH);
+    g.closePath();
+    g.fill();
+
+    // 两侧小树
+    tree(g, cssW * 0.06, cssH * 0.80, 42 * k, '#8FCF9F', 0.75);
+    tree(g, cssW * 0.94, cssH * 0.76, 36 * k, '#8FCF9F', 0.6);
+  }
+
+  function cloud(g, x, y, r, alpha) {
+    g.save();
+    g.globalAlpha = alpha;
+    g.fillStyle = '#FFFFFF';
+    g.beginPath();
+    g.arc(x, y, r * 0.62, 0, Math.PI * 2);
+    g.arc(x + r * 0.62, y + r * 0.1, r * 0.46, 0, Math.PI * 2);
+    g.arc(x - r * 0.6, y + r * 0.12, r * 0.4, 0, Math.PI * 2);
+    g.arc(x + r * 0.2, y - r * 0.3, r * 0.44, 0, Math.PI * 2);
+    g.fill();
+    g.restore();
+  }
+
+  function tree(g, x, baseY, h, color, alpha) {
+    g.save();
+    g.globalAlpha = alpha;
+    g.fillStyle = '#B98B5E';
+    g.fillRect(x - h * 0.06, baseY - h * 0.35, h * 0.12, h * 0.35);
+    g.fillStyle = color;
+    g.beginPath();
+    g.moveTo(x, baseY - h);
+    g.lineTo(x + h * 0.42, baseY - h * 0.42);
+    g.lineTo(x - h * 0.42, baseY - h * 0.42);
+    g.closePath(); g.fill();
+    g.beginPath();
+    g.moveTo(x, baseY - h * 1.22);
+    g.lineTo(x + h * 0.32, baseY - h * 0.74);
+    g.lineTo(x - h * 0.32, baseY - h * 0.74);
+    g.closePath(); g.fill();
+    g.restore();
+  }
+
+  /* ============================================================
+   * 9. 各屏绘制
+   * ============================================================ */
+  function drawTopBar() {
+    var g = ctx;
+    var m = MODES[state.mode] || MODES.mix;
+
+    // 返回
+    card(g, ui.back.x, ui.back.y, ui.back.w, ui.back.h, 14, 'rgba(255,255,255,0.92)', C.line, 0.05);
+    g.save();
+    g.strokeStyle = C.ink;
+    g.lineWidth = 3 * k;
+    g.lineCap = 'round';
+    g.lineJoin = 'round';
+    var bx = ui.back.x + ui.back.w / 2, by = ui.back.y + ui.back.h / 2;
+    g.beginPath();
+    g.moveTo(bx + 6 * k, by - 8 * k);
+    g.lineTo(bx - 5 * k, by);
+    g.lineTo(bx + 6 * k, by + 8 * k);
+    g.stroke();
+    g.restore();
+
+    // 小狐狸头像
+    drawFoxHead(g, ui.foxHud.x + 26, ui.foxHud.y + 30, 46, starPop > 0.2 ? 'happy' : 'idle');
+
+    // 科目牌
+    card(g, ui.chip.x, ui.chip.y, ui.chip.w, ui.chip.h, 15, m.tint, null, 0);
+    txt(g, m.emoji + ' ' + m.name, ui.chip.x + ui.chip.w / 2, ui.chip.y + ui.chip.h / 2 + 1, 15 * k, m.color, 800);
+
+    // 星星总数
+    card(g, ui.pill.x, ui.pill.y, ui.pill.w, ui.pill.h, 17, '#FFF6DA', '#F4DFA8', 0.10);
+    drawStar(g, ui.pill.x + 22, ui.pill.y + ui.pill.h / 2, 9 * k, C.gold, C.goldDeep);
+    txt(g, String(save.total + state.stars), ui.pill.x + 48, ui.pill.y + ui.pill.h / 2 + 1, 15 * k, '#A9791B', 800);
+
+    // 进度星
+    var n = state.questions.length || NQ;
+    var gapS = Math.min(24 * k, (vw - 60) / n);
+    var startX = vw / 2 - (n - 1) * gapS / 2;
+    var finished = state.qi + (cur && cur.done ? 1 : 0);
+    for (var i = 0; i < n; i++) {
+      var r = 7 * k;
+      var sxp = startX + i * gapS;
+      if (i < finished) {
+        drawStar(g, sxp, ui.progY + 10, r, C.gold, C.goldDeep);
+      } else if (i === finished) {
+        drawStar(g, sxp, ui.progY + 10, r + 1.6 * k, '#FFE9B0', '#EFD08C');
+      } else {
+        drawStar(g, sxp, ui.progY + 10, r, '#FFFFFF', '#E4D5C2');
+      }
+    }
+  }
+
+  function drawCardContent(g, q, r) {
+    var cx = r.x + r.w / 2;
+    var contentTop = r.y + (q.card.type === 'none' ? 0 : 42);
+    var contentH = r.h - (q.card.type === 'none' ? 0 : 46);
+    var cy = contentTop + contentH / 2;
+    var cd = q.card;
+
+    if (cd.type === 'listen') {
+      // 没有配图的字：听音找字
+      g.fillStyle = '#F3ECFF';
+      g.beginPath();
+      var lr = Math.min(r.h * 0.17, 40 * k);
+      g.arc(cx, cy - 10 * k, lr, 0, Math.PI * 2);
+      g.fill();
+      emoji(g, '🔊', cx, cy - 10 * k, lr * 1.05);
+      txt(g, '点一下再听', cx, cy + lr + 6 * k, 11.5 * k, C.inkFaint, 700);
+    } else if (cd.type === 'blend') {
+      var bs = Math.min(r.h * 0.24, 52 * k);
+      txt(g, cd.s, cx - bs * 1.55, cy, bs, '#7A6BD6', 800, FAMILY_EN);
+      txt(g, '+', cx - bs * 0.62, cy, bs * 0.7, C.inkSoft, 800);
+      txt(g, cd.y, cx + bs * 0.22, cy, bs, '#C05A54', 800, FAMILY_EN);
+      txt(g, '=', cx + bs * 1.15, cy, bs * 0.7, C.inkSoft, 800);
+      txt(g, '?', cx + bs * 1.62, cy, bs * 0.9, C.orange, 800);
+    } else if (cd.type === 'decompose') {
+      var ds = Math.min(r.h * 0.17, 40 * k);
+      txt(g, String(cd.total), cx, r.y + r.h * 0.34, ds * 1.5, C.ink, 800);
+      g.strokeStyle = '#E2D3C0';
+      g.lineWidth = 2.5 * k;
+      g.beginPath();
+      g.moveTo(cx, r.y + r.h * 0.50);
+      g.lineTo(cx - 46 * k, r.y + r.h * 0.64);
+      g.moveTo(cx, r.y + r.h * 0.50);
+      g.lineTo(cx + 46 * k, r.y + r.h * 0.64);
+      g.stroke();
+      txt(g, String(cd.part), cx - 46 * k, r.y + r.h * 0.78, ds * 1.2, C.blue, 800);
+      txt(g, '?', cx + 46 * k, r.y + r.h * 0.78, ds * 1.2, C.orange, 800);
+    } else if (cd.type === 'poem') {
+      txt(g, cd.title + ' · ' + cd.author, cx, r.y + r.h * 0.30, Math.min(15 * k, 16), C.inkSoft, 700);
+      txt(g, cd.line, cx, r.y + r.h * 0.58, Math.min(r.w * 0.10, 30 * k), C.ink, 800);
+      txt(g, '🔊 点一下再听一遍', cx, r.y + r.h * 0.83, 11.5 * k, C.inkFaint, 700);
+    } else if (cd.type === 'rhyme') {
+      var rl = cd.line.replace('__', '＿');
+      txt(g, rl, cx, cy, Math.min((r.w - 56 * k) / Math.max(rl.length, 6), 26 * k), C.ink, 800);
+      txt(g, '🔊 点一下再听一遍', cx, r.y + r.h * 0.82, 11.5 * k, C.inkFaint, 700);
+    } else if (cd.type === 'clock') {
+      drawClock(g, cx, cy, Math.min(r.h * 0.36, 96 * k), cd.hour);
+    } else if (cd.type === 'emoji') {
+      emoji(g, cd.emoji, cx, cy + 2, Math.min(r.h * 0.50, 118 * k));
+    } else if (cd.type === 'char') {
+      txt(g, cd.pinyin, cx, r.y + r.h * 0.30, 20 * k, C.inkSoft, 700);
+      txt(g, cd.char, cx, r.y + r.h * 0.64, Math.min(r.h * 0.50, 132 * k), C.ink, 800);
+    } else if (cd.type === 'word') {
+      txt(g, cd.word, cx, r.y + r.h * 0.48, Math.min(r.h * 0.30, 70 * k), C.ink, 800, FAMILY_EN);
+    } else if (cd.type === 'letter') {
+      txt(g, '大写', cx, r.y + r.h * 0.28, 15 * k, C.inkSoft, 700);
+      txt(g, cd.up, cx, r.y + r.h * 0.60, Math.min(r.h * 0.44, 116 * k), C.ink, 800, FAMILY_EN);
+    } else if (cd.type === 'count') {
+      var n = cd.n, gapE = 6 * k;
+      var size = Math.min(r.h * 0.36, (r.w - 70 * k - (n - 1) * gapE) / n);
+      var totalW = n * size + (n - 1) * gapE;
+      var x0 = cx - totalW / 2 + size / 2;
+      for (var i = 0; i < n; i++) emoji(g, cd.emoji, x0 + i * (size + gapE), cy, size * 0.95);
+    } else if (cd.type === 'add') {
+      var size2 = Math.min(r.h * 0.34, 64 * k);
+      var toks = [];
+      for (var a = 0; a < cd.a; a++) toks.push({ t: 'e', v: cd.emoji });
+      toks.push({ t: 's', v: '+' });
+      for (var b = 0; b < cd.b; b++) toks.push({ t: 'e', v: cd.emoji });
+      toks.push({ t: 's', v: '=' });
+      toks.push({ t: 's', v: '?' });
+      drawTokens(g, toks, cx, cy, size2, r.w - 40 * k);
+    } else if (cd.type === 'sub') {
+      var size3 = Math.min(r.h * 0.26, 52 * k);
+      var n3 = cd.total, gap3 = size3 * 0.18;
+      var totalW3 = n3 * size3 + (n3 - 1) * gap3;
+      var x3 = cx - totalW3 / 2 + size3 / 2;
+      var y3 = cy - 8 * k;
+      for (var s3 = 0; s3 < n3; s3++) {
+        g.save();
+        if (s3 >= n3 - cd.eaten) g.globalAlpha = 0.26;
+        emoji(g, cd.emoji, x3 + s3 * (size3 + gap3), y3, size3 * 0.95);
+        g.restore();
+      }
+      txt(g, '吃掉了 ' + cd.eaten + ' 个', cx, y3 + size3 * 0.86, 13 * k, C.inkSoft, 700);
+    } else if (cd.type === 'groups') {
+      var halfW = r.w / 2 - 12 * k;
+      var g1x = r.x + 10 * k, g2x = cx + 2 * k;
+      groupsPane(g, g1x, r.y + 46 * k, halfW, r.h - 76 * k, cd.left, '左边');
+      groupsPane(g, g2x, r.y + 46 * k, halfW, r.h - 76 * k, cd.right, '右边');
+      g.save();
+      g.setLineDash([5 * k, 6 * k]);
+      g.strokeStyle = '#E8D8C2';
+      g.lineWidth = 2;
+      g.beginPath(); g.moveTo(cx, r.y + 58 * k); g.lineTo(cx, r.y + r.h - 22 * k); g.stroke();
+      g.restore();
+    } else if (cd.type === 'pattern') {
+      var size4 = Math.min(r.h * 0.32, 58 * k);
+      var toks2 = cd.items.map(function (e) { return { t: 'e', v: e }; });
+      toks2.push({ t: 's', v: '?' });
+      drawTokens(g, toks2, cx, cy, size4, r.w - 40 * k);
+    } else if (cd.type === 'seq') {
+      var size5 = Math.min(r.h * 0.30, 54 * k);
+      var toks3 = cd.nums.map(function (n2) { return { t: 's', v: cnNum(n2) }; });
+      toks3.push({ t: 's', v: '?' });
+      drawTokens(g, toks3, cx, cy, size5, r.w - 50 * k);
+    } else if (cd.type === 'none') {
+      txt(g, cd.hint || '👀', cx, r.y + r.h * 0.34, 44 * k, C.inkSoft, 700);
+    }
+  }
+
+  function groupsPane(g, x, y, w, h, grp, label) {
+    var n = grp.n;
+    var cols = n > 5 ? 3 : n;
+    var rows = Math.ceil(n / cols);
+    var gapE = 4 * k;
+    var size = Math.min((w - 8 - (cols - 1) * gapE) / cols, (h - 16 - (rows - 1) * gapE) / rows, 40 * k);
+    size = Math.max(size, 14);
+    var totalW = cols * size + (cols - 1) * gapE;
+    var totalH = rows * size + (rows - 1) * gapE;
+    var sx = x + (w - totalW) / 2 + size / 2;
+    var sy = y + (h - totalH) / 2 + size / 2;
+    for (var i = 0; i < n; i++) {
+      var c = i % cols, rIdx = Math.floor(i / cols);
+      emoji(g, grp.emoji, sx + c * (size + gapE), sy + rIdx * (size + gapE), size * 0.95);
+    }
+    txt(g, label, x + w / 2, y + h + 6 * k, 12 * k, C.inkFaint, 700);
+  }
+
+  function drawTokens(g, toks, cx, cy, size, maxW) {
+    var gap = size * 0.22;
+    var widths = toks.map(function (tk) { return tk.t === 'e' ? size : size * (tk.v.length > 1 ? 0.72 : 0.52); });
+    var total = widths.reduce(function (a, b) { return a + b; }, 0) + gap * (toks.length - 1);
+    var scale = total > maxW ? maxW / total : 1;
+    var x = cx - (total * scale) / 2;
+    for (var i = 0; i < toks.length; i++) {
+      var w = widths[i] * scale;
+      if (toks[i].t === 'e') {
+        emoji(g, toks[i].v, x + w / 2, cy, size * scale * 0.95);
+      } else {
+        txt(g, toks[i].v, x + w / 2, cy, size * scale * 0.86, toks[i].v === '?' ? C.orange : C.inkSoft, 800);
+      }
+      x += w + gap * scale;
+    }
+  }
+
+  function drawOption(g, opt, r, i) {
+    var isWrong = cur && cur.wrong[i];
+    var isRight = cur && cur.done && i === cur.q.answer;
+    var shaking = shake.i === i && shake.t > 0;
+    var dx = shaking ? Math.sin(shake.t * 60) * 6 * k * (shake.t / 0.35) : 0;
+    var fill = C.paper, line = C.line;
+    if (isWrong) { fill = '#F6F1EA'; line = '#E6DACB'; }
+    if (isRight) { fill = '#E9F8EC'; line = '#8FD3A0'; }
+
+    g.save();
+    g.translate(dx, 0);
+    card(g, r.x, r.y, r.w, r.h, 20, fill, line, isRight ? 0.06 : 0.14);
+
+    // 序号徽章
+    g.fillStyle = isRight ? '#8FD3A0' : (isWrong ? '#E4D8C8' : '#F7EBDC');
+    g.beginPath();
+    g.arc(r.x + 26 * k, r.y + r.h / 2, 13 * k, 0, Math.PI * 2);
+    g.fill();
+    txt(g, String(i + 1), r.x + 26 * k, r.y + r.h / 2 + 1, 14 * k, isRight ? '#FFFFFF' : C.inkSoft, 800);
+
+    var contentCx = r.x + r.w / 2 + 10 * k;
+    var cy = r.y + r.h / 2;
+
+    if (opt.type === 'char') {
+      txt(g, opt.pinyin, contentCx, cy - r.h * 0.30, 12 * k, C.inkSoft, 700);
+      txt(g, opt.char, contentCx, cy + r.h * 0.13, Math.min(r.h * 0.44, 48 * k), C.ink, 800);
+    } else if (opt.type === 'emoji') {
+      if (opt.label) {
+        emoji(g, opt.emoji, contentCx - 30 * k, cy, Math.min(r.h * 0.60, 56 * k));
+        txtLeft(g, opt.label, contentCx - 2 * k, cy + 2, Math.min(r.h * 0.26, 23 * k), C.inkSoft, 700);
+      } else {
+        emoji(g, opt.emoji, contentCx, cy, Math.min(r.h * 0.66, 62 * k));
+      }
+    } else if (opt.type === 'number') {
+      txt(g, String(opt.n), contentCx, cy + 2, Math.min(r.h * 0.60, 58 * k), C.ink, 800);
+    } else if (opt.type === 'letter') {
+      txt(g, opt.ch, contentCx, cy + 2, Math.min(r.h * 0.60, 58 * k), C.ink, 800, FAMILY_EN);
+    } else if (opt.type === 'text') {
+      if (opt.emoji) {
+        emoji(g, opt.emoji, contentCx - 34 * k, cy, Math.min(r.h * 0.44, 40 * k));
+        txtLeft(g, opt.text, contentCx - 8 * k, cy + 1, Math.min(r.h * 0.30, 24 * k), C.ink, 800);
+      } else {
+        txt(g, opt.text, contentCx, cy + 1, Math.min(r.h * 0.32, 26 * k), C.ink, 800);
+      }
+    } else if (opt.type === 'swatch') {
+      var sw = Math.min(r.h * 0.34, 52 * k);
+      g.save();
+      g.fillStyle = opt.hex;
+      rr(g, contentCx - sw / 2, cy - sw / 2, sw, sw, sw * 0.28);
+      g.fill();
+      g.strokeStyle = 'rgba(74,54,38,0.22)';
+      g.lineWidth = 2;
+      rr(g, contentCx - sw / 2, cy - sw / 2, sw, sw, sw * 0.28);
+      g.stroke();
+      g.restore();
+    } else if (opt.type === 'pinyin') {
+      txt(g, opt.text, contentCx, cy + 2, Math.min(r.h * 0.40, 42 * k), C.ink, 800, FAMILY_EN);
+    } else if (opt.type === 'shape') {
+      drawShape(g, opt.shape, contentCx, cy, Math.min(r.h * 0.38, 34 * k), ['#F7A6B8', '#7FC8E8', '#F5C36B', '#9BD4A6'][i % 4]);
+    }
+
+    // 判对/判错标记
+    if (isRight) {
+      g.fillStyle = '#5FAE74';
+      g.beginPath(); g.arc(r.x + r.w - 26 * k, r.y + r.h / 2, 14 * k, 0, Math.PI * 2); g.fill();
+      g.strokeStyle = '#FFFFFF';
+      g.lineWidth = 3.2 * k;
+      g.lineCap = 'round';
+      g.lineJoin = 'round';
+      var cxx = r.x + r.w - 26 * k, cyy = r.y + r.h / 2;
+      g.beginPath();
+      g.moveTo(cxx - 6 * k, cyy);
+      g.lineTo(cxx - 1.5 * k, cyy + 5 * k);
+      g.lineTo(cxx + 6.5 * k, cyy - 5 * k);
+      g.stroke();
+    }
+    if (isWrong) {
+      g.strokeStyle = '#C4B2A0';
+      g.lineWidth = 3 * k;
+      g.lineCap = 'round';
+      var wx = r.x + r.w - 26 * k, wy = r.y + r.h / 2;
+      g.beginPath();
+      g.moveTo(wx - 6 * k, wy - 6 * k); g.lineTo(wx + 6 * k, wy + 6 * k);
+      g.moveTo(wx + 6 * k, wy - 6 * k); g.lineTo(wx - 6 * k, wy + 6 * k);
+      g.stroke();
+    }
+    g.restore();
+  }
+
+  function drawPlaying() {
+    var g = ctx;
+    var q = cur.q;
+
+    // 题卡
+    card(g, ui.card.x, ui.card.y, ui.card.w, ui.card.h, 26, C.paper, '#F6E7D3', 0.13);
+    if (q.card.type === 'none') {
+      txt(g, q.prompt, ui.card.x + ui.card.w / 2, ui.card.y + ui.card.h * 0.52, Math.min(32 * k, ui.card.h * 0.26), C.ink, 800);
+    } else {
+      txt(g, q.prompt, ui.card.x + ui.card.w / 2, ui.card.y + 24 * k, Math.min(17 * k, 16 * k), C.inkSoft, 700);
+      drawCardContent(g, q, ui.card);
+    }
+
+    // 喇叭（只有英语单词卡需要这一条胶囊）
+    if (ui.speaker && q.card.type === 'word') {
+      var sp = ui.speaker;
+      card(g, sp.x, sp.y, sp.w, sp.h, 19, '#EAF6FF', '#CFE9F7', 0.05);
+      emoji(g, '🔊', sp.x + 30 * k, sp.y + sp.h / 2, 17 * k);
+      txt(g, '再听一遍', sp.x + sp.w / 2 + 10 * k, sp.y + sp.h / 2 + 1, 14 * k, '#3E8FBF', 800);
+    }
+
+    for (var i = 0; i < ui.opts.length; i++) drawOption(g, q.options[i], ui.opts[i], i);
+  }
+
+  function drawTitle() {
+    var g = ctx;
+    // 顶部：总星星 + 家长齿轮
+    card(g, ui.pad, 30, 86, 34, 17, 'rgba(255,255,255,0.88)', '#F2E2CC', 0.06);
+    drawStar(g, ui.pad + 24, 47, 9 * k, C.gold, C.goldDeep);
+    txt(g, String(save.total), ui.pad + 48, 48, 15 * k, '#A9791B', 800);
+
+    var gx = vw - ui.pad - 34, gy = 30;
+    card(g, gx, gy, 34, 34, 17, 'rgba(255,255,255,0.88)', '#F2E2CC', 0.06);
+    emoji(g, '⚙️', gx + 17, gy + 18, 15 * k);
+
+    // 标题
+    var titleY = Math.max(vh * 0.098, 84);
+    var ts = Math.min(38 * k, 46, vh * 0.058);
+    txt(g, '星星课堂', vw / 2, titleY + ts * 0.1, ts, C.ink, 800);
+    if (vh >= 640) {
+      txt(g, '小狐狸陪你学 · 识字 拼音 数学 英语 唐诗 儿歌', vw / 2, titleY + ts * 0.1 + ts * 0.78, 11.5 * k, C.inkSoft, 700);
+    }
+
+    // 科目卡片
+    for (var i = 0; i < ui.titleBtns.length; i++) {
+      var b = ui.titleBtns[i];
+      if (b.y + b.h > vh - 4) continue;
+      var m = MODES[b.id];
+      var mixTile = b.id === 'mix';
+      card(g, b.x, b.y, b.w, b.h, 18, mixTile ? '#FFF4D6' : C.paper, mixTile ? '#F0CE83' : C.line, 0.10);
+      var cx = b.x + b.w / 2;
+      g.fillStyle = m.tint;
+      g.beginPath();
+      g.arc(cx, b.y + b.h * 0.34, Math.min(b.w * 0.22, b.h * 0.24), 0, Math.PI * 2);
+      g.fill();
+      emoji(g, m.emoji, cx, b.y + b.h * 0.345, Math.min(b.w * 0.26, 26 * k));
+      txt(g, m.name, cx, b.y + b.h * 0.71, Math.min(16 * k, b.h * 0.20), C.ink, 800);
+    }
+
+    // 小狐狸
+    if (ui.foxTitle && ui.foxTitle.h >= 90) {
+      var fBase = Math.min(ui.foxTitle.y + ui.foxTitle.h - 4, vh - 44);
+      var fh = Math.min(fBase - ui.foxTitle.y - 8, 150 * k);
+      if (fh >= 80) {
+        var bob = Math.sin(t * 2.1) * 3 * k;
+        drawFox(g, vw / 2, fBase + bob, fh, 'happy');
+      }
+    }
+
+    // 复习错题
+    if (ui.reviewBtn) {
+      var rb = ui.reviewBtn;
+      card(g, rb.x, rb.y, rb.w, rb.h, 18, '#FBE7E5', '#E7BDB9', 0.08);
+      emoji(g, '🔁', rb.x + 32 * k, rb.y + rb.h / 2, 16 * k);
+      txtLeft(g, '复习错题', rb.x + 52 * k, rb.y + rb.h / 2 + 1, 16 * k, '#B4574F', 800);
+      txt(g, save.wrong.length + ' 题', rb.x + rb.w - 20 * k, rb.y + rb.h / 2 + 1, 13 * k, '#B4574F', 700);
+    }
+
+    txt(g, '点一点就能玩 · 没有输赢，只有星星', vw / 2, vh - 14, 10.5 * k, C.inkFaint, 700);
+  }
+
+  function drawWon() {
+    var g = ctx;
+    var pt = ui.topH + 36, pw2 = vw - ui.pad * 2, ph2 = vh - pt - 26;
+    card(g, ui.pad, pt, pw2, ph2, 30, C.paper, '#F6E7D3', 0.14);
+
+    var total = state.questions.length || 1;
+    var acc = state.firstTry / total;
+    var stars = acc >= 0.85 ? 3 : (acc >= 0.58 ? 2 : 1);
+
+    txt(g, '太棒了！', vw / 2, pt + ph2 * 0.105, 34 * k, C.ink, 800);
+    txt(g, '你收下了 ' + state.stars + ' 颗星星', vw / 2, pt + ph2 * 0.163, 16 * k, C.inkSoft, 700);
+
+    // 三颗评价星
+    for (var i = 0; i < 3; i++) {
+      var on = i < stars;
+      var sc = on ? 1 + Math.sin(t * 3.2 + i * 0.6) * 0.035 : 1;
+      var sxp = vw / 2 + (i - 1) * 62 * k;
+      drawStar(g, sxp, pt + ph2 * 0.243, 24 * k * sc, on ? C.gold : '#F2E8DA', on ? C.goldDeep : '#E2D3C0');
+    }
+
+    // 狐狸
+    drawFox(g, vw / 2, pt + ph2 * 0.545, Math.min(142 * k, ph2 * 0.24), 'happy');
+
+    // 成绩
+    txt(g, '答对 ' + total + ' 题 · 一次就答对 ' + state.firstTry + ' 题', vw / 2, pt + ph2 * 0.625, 16 * k, C.ink, 800);
+    var c = state.counts || {};
+    var parts = [];
+    for (var key in c) {
+      if (!c.hasOwnProperty(key) || !c[key]) continue;
+      parts.push((MODES[key] ? MODES[key].name : key) + ' ' + c[key]);
+    }
+    if (state.mode === 'review') parts = ['错题复习 ' + total];
+    if (parts.length) txt(g, '本轮：' + parts.join(' · '), vw / 2, pt + ph2 * 0.672, 13 * k, C.inkSoft, 700);
+
+    for (var b = 0; b < ui.wonBtns.length; b++) {
+      var btn = ui.wonBtns[b];
+      var primary = b === 0;
+      card(g, btn.x, btn.y, btn.w, btn.h, 20, primary ? '#F2914F' : C.paper, primary ? '#D96E2E' : C.line, 0.11);
+      txt(g, primary ? '再来一轮' : '换个玩法', btn.x + btn.w / 2, btn.y + btn.h / 2 + 1, 20 * k, primary ? '#FFFFFF' : C.ink, 800);
+    }
+  }
+
+  function drawParent() {
+    var g = ctx;
+    g.fillStyle = 'rgba(60,40,20,0.45)';
+    g.fillRect(0, 0, cssW, cssH);
+
+    var pTop = Math.round(clamp(vh * 0.09, 40, 78)), pH = ui.panelH || vh * 0.6;
+    card(g, ui.pad, pTop, vw - ui.pad * 2, pH, 26, C.paper, null, 0.2);
+    txt(g, '给家长', vw / 2, pTop + 34 * k, 20 * k, C.ink, 800);
+
+    // 学习统计
+    var sx0 = ui.pad + 16, sw = (vw - ui.pad * 2 - 32 - 16) / 3, sy0 = pTop + 58 * k;
+    var stats = [
+      ['汉字', countKeys(save.learnedChars), CHARS.length, '#F08A4B', '#FFE9D8'],
+      ['单词', countKeys(save.learnedWords), WORDS.length, '#6FBE84', '#E2F5E7'],
+      ['错题', save.wrong.length, 0, '#B4574F', '#FBE7E5']
+    ];
+    for (var i = 0; i < 3; i++) {
+      var bx = sx0 + i * (sw + 8);
+      card(g, bx, sy0, sw, 58 * k, 14, stats[i][4], null, 0);
+      txt(g, String(stats[i][1]), bx + sw / 2, sy0 + 22 * k, 20 * k, stats[i][3], 800);
+      txt(g, stats[i][2] ? stats[i][0] + ' / ' + stats[i][2] : stats[i][0], bx + sw / 2, sy0 + 44 * k, 10.5 * k, C.inkSoft, 700);
+    }
+
+    var lines = [
+      '· 每轮 ' + NQ + ' 题，没有计时、不会失败；答错可以再选。',
+      '· 识字按「' + ['启蒙', '大班', '幼小衔接'][state.wordLevel - 1] + '」出题，含拼音、组词。',
+      '· 数学 ' + maxNumber + ' 以内点数、加减、分合、比多少、形状、规律。',
+      '· 英语 ' + WORDS.length + ' 词 + 字母；唐诗 ' + POEMS.length + ' 首、儿歌 ' + RHYMES.length + ' 首。'
+    ];
+    var ly = sy0 + 76 * k;
+    for (var j = 0; j < lines.length; j++) {
+      txtLeft(g, lines[j], ui.pad + 24, ly + j * 22 * k, 12 * k, C.inkSoft, 700);
+    }
+
+    var btns = ui.parentBtns;
+    var labels = {
+      speech: '🔊 语音 ' + (speechOn ? '开' : '关'),
+      sound: '🎵 音效 ' + (soundOn ? '开' : '关'),
+      count: '📝 每轮 ' + NQ + ' 题',
+      level: '📈 数学 ' + (maxNumber > 5 ? '10' : '5') + ' 以内',
+      word: '📖 识字 ' + ['启蒙', '大班', '幼小衔接'][state.wordLevel - 1],
+      report: '📊 学习周报',
+      review: '🔁 复习错题（' + save.wrong.length + '）',
+      close: '知道啦'
+    };
+    for (var b = 0; b < btns.length; b++) {
+      var btn = btns[b];
+      var on = (btn.id === 'speech' && speechOn) || (btn.id === 'sound' && soundOn);
+      if (btn.id === 'close') {
+        card(g, btn.x, btn.y, btn.w, btn.h, 20, '#F2914F', '#D96E2E', 0.12);
+        txt(g, labels[btn.id], btn.x + btn.w / 2, btn.y + btn.h / 2 + 1, 18 * k, '#FFFFFF', 800);
+      } else if (btn.id === 'review' || btn.id === 'report') {
+        var has = btn.id === 'report' ? true : save.wrong.length > 0;
+        var tint = btn.id === 'report' ? '#EAF1FB' : '#FBE7E5';
+        var line = btn.id === 'report' ? '#B9CFEA' : '#E7BDB9';
+        var fg = btn.id === 'report' ? '#3E6FA8' : '#B4574F';
+        card(g, btn.x, btn.y, btn.w, btn.h, 16, has ? tint : '#F7F1E8', has ? line : '#EADCCB', 0.04);
+        txt(g, labels[btn.id], btn.x + btn.w / 2, btn.y + btn.h / 2 + 1, 13 * k, has ? fg : C.inkFaint, 800);
+      } else if (btn.id === 'speech' || btn.id === 'sound') {
+        card(g, btn.x, btn.y, btn.w, btn.h, 16, on ? '#EAF7EE' : '#F7F1E8', on ? '#B7DFC2' : '#EADCCB', 0.04);
+        txt(g, labels[btn.id], btn.x + btn.w / 2, btn.y + btn.h / 2 + 1, 13 * k, C.ink, 800);
+      } else {
+        card(g, btn.x, btn.y, btn.w, btn.h, 16, '#FAF6EF', null, 0);
+        g.save();
+        g.setLineDash([6 * k, 4 * k]);
+        g.strokeStyle = '#DCCAB3';
+        g.lineWidth = 2;
+        rr(g, btn.x, btn.y, btn.w, btn.h, 16);
+        g.stroke();
+        g.restore();
+        txt(g, labels[btn.id], btn.x + btn.w / 2, btn.y + btn.h / 2 + 1, 12.5 * k, C.ink, 800);
+      }
+    }
+  }
+
+  /* ---------- 学习周报 ---------- */
+  function reportData() {
+    var thisWeek = sumRange(daysBack(7, 0));
+    var lastWeek = sumRange(daysBack(7, 7));
+    var keys = daysBack(7, 0).slice().reverse();
+    var bars = keys.map(function (key) {
+      var e = save.days[key];
+      var d = new Date(key.replace(/-/g, '/'));
+      return {
+        key: key,
+        n: e ? (e.a || 0) : 0,
+        wd: '日一二三四五六'.charAt(d.getDay())
+      };
+    });
+    return {
+      wk: thisWeek,
+      pw: lastWeek,
+      bars: bars,
+      rate: thisWeek.a ? Math.round(thisWeek.c / thisWeek.a * 100) : 0,
+      range: keys[0].slice(5).replace('-', '.') + ' – ' + keys[6].slice(5).replace('-', '.')
+    };
+  }
+
+  function reportText() {
+    var d = reportData();
+    var lines = [];
+    lines.push('【星星课堂 · 学习周报】' + d.range);
+    lines.push('打卡 ' + d.wk.days + '/7 天 · 答题 ' + d.wk.a + ' 道 · 一次答对 ' + d.wk.c + ' 道（' + d.rate + '%）');
+    lines.push('新认识汉字 ' + d.wk.l.length + ' 个' + (d.wk.l.length ? '：' + d.wk.l.slice(0, 20).join(' ') : ''));
+    lines.push('新学英语单词 ' + d.wk.w.length + ' 个' + (d.wk.w.length ? '：' + d.wk.w.slice(0, 15).join(' ') : ''));
+    lines.push('错题本还有 ' + save.wrong.length + ' 道待复习');
+    lines.push('累计已认汉字 ' + countKeys(save.learnedChars) + '/' + CHARS.length + '，单词 ' + countKeys(save.learnedWords) + '/' + WORDS.length);
+    return lines.join('\n');
+  }
+
+  function drawReport(g, W, H, kk, forExport) {
+    var pad = 12;
+    var px = pad, py = forExport ? 0 : 18, pw = W - pad * 2, ph = forExport ? H : H - 36;
+
+    g.save();
+    if (!forExport) {
+      g.fillStyle = 'rgba(60,40,20,0.45)';
+      g.fillRect(0, 0, W, H);
+    } else {
+      var bg = g.createLinearGradient(0, 0, 0, H);
+      bg.addColorStop(0, '#FFF6E4');
+      bg.addColorStop(1, '#FDE9CC');
+      g.fillStyle = bg;
+      g.fillRect(0, 0, W, H);
+    }
+    card(g, px, py, pw, ph, 24, C.paper, null, 0.16);
+
+    var d = reportData();
+    var L = px + 20 * kk;
+    var R = px + pw - 20 * kk;
+    var innerW = R - L;
+    var cx = (L + R) / 2;
+
+    // 标题
+    txtLeft(g, '学习周报', L, py + 34 * kk, 21 * kk, C.ink, 800);
+    g.save();
+    g.font = '700 ' + Math.round(11 * kk) + 'px ' + FAMILY;
+    g.fillStyle = C.inkSoft;
+    g.textAlign = 'right';
+    g.textBaseline = 'middle';
+    g.fillText(d.range, R, py + 35 * kk);
+    g.restore();
+    g.fillStyle = '#F3E7D6';
+    g.fillRect(L, py + 50 * kk, innerW, 1.5);
+
+    // 四宫格数字
+    var gy = py + 62 * kk, gh = 60 * kk, gw = (innerW - 10) / 2;
+    var boxes = [
+      ['打卡', d.wk.days + '/7', '天', '#F08A4B'],
+      ['答题', String(d.wk.a), '道', '#4FA9DE'],
+      ['正确率', String(d.rate), '%', '#6FBE84'],
+      ['新认字', String(d.wk.l.length), '个', '#C05A54']
+    ];
+    for (var i2 = 0; i2 < 4; i2++) {
+      var bx = L + (i2 % 2) * (gw + 10);
+      var by = gy + Math.floor(i2 / 2) * (gh + 8);
+      card(g, bx, by, gw, gh, 14, '#FFF9F0', '#F3E7D6', 0);
+      txtLeft(g, boxes[i2][0], bx + 12 * kk, by + 19 * kk, 10.5 * kk, C.inkSoft, 700);
+      txt(g, boxes[i2][1], bx + gw * 0.62, by + 35 * kk, 19 * kk, boxes[i2][3], 800);
+      txtLeft(g, boxes[i2][2], bx + gw * 0.62 + String(boxes[i2][1]).length * 6.6 * kk + 3 * kk, by + 39 * kk, 9 * kk, C.inkFaint, 700);
+    }
+
+    // 7 天柱状图
+    var chY = gy + gh * 2 + 24 * kk;
+    txtLeft(g, '这 7 天答了多少题', L, chY, 10.5 * kk, C.inkSoft, 800);
+    var barTop = chY + 14 * kk, barH = 54 * kk;
+    var maxN = 1;
+    d.bars.forEach(function (b) { if (b.n > maxN) maxN = b.n; });
+    var bw = (innerW - 6 * 6) / 7;
+    for (var b2 = 0; b2 < 7; b2++) {
+      var bx2 = L + b2 * (bw + 6);
+      var bh = barH * (d.bars[b2].n / maxN);
+      g.fillStyle = '#F4EADC';
+      rr(g, bx2, barTop, bw, barH, 4);
+      g.fill();
+      if (d.bars[b2].n > 0) {
+        g.fillStyle = b2 === 6 ? '#F2914F' : '#F7C98B';
+        rr(g, bx2, barTop + barH - Math.max(bh, 3), bw, Math.max(bh, 3), 4);
+        g.fill();
+      }
+      txt(g, d.bars[b2].wd, bx2 + bw / 2, barTop + barH + 10 * kk, 8.5 * kk, C.inkFaint, 700);
+    }
+
+    // 新认识的字
+    var sy = barTop + barH + 30 * kk;
+    txtLeft(g, '新认识 ' + d.wk.l.length + ' 个字', L, sy, 11.5 * kk, C.ink, 800);
+    var chips = d.wk.l.slice(0, 14);
+    var cy2 = sy + 15 * kk;
+    if (!chips.length) {
+      txtLeft(g, '还没开始，来玩一局吧～', L, cy2 + 8 * kk, 10 * kk, C.inkFaint, 700);
+    } else {
+      var cw = 22 * kk, cgap = 5 * kk, perRow = 8;
+      for (var c2 = 0; c2 < chips.length; c2++) {
+        var col = c2 % perRow, row = Math.floor(c2 / perRow);
+        var cxp = L + col * (cw + cgap), cyp = cy2 + row * (cw + cgap);
+        card(g, cxp, cyp, cw, cw, 6, '#FFF3E2', '#F2DDC2', 0);
+        txt(g, chips[c2], cxp + cw / 2, cyp + cw / 2 + 1 * kk, 13 * kk, C.ink, 800);
+      }
+    }
+
+    // 新学的单词
+    var wy = cy2 + (chips.length > 8 ? 2 : 1) * (22 * kk + 5 * kk) + 10 * kk;
+    txtLeft(g, '新学 ' + d.wk.w.length + ' 个单词', L, wy, 11.5 * kk, C.ink, 800);
+    txtLeft(g, d.wk.w.length ? d.wk.w.slice(0, 7).join(' · ') : '—', L, wy + 15 * kk, 10 * kk, C.inkSoft, 700);
+
+    // 时间花在
+    var ky = wy + 36 * kk;
+    txtLeft(g, '时间花在', L, ky, 10.5 * kk, C.inkSoft, 800);
+    var subs = [];
+    for (var s3 in d.wk.s) {
+      if (!d.wk.s.hasOwnProperty(s3) || !d.wk.s[s3]) continue;
+      subs.push([s3, d.wk.s[s3]]);
+    }
+    subs.sort(function (a, b) { return b[1] - a[1]; });
+    subs = subs.slice(0, 4);
+    var totalS = 0;
+    subs.forEach(function (x) { totalS += x[1]; });
+    if (!subs.length) {
+      txtLeft(g, '这周还没有数据', L, ky + 16 * kk, 9.5 * kk, C.inkFaint, 700);
+    }
+    for (var s4 = 0; s4 < subs.length; s4++) {
+      var ry = ky + 12 * kk + s4 * 14 * kk;
+      var m = MODES[subs[s4][0]] || { name: subs[s4][0], color: C.inkSoft };
+      txtLeft(g, m.name, L, ry + 4 * kk, 9.5 * kk, C.inkSoft, 700);
+      var trackX = L + 34 * kk, trackW = innerW - 74 * kk;
+      g.fillStyle = '#F4EADC';
+      rr(g, trackX, ry, trackW, 7 * kk, 3.5 * kk);
+      g.fill();
+      g.fillStyle = m.color || C.orange;
+      rr(g, trackX, ry, Math.max(trackW * (subs[s4][1] / totalS), 6 * kk), 7 * kk, 3.5 * kk);
+      g.fill();
+      txt(g, String(subs[s4][1]), R, ry + 4 * kk, 9 * kk, C.inkFaint, 700);
+    }
+
+    // 错题
+    var fy = ky + 12 * kk + Math.max(subs.length, 1) * 14 * kk + 18 * kk;
+    card(g, L, fy, innerW, 46 * kk, 12, '#FBE7E5', null, 0);
+    txtLeft(g, '错题本还有 ' + save.wrong.length + ' 道', L + 12 * kk, fy + 16 * kk, 10.5 * kk, '#B4574F', 800);
+    var wl = save.wrong.slice(0, 4).map(function (w) {
+      var q = w.q || {}, tag = q.tag || {};
+      if (tag.kind === 'char') return tag.key;
+      if (tag.kind === 'word') return tag.key;
+      return MODES[q.sub] ? MODES[q.sub].name : '题目';
+    });
+    txtLeft(g, wl.length ? '还要再练：' + wl.join(' · ') : '本周没有错题，很棒！', L + 12 * kk, fy + 32 * kk, 8.8 * kk, '#C98A85', 700);
+
+    // 累计
+    txtLeft(g, '累计已认汉字 ' + countKeys(save.learnedChars) + '/' + CHARS.length +
+      ' · 单词 ' + countKeys(save.learnedWords) + '/' + WORDS.length, L, fy + 66 * kk, 9 * kk, C.inkFaint, 700);
+
+    // 一句话 + 对比
+    var msg = d.wk.days >= 6 ? '几乎每天都来，太厉害啦！' :
+      (d.wk.days >= 3 ? '这周坚持得不错，继续保持！' :
+        (d.wk.days >= 1 ? '已经开始了，明天再来一会儿。' : '这周还没开始，来玩一局吧～'));
+    txt(g, msg, cx, fy + 92 * kk, 11 * kk, C.inkSoft, 700);
+    if (d.pw.a > 0) {
+      var diff = d.wk.a - d.pw.a;
+      var cmp = (diff >= 0 ? '比上周多答 ' : '比上周少答 ') + Math.abs(diff) + ' 道';
+      txt(g, cmp, cx, fy + 112 * kk, 9 * kk, C.inkFaint, 700);
+    }
+
+    // 按钮（只有屏上要）
+    if (!forExport) {
+      for (var b3 = 0; b3 < ui.reportBtns.length; b3++) {
+        var btn = ui.reportBtns[b3];
+        var primary = btn.id === 'save';
+        if (btn.id === 'close') {
+          card(g, btn.x, btn.y, btn.w, btn.h, 16, '#F7F1E8', '#EADCCB', 0.04);
+          txt(g, '关闭', btn.x + btn.w / 2, btn.y + btn.h / 2 + 1, 13 * kk, C.inkSoft, 800);
+        } else {
+          card(g, btn.x, btn.y, btn.w, btn.h, 16, primary ? '#F2914F' : '#EAF1FB', primary ? '#D96E2E' : '#B9CFEA', 0.06);
+          txt(g, primary ? '存成图片' : '复制文字', btn.x + btn.w / 2, btn.y + btn.h / 2 + 1, 14 * kk, primary ? '#FFFFFF' : '#3E6FA8', 800);
+        }
+      }
+    }
+    g.restore();
+  }
+
+  function toast(msg) {
+    state.toast = { text: msg, t: 2.2 };
+  }
+
+  function saveReportImage() {
+    try {
+      var W = 390, H = 844, S = 2;
+      var c = document.createElement('canvas');
+      c.width = W * S; c.height = H * S;
+      var g = c.getContext('2d');
+      g.setTransform(S, 0, 0, S, 0, 0);
+      drawReport(g, W, H, 1, true);
+      var a = document.createElement('a');
+      a.download = '星星课堂-学习周报-' + dayKey() + '.png';
+      a.href = c.toDataURL('image/png');
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      toast('已存成图片，在「下载」文件夹里');
+    } catch (e) {
+      toast('这张图存不下来，直接截图也可以');
+    }
+  }
+
+  function copyReportText() {
+    var text = reportText();
+    var done = function () { toast('文字已复制，去微信粘贴吧'); };
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, function () { toast('复制不了，可以截图分享'); });
+        return;
+      }
+    } catch (e) { /* 落到下面的兜底 */ }
+    try {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      done();
+    } catch (e) {
+      toast('复制不了，可以截图分享');
+    }
+  }
+
+  function drawParticles() {
+    var g = ctx;
+    for (var i = 0; i < particles.length; i++) {
+      var p = particles[i];
+      g.save();
+      g.globalAlpha = Math.max(0, p.life);
+      g.translate(p.x, p.y);
+      g.rotate(p.rot);
+      g.fillStyle = p.color;
+      if (p.kind === 'star') {
+        drawStar(g, 0, 0, p.size, p.color);
+      } else {
+        rr(g, -p.size / 2, -p.size / 2, p.size, p.size * 0.7, 2);
+        g.fill();
+      }
+      g.restore();
+    }
+  }
+
+  /* ============================================================
+   * 10. 主循环
+   * ============================================================ */
+  function update(dt) {
+    t += dt;
+    if (starPop > 0) starPop -= dt * 2.2;
+    if (state.toast) { state.toast.t -= dt; if (state.toast.t <= 0) state.toast = null; }
+    if (shake.t > 0) shake.t -= dt;
+
+    for (var i = particles.length - 1; i >= 0; i--) {
+      var p = particles[i];
+      p.life -= dt * 0.9;
+      p.vy += 620 * dt;
+      p.x += p.vx * dt;
+      p.y += p.vy * dt;
+      p.rot += p.vr * dt;
+      if (p.life <= 0) particles.splice(i, 1);
+    }
+
+    if (pending) {
+      pending.t -= dt;
+      if (pending.t <= 0) {
+        var fn = pending.fn;
+        pending = null;
+        fn();
+      }
+    }
+  }
+
+  function render() {
+    var g = ctx;
+    g.setTransform(dpr, 0, 0, dpr, 0, 0);
+    drawSky(g);
+    g.save();
+    g.translate(vx, vy);
+    layout();
+    if (state.phase === 'title') {
+      drawTitle();
+    } else if (state.phase === 'playing') {
+      drawTopBar();
+      drawPlaying();
+    } else if (state.phase === 'won') {
+      drawTopBar();
+      drawWon();
+    } else if (state.phase === 'parent') {
+      drawTitle();
+      drawParent();
+    } else if (state.phase === 'report') {
+      drawTitle();
+      drawReport(g, vw, vh, k, false);
+    }
+    drawParticles();
+    if (state.toast) {
+      var tw = Math.min(vw - 48, 300);
+      var ty = vh - 150;
+      card(g, vw / 2 - tw / 2, ty, tw, 40, 20, 'rgba(74,54,38,0.92)', null, 0.12);
+      txt(g, state.toast.text, vw / 2, ty + 21, 12.5 * k, '#FFFFFF', 700);
+    }
+    g.restore();
+  }
+
+  function frame(now) {
+    requestAnimationFrame(frame);
+    if (!lastT) lastT = now;
+    var dt = Math.min(0.05, Math.max(0, (now - lastT) / 1000));
+    lastT = now;
+    fpsFrames++; fpsAccum += dt;
+    if (fpsAccum >= 0.5) { fps = Math.round(fpsFrames / fpsAccum); fpsFrames = 0; fpsAccum = 0; }
+    update(dt);
+    render();
+  }
+
+  /* ============================================================
+   * 11. 流程
+   * ============================================================ */
+  function countSubjects(qs) {
+    var c = {};
+    for (var i = 0; i < qs.length; i++) c[qs[i].sub] = (c[qs[i].sub] || 0) + 1;
+    return c;
+  }
+
+  function startRound(mode) {
+    state.mode = mode || 'mix';
+    state.phase = 'playing';
+    state.questions = buildRound(state.mode);
+    state.counts = countSubjects(state.questions);
+    state.qi = 0;
+    state.stars = 0;
+    state.firstTry = 0;
+    state.wrongCount = 0;
+    cur = null;
+    pending = null;
+    startQuestion();
+  }
+
+  function startReview() {
+    if (!save.wrong.length) { toTitle(); return; }
+    state.mode = 'review';
+    state.phase = 'playing';
+    state.questions = shuffle(save.wrong.slice()).slice(0, NQ).map(function (w) { return w.q; });
+    state.counts = countSubjects(state.questions);
+    state.qi = 0;
+    state.stars = 0;
+    state.firstTry = 0;
+    state.wrongCount = 0;
+    cur = null;
+    pending = null;
+    startQuestion();
+  }
+
+  function startQuestion() {
+    if (state.qi >= state.questions.length) { finishRound(); return; }
+    var q = state.questions[state.qi];
+    cur = { q: q, wrong: {}, tries: 0, done: false, okT: 0, shownT: 0 };
+    state.phase = 'playing';
+    layout();
+    if (q.say) say(q.say, q.sayLang || 'zh-CN');
+  }
+
+  function advance() {
+    if (state.phase !== 'playing') return;
+    cur = null;
+    state.qi++;
+    if (state.qi >= state.questions.length) { finishRound(); return; }
+    startQuestion();
+  }
+
+  function finishRound() {
+    state.phase = 'won';
+    cur = null;
+    sfxWin();
+    burst(vw / 2, vh * 0.35, 46);
+    save.total += state.stars;
+    if (state.stars > save.best) save.best = state.stars;
+    writeSave();
+    say('太棒了，你收下了 ' + state.stars + ' 颗星星！', 'zh-CN', true);
+  }
+
+  function choose(i) {
+    if (state.phase !== 'playing' || !cur || cur.done) return;
+    var q = cur.q;
+    if (i === q.answer) {
+      cur.done = true;
+      state.stars++;
+      if (cur.tries === 0) state.firstTry++;
+      recordAnswer(q, cur.tries === 0);
+      if (q.tag && q.tag.kind === 'char') save.learnedChars[q.tag.key] = (save.learnedChars[q.tag.key] || 0) + 1;
+      if (q.tag && q.tag.kind === 'word') save.learnedWords[q.tag.key] = (save.learnedWords[q.tag.key] || 0) + 1;
+      if (state.mode === 'review') clearWrong(q.id);
+      writeSave();
+      starPop = 1;
+      sfxCorrect();
+      var r = ui.opts[i];
+      burst(r.x + r.w / 2, r.y + r.h / 2, 16);
+      say(q.praise, 'zh-CN', true);
+      pending = { t: 1.25, fn: advance };
+    } else {
+      cur.wrong[i] = true;
+      cur.tries++;
+      state.wrongCount++;
+      recordAnswer(q, false);
+      addWrong(q);
+      writeSave();
+      shake.i = i;
+      shake.t = 0.35;
+      sfxWrong();
+      say('再试一次', 'zh-CN', true);
+    }
+  }
+
+  function burst(x, y, n) {
+    var colors = ['#F2B33D', '#F2914F', '#7FC8E8', '#8FD3A0', '#F7A6B8', '#FFFFFF'];
+    for (var i = 0; i < n; i++) {
+      var ang = -Math.PI / 2 + (Math.random() - 0.5) * 2.6;
+      var sp = 120 + Math.random() * 260;
+      particles.push({
+        x: x, y: y,
+        vx: Math.cos(ang) * sp,
+        vy: Math.sin(ang) * sp,
+        rot: Math.random() * 6,
+        vr: (Math.random() - 0.5) * 8,
+        size: 4 + Math.random() * 6,
+        color: pick(colors),
+        life: 0.9 + Math.random() * 0.5,
+        kind: Math.random() < 0.3 ? 'star' : 'bit'
+      });
+    }
+  }
+
+  function toTitle() {
+    state.phase = 'title';
+    cur = null;
+    pending = null;
+    particles.length = 0;
+    layout();
+  }
+
+  /* ============================================================
+   * 12. 输入
+   * ============================================================ */
+  function pt(e) {
+    var rect = canvas.getBoundingClientRect();
+    return { x: e.clientX - rect.left - vx, y: e.clientY - rect.top - vy };
+  }
+  function hit(r, x, y) {
+    return r && x >= r.x && x <= r.x + r.w && y >= r.y && y <= r.y + r.h;
+  }
+
+  function handleTap(x, y) {
+    ensureAudio();
+
+    if (state.phase === 'report') {
+      for (var rb = 0; rb < ui.reportBtns.length; rb++) {
+        var rbtn = ui.reportBtns[rb];
+        if (!hit(rbtn, x, y)) continue;
+        sfxTap();
+        if (rbtn.id === 'save') saveReportImage();
+        else if (rbtn.id === 'copy') copyReportText();
+        else state.phase = 'parent';
+        return;
+      }
+      return;
+    }
+
+    if (state.phase === 'parent') {
+      for (var b = 0; b < ui.parentBtns.length; b++) {
+        var btn = ui.parentBtns[b];
+        if (!hit(btn, x, y)) continue;
+        sfxTap();
+        if (btn.id === 'speech') { speechOn = !speechOn; if (!speechOn && window.speechSynthesis) { try { window.speechSynthesis.cancel(); } catch (e) {} } }
+        else if (btn.id === 'sound') { soundOn = !soundOn; if (soundOn) ensureAudio(); }
+        else if (btn.id === 'count') { NQ = NQ === 6 ? 8 : (NQ === 8 ? 10 : 6); }
+        else if (btn.id === 'level') { maxNumber = maxNumber >= 10 ? 5 : 10; }
+        else if (btn.id === 'word') { state.wordLevel = state.wordLevel >= 3 ? 1 : state.wordLevel + 1; }
+        else if (btn.id === 'review') { if (save.wrong.length) { startReview(); } else { state.phase = 'title'; } }
+        else if (btn.id === 'report') { state.phase = 'report'; layout(); }
+        else if (btn.id === 'close') { state.phase = 'title'; }
+        layout();
+        return;
+      }
+      return;
+    }
+
+    if (state.phase === 'title') {
+      if (RULES.debugReview && save.wrong.length) { startReview(); return; }
+      if (FORCED_MODE && MODES[FORCED_MODE]) {
+        sfxTap();
+        startRound(FORCED_MODE);
+        return;
+      }
+      // 齿轮
+      if (x >= vw - ui.pad - 34 && x <= vw - ui.pad && y >= 34 && y <= 68) {
+        sfxTap();
+        state.phase = 'parent';
+        layout();
+        return;
+      }
+      if (ui.reviewBtn && hit(ui.reviewBtn, x, y)) {
+        sfxTap();
+        startReview();
+        return;
+      }
+      for (var i = 0; i < ui.titleBtns.length; i++) {
+        if (hit(ui.titleBtns[i], x, y)) {
+          sfxTap();
+          startRound(ui.titleBtns[i].id);
+          return;
+        }
+      }
+      if (hit(ui.foxTitle, x, y)) {
+        sfxTap();
+        startRound('mix');
+        return;
+      }
+      return;
+    }
+
+    if (state.phase === 'won') {
+      for (var w = 0; w < ui.wonBtns.length; w++) {
+        if (hit(ui.wonBtns[w], x, y)) {
+          sfxTap();
+          if (ui.wonBtns[w].id === 'again') startRound(state.mode);
+          else toTitle();
+          return;
+        }
+      }
+      return;
+    }
+
+    if (state.phase === 'playing') {
+      if (hit(ui.back, x, y)) { sfxTap(); toTitle(); return; }
+      if (ui.speaker && hit(ui.speaker, x, y)) {
+        var q0 = cur && cur.q;
+        if (q0) say(q0.say || q0.card.word, q0.sayLang || 'zh-CN', true);
+        sfxTap();
+        return;
+      }
+      for (var o = 0; o < ui.opts.length; o++) {
+        if (hit(ui.opts[o], x, y)) { choose(o); return; }
+      }
+    }
+  }
+
+  canvas.addEventListener('pointerdown', function (e) {
+    e.preventDefault();
+    var p = pt(e);
+    handleTap(p.x, p.y);
+  }, { passive: false });
+
+  document.addEventListener('keydown', function (e) {
+    var key = e.key;
+    if (key === 'Enter' || key === ' ') {
+      e.preventDefault();
+      if (state.phase === 'title') { startRound(FORCED_MODE || 'mix'); return; }
+      if (state.phase === 'won') { startRound(FORCED_MODE || state.mode); return; }
+    }
+    if (key === 'Escape') {
+      if (state.phase === 'playing' || state.phase === 'parent') toTitle();
+      return;
+    }
+    var n = parseInt(key, 10);
+    if (n >= 1 && n <= 4 && state.phase === 'playing' && cur) {
+      if (n - 1 < ui.opts.length) choose(n - 1);
+    }
+  });
+
+  window.addEventListener('resize', resize);
+
+  /* ============================================================
+   * 13. Game Studio 接口
+   * ============================================================ */
+  function emit(type, payload) {
+    try {
+      if (window.parent && window.parent !== window) {
+        window.parent.postMessage(Object.assign({ source: 'dsh-game-studio', type: type }, payload), '*');
+      }
+    } catch (e) {}
+  }
+
+  window.__gameState = function () {
+    return {
+      phase: state.phase === 'parent' ? 'title' : state.phase,
+      score: save.total + state.stars,
+      hearts: 3,
+      fps: fps,
+      hero: { x: vw / 2, y: ui.card ? ui.card.y + ui.card.h : vh / 2 },
+      pickups: ui.opts.map(function (o) { return { x: o.x + o.w / 2, y: o.y + o.h / 2 }; }),
+      enemies: [],
+      world: { w: vw, h: vh },
+      heroOnScreen: true
+    };
+  };
+
+  var FORCED_MODE = RULES.autoMode ? String(RULES.autoMode) : '';
+  var autoModes = FORCED_MODE ? [FORCED_MODE] : ['lit', 'pinyin', 'math', 'en', 'poem', 'rhyme', 'color', 'time', 'mix'];
+  var autoModeIdx = 0;
+  function autoMode() { return autoModes[(autoModeIdx++) % autoModes.length]; }
+  window.__autoplay = function () {
+    if (state.phase === 'title') {
+      if (RULES.debugReview && save.wrong.length) { startReview(); return 'review'; }
+      startRound(autoMode());
+      return 'start';
+    }
+    if (state.phase === 'won') {
+      if (pending) return 'wait';
+      startRound(autoMode());
+      return 'again';
+    }
+    if (state.phase === 'playing' && cur && !cur.done) {
+      if (!cur.shownT) cur.shownT = t;
+      var waited = t - cur.shownT;
+      if (RULES.debugWrong && !cur.triedWrong) {
+        if (waited < 1.4) return 'read';
+        cur.triedWrong = true;
+        for (var wi = 0; wi < cur.q.options.length; wi++) {
+          if (wi !== cur.q.answer) { choose(wi); return 'wrong'; }
+        }
+      }
+      if (RULES.debugWrong && waited < 6) return 'hold';
+      if (waited < 1.4) return 'read';
+      choose(cur.q.answer);
+      return 'answer';
+    }
+    return 'noop';
+  };
+
+  /* 侧栏缩略图：把代码画的小狐狸和星星渲染成 PNG */
+  function slotCanvas(size, draw) {
+    var c = document.createElement('canvas');
+    c.width = size; c.height = size;
+    var g = c.getContext('2d');
+    draw(g, size);
+    return c.toDataURL('image/png');
+  }
+  window.__renderSlots = function (size) {
+    size = size || 256;
+    return {
+      hero: slotCanvas(size, function (g, s) {
+        drawFox(g, s / 2, s * 0.9, s * 0.78, 'happy');
+      }),
+      pickup: slotCanvas(size, function (g, s) {
+        drawStar(g, s / 2, s / 2, s * 0.3, C.gold, C.goldDeep);
+      })
+    };
+  };
+
+  /* ============================================================
+   * 14. 启动
+   * ============================================================ */
+  window.addEventListener('error', function (e) {
+    emit('error', { message: String((e && e.message) || 'error').slice(0, 300) });
+  });
+
+  var img = new Image();
+  img.onload = function () { bgImg = img; };
+  if (GAME.assets && GAME.assets.background) img.src = GAME.assets.background;
+
+  resize();
+  if (RULES.debugView === 'parent') { state.phase = 'parent'; layout(); }
+  if (RULES.debugSeedWeek) {
+    var seedChars = ['鱼', '鸟', '山', '水', '火', '木', '花', '草', '猫', '狗', '兔', '云', '雨', '星', '月', '日', '人', '口', '手', '大', '小', '上', '中'];
+    var seedWords = ['cat', 'dog', 'pig', 'sun', 'moon', 'star', 'book', 'bus'];
+    for (var si = 0; si < 7; si++) {
+      var skey = daysBack(1, 6 - si)[0];
+      var se = dayEntry(skey);
+      se.a = 5 + (si * 4) % 11;
+      se.c = se.a - (si % 3);
+      se.s = { lit: 2 + si % 3, math: 2, en: 1 + si % 2, pinyin: si % 2 };
+      for (var sj = 0; sj < 3; sj++) {
+        var sch = seedChars[(si * 3 + sj) % seedChars.length];
+        if (se.l.indexOf(sch) < 0) se.l.push(sch);
+        save.learnedChars[sch] = 1;
+      }
+      if (si % 2 === 0) {
+        var sw = seedWords[si % seedWords.length];
+        if (se.w.indexOf(sw) < 0) se.w.push(sw);
+        save.learnedWords[sw] = 1;
+      }
+    }
+    [makeLit(), makeMath(), makeEn()].forEach(function (q) {
+      if (q) save.wrong.push({ id: 'seed-' + q.id, q: q, n: 1, t: Date.now() });
+    });
+  }
+  if (RULES.debugView === 'report') { state.phase = 'report'; layout(); }
+  if (RULES.debugSeedWrong) {
+    [makeLit(), makeMath(), makeEn()].forEach(function (q) {
+      if (q) save.wrong.push({ id: q.id, q: q, n: 1, t: Date.now() });
+    });
+  }
+  requestAnimationFrame(frame);
+  setTimeout(function () { emit('renders', { renders: window.__renderSlots(256) }); }, 60);
+
+  // 首页轻微延迟后打个招呼（不自动播，等用户点）
+  setTimeout(function () {
+    if (state.phase === 'title' && speechOn) say('我们来玩星星课堂吧', 'zh-CN', true);
+  }, 900);
+})();
+</script>
+</body></html>

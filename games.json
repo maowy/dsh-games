@@ -1,0 +1,19 @@
+{
+  "format": "dsh-games-feed",
+  "version": 1,
+  "name": "maowy 的小游戏",
+  "author": "maowy",
+  "updatedAt": "2026-11-15T16:25:59.313Z",
+  "games": [
+    {
+      "slug": "star-school",
+      "title": "小狐狸星星课堂",
+      "url": "star-school/",
+      "cover": "star-school/cover.jpg",
+      "dimension": "2d",
+      "orientation": "portrait",
+      "publishedAt": "2026-11-15T16:25:59.313Z"
+    }
+  ],
+  "wall": null
+}

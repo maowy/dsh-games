@@ -1,0 +1,16 @@
+{
+  "tool": "dsh-game-studio",
+  "version": 1,
+  "games": {
+    "star-school": {
+      "title": "小狐狸星星课堂",
+      "source": "62e8718ac40c2861",
+      "publishedAt": "2026-11-15T16:25:59.313Z",
+      "buildId": "ef8092baf0c4",
+      "dimension": "2d",
+      "orientation": "portrait",
+      "cover": "star-school/cover.jpg"
+    }
+  },
+  "wall": null
+}
