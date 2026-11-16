@@ -377,9 +377,9 @@ var WORDS_RAW = "cat|猫|🐱|动物|1;dog|狗|🐶|动物|1;pig|猪|🐷|动物
   }
 
   /* ---------- 识字：看图选字 / 听音选字 / 看字选图 ---------- */
-  function makeLit() {
+  function makeLit(fixed) {
     var pool = poolChars();
-    var item = pick(pool);
+    var item = fixed || pick(pool);
     var others = sample(pool.filter(function (c) { return c.char !== item.char; }), OPTIONS - 1);
     var roll = Math.random();
     var mode = item.emoji ? (roll < 0.55 ? 'pic' : (roll < 0.8 ? 'listen' : 'word')) : 'listen';
@@ -1599,10 +1599,11 @@ var WORDS_RAW = "cat|猫|🐱|动物|1;dog|狗|🐶|动物|1;pig|猪|🐷|动物
     txt(g, String(save.total + state.stars), ui.pill.x + 48, ui.pill.y + ui.pill.h / 2 + 1, 15 * k, '#A9791B', 800);
 
     // 进度星
-    var n = state.questions.length || NQ;
+    var teaching = state.phase === 'teach';
+    var n = teaching ? (state.teachQueue ? state.teachQueue.length : 3) : (state.questions.length || NQ);
     var gapS = Math.min(24 * k, (vw - 60) / n);
     var startX = vw / 2 - (n - 1) * gapS / 2;
-    var finished = state.qi + (cur && cur.done ? 1 : 0);
+    var finished = teaching ? state.teachIdx : (state.qi + (cur && cur.done ? 1 : 0));
     for (var i = 0; i < n; i++) {
       var r = 7 * k;
       var sxp = startX + i * gapS;
@@ -1998,7 +1999,7 @@ var WORDS_RAW = "cat|猫|🐱|动物|1;dog|狗|🐶|动物|1;pig|猪|🐷|动物
 
     var lines = [
       '· 每轮 ' + NQ + ' 题，没有计时、不会失败；答错可以再选。',
-      '· 识字按「' + ['启蒙', '大班', '幼小衔接'][state.wordLevel - 1] + '」出题，含拼音、组词。',
+      '· 识字先教 3 个字（描红+朗读），再练 5 题；难度「' + ['启蒙', '大班', '幼小衔接'][state.wordLevel - 1] + '」。',
       '· 数学 ' + maxNumber + ' 以内点数、加减、分合、比多少、形状、规律。',
       '· 英语 ' + WORDS.length + ' 词 + 字母；唐诗 ' + POEMS.length + ' 首、儿歌 ' + RHYMES.length + ' 首。'
     ];
@@ -2356,6 +2357,9 @@ var WORDS_RAW = "cat|猫|🐱|动物|1;dog|狗|🐶|动物|1;pig|猪|🐷|动物
     layout();
     if (state.phase === 'title') {
       drawTitle();
+    } else if (state.phase === 'teach') {
+      drawTopBar();
+      drawTeach();
     } else if (state.phase === 'playing') {
       drawTopBar();
       drawPlaying();
@@ -2399,8 +2403,205 @@ var WORDS_RAW = "cat|猫|🐱|动物|1;dog|狗|🐶|动物|1;pig|猪|🐷|动物
     return c;
   }
 
+  /* ---------- 识字：先教后练 ---------- */
+  function teachCount() {
+    return Math.max(2, Math.min(3, NQ - 4));
+  }
+
+  /* 选这一轮要教的字：先补错过的，再挑没学过的 */
+  function pickTeachChars(n) {
+    var pool = poolChars();
+    var out = [];
+    var wrongChars = [];
+    save.wrong.forEach(function (w) {
+      var q = w.q || {};
+      if (q.tag && q.tag.kind === 'char' && wrongChars.indexOf(q.tag.key) < 0) wrongChars.push(q.tag.key);
+    });
+    wrongChars.forEach(function (ch) {
+      if (out.length >= n) return;
+      var hitItem = null;
+      for (var i = 0; i < pool.length; i++) if (pool[i].char === ch) { hitItem = pool[i]; break; }
+      if (hitItem) out.push(hitItem);
+    });
+    var fresh = shuffle(pool.filter(function (c) {
+      return !save.learnedChars[c.char] && !out.some(function (o) { return o.char === c.char; });
+    }));
+    while (out.length < n && fresh.length) out.push(fresh.shift());
+    var rest = shuffle(pool);
+    while (out.length < n && rest.length) {
+      var r = rest.shift();
+      if (!out.some(function (o) { return o.char === r.char; })) out.push(r);
+    }
+    return out;
+  }
+
+  function startLitRound() {
+    state.mode = 'lit';
+    state.phase = 'teach';
+    state.teachQueue = pickTeachChars(teachCount());
+    state.teachIdx = 0;
+    state.strokes = [];
+    state.drawing = false;
+    state.questions = [];
+    state.counts = {};
+    state.qi = 0;
+    state.stars = 0;
+    state.firstTry = 0;
+    state.wrongCount = 0;
+    cur = null;
+    pending = null;
+    layoutTeach();
+    showTeach();
+  }
+
+  function showTeach() {
+    var item = state.teachQueue[state.teachIdx];
+    if (!item) { startLitQuiz(); return; }
+    state.phase = 'teach';
+    state.strokes = [];
+    state.drawing = false;
+    state.teachShownAt = t;
+    layoutTeach();
+    say(item.char + '，' + item.word + '的' + item.char + '。', 'zh-CN', true);
+  }
+
+  function nextTeach() {
+    state.teachIdx++;
+    if (state.teachIdx >= state.teachQueue.length) { startLitQuiz(); return; }
+    showTeach();
+  }
+
+  /* 教完再练：先出刚教的字，其余只从「已经学过的字」里抽 */
+  function startLitQuiz() {
+    var qs = [];
+    state.teachQueue.forEach(function (c) {
+      var q = makeLit(c);
+      if (q) qs.push(q);
+    });
+    var learned = poolChars().filter(function (c) { return save.learnedChars[c.char]; });
+    var guard = 0;
+    while (qs.length < NQ && learned.length && guard++ < 40) {
+      var q2 = makeLit(pick(learned));
+      if (q2 && !qs.some(function (x) { return x.id === q2.id; })) qs.push(q2);
+    }
+    guard = 0;
+    while (qs.length < NQ && guard++ < 40) {
+      var q3 = makeLit();
+      if (q3 && !qs.some(function (x) { return x.id === q3.id; })) qs.push(q3);
+    }
+    state.questions = shuffle(qs.slice(0, NQ));
+    state.counts = countSubjects(state.questions);
+    state.qi = 0;
+    state.phase = 'playing';
+    startQuestion();
+  }
+
+  function layoutTeach() {
+    var pad = ui.pad;
+    var box = Math.min(vw - pad * 2 - 24 * k, vh * 0.40, 340 * k);
+    var gx = (vw - box) / 2;
+    // 整块内容（标题 + 格子 + 拼音组词 + 按钮）在顶栏以下居中
+    var blockH = 44 * k + box + 34 * k + 30 * k + 96 * k + 48 * k;
+    var gy = ui.topH + Math.max(20 * k, (vh - ui.topH - blockH) / 2) + 26 * k;
+    var btnW = (vw - pad * 2 - 26) / 2;
+    var btnY = gy + box + 126 * k;
+    ui.teach = {
+      grid: { x: gx, y: gy, w: box, h: box },
+      btnRead: { x: pad + 6, y: btnY, w: btnW, h: 48 * k },
+      btnNext: { x: pad + 20 + btnW, y: btnY, w: btnW, h: 48 * k }
+    };
+  }
+
+  function drawTeach() {
+    var g = ctx;
+    if (!state.teachQueue || !state.teachQueue.length) return;
+    var item = state.teachQueue[Math.min(state.teachIdx, state.teachQueue.length - 1)];
+    var gr = ui.teach.grid;
+
+    txt(g, '学新字 ' + (state.teachIdx + 1) + ' / ' + state.teachQueue.length,
+      vw / 2, ui.topH + 44 * k, 14 * k, C.inkSoft, 700);
+
+    // 田字格
+    g.save();
+    g.fillStyle = '#FFFDF8';
+    rr(g, gr.x, gr.y, gr.w, gr.h, 18);
+    g.fill();
+    g.strokeStyle = '#EBDCC6';
+    g.lineWidth = 2;
+    rr(g, gr.x, gr.y, gr.w, gr.h, 18);
+    g.stroke();
+
+    g.setLineDash([6 * k, 8 * k]);
+    g.strokeStyle = '#F0E1CC';
+    g.lineWidth = 1.5;
+    g.beginPath();
+    g.moveTo(gr.x + gr.w / 2, gr.y + 10);
+    g.lineTo(gr.x + gr.w / 2, gr.y + gr.h - 10);
+    g.moveTo(gr.x + 10, gr.y + gr.h / 2);
+    g.lineTo(gr.x + gr.w - 10, gr.y + gr.h / 2);
+    g.stroke();
+    g.setLineDash([]);
+
+    // 淡色范字
+    txt(g, item.char, gr.x + gr.w / 2, gr.y + gr.h / 2 + 3, Math.min(gr.w * 0.60, 210 * k), '#E8D8C0', 800);
+
+    // 手指描红
+    g.strokeStyle = '#F2914F';
+    g.fillStyle = '#F2914F';
+    g.lineWidth = 9 * k;
+    g.lineCap = 'round';
+    g.lineJoin = 'round';
+    (state.strokes || []).forEach(function (s) {
+      if (!s || !s.length) return;
+      if (s.length === 1) {
+        g.beginPath();
+        g.arc(s[0].x, s[0].y, 4.5 * k, 0, Math.PI * 2);
+        g.fill();
+        return;
+      }
+      g.beginPath();
+      g.moveTo(s[0].x, s[0].y);
+      for (var i = 1; i < s.length; i++) g.lineTo(s[i].x, s[i].y);
+      g.stroke();
+    });
+    g.restore();
+
+    // 拼音 + 组词
+    var pyY = gr.y + gr.h + 34 * k;
+    txt(g, item.pinyin, vw / 2, pyY, 22 * k, C.ink, 800);
+    var wdY = pyY + 30 * k;
+    txt(g, item.word, vw / 2 - (item.emoji ? 18 * k : 0), wdY, 17 * k, C.inkSoft, 700);
+    if (item.emoji) emoji(g, item.emoji, vw / 2 + 46 * k, wdY - 1, 24 * k);
+
+    txt(g, '用手指在格子里描一描', vw / 2, gr.y + gr.h + 96 * k, 11 * k, C.inkFaint, 700);
+
+    // 按钮
+    card(g, ui.teach.btnRead.x, ui.teach.btnRead.y, ui.teach.btnRead.w, ui.teach.btnRead.h, 18, '#EAF6FF', '#CFE9F7', 0.05);
+    emoji(g, '🔊', ui.teach.btnRead.x + 30 * k, ui.teach.btnRead.y + ui.teach.btnRead.h / 2, 16 * k);
+    txt(g, '再听一遍', ui.teach.btnRead.x + ui.teach.btnRead.w / 2 + 12 * k, ui.teach.btnRead.y + ui.teach.btnRead.h / 2 + 1, 15 * k, '#3E8FBF', 800);
+
+    card(g, ui.teach.btnNext.x, ui.teach.btnNext.y, ui.teach.btnNext.w, ui.teach.btnNext.h, 18, '#F2914F', '#D96E2E', 0.1);
+    txt(g, '会了，下一个', ui.teach.btnNext.x + ui.teach.btnNext.w / 2, ui.teach.btnNext.y + ui.teach.btnNext.h / 2 + 1, 15 * k, '#FFFFFF', 800);
+  }
+
+  function handleTeachDown(x, y) {
+    if (hit(ui.back, x, y)) { sfxTap(); toTitle(); return; }
+    if (hit(ui.teach.btnRead, x, y)) {
+      var item = state.teachQueue[state.teachIdx];
+      if (item) say(item.char + '，' + item.word + '的' + item.char + '。', 'zh-CN', true);
+      sfxTap();
+      return;
+    }
+    if (hit(ui.teach.btnNext, x, y)) { sfxTap(); nextTeach(); return; }
+    if (hit(ui.teach.grid, x, y)) {
+      state.drawing = true;
+      state.strokes.push([{ x: x, y: y }]);
+    }
+  }
+
   function startRound(mode) {
     state.mode = mode || 'mix';
+    if (state.mode === 'lit') { startLitRound(); return; }
     state.phase = 'playing';
     state.questions = buildRound(state.mode);
     state.counts = countSubjects(state.questions);
@@ -2621,11 +2822,28 @@ var WORDS_RAW = "cat|猫|🐱|动物|1;dog|狗|🐶|动物|1;pig|猪|🐷|动物
     }
   }
 
+  function onDown(x, y) {
+    if (state.phase === 'teach') { handleTeachDown(x, y); return; }
+    handleTap(x, y);
+  }
+  function onMove(x, y) {
+    if (state.phase !== 'teach' || !state.drawing) return;
+    var s = state.strokes[state.strokes.length - 1];
+    if (s) s.push({ x: x, y: y });
+  }
+  function onUp() { state.drawing = false; }
+
   canvas.addEventListener('pointerdown', function (e) {
     e.preventDefault();
     var p = pt(e);
-    handleTap(p.x, p.y);
+    onDown(p.x, p.y);
   }, { passive: false });
+  canvas.addEventListener('pointermove', function (e) {
+    var p = pt(e);
+    onMove(p.x, p.y);
+  });
+  canvas.addEventListener('pointerup', onUp);
+  canvas.addEventListener('pointercancel', onUp);
 
   document.addEventListener('keydown', function (e) {
     var key = e.key;
@@ -2659,7 +2877,7 @@ var WORDS_RAW = "cat|猫|🐱|动物|1;dog|狗|🐶|动物|1;pig|猪|🐷|动物
 
   window.__gameState = function () {
     return {
-      phase: state.phase === 'parent' ? 'title' : state.phase,
+      phase: (state.phase === 'parent') ? 'title' : (state.phase === 'teach' ? 'playing' : state.phase),
       score: save.total + state.stars,
       hearts: 3,
       fps: fps,
@@ -2685,6 +2903,13 @@ var WORDS_RAW = "cat|猫|🐱|动物|1;dog|狗|🐶|动物|1;pig|猪|🐷|动物
       if (pending) return 'wait';
       startRound(autoMode());
       return 'again';
+    }
+    if (state.phase === 'teach') {
+      // 自动试玩也要在字卡上停一会儿，别一闪而过
+      if (!state.teachShownAt) state.teachShownAt = t;
+      if (t - state.teachShownAt < 2.4) return 'look';
+      nextTeach();
+      return 'teach';
     }
     if (state.phase === 'playing' && cur && !cur.done) {
       if (!cur.shownT) cur.shownT = t;
