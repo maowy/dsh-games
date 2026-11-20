@@ -3,7 +3,7 @@
   "version": 1,
   "name": "maowy 的小游戏",
   "author": "maowy",
-  "updatedAt": "2026-11-15T16:25:59.313Z",
+  "updatedAt": "2026-11-20T00:25:32.600Z",
   "games": [
     {
       "slug": "star-school",
@@ -12,7 +12,7 @@
       "cover": "star-school/cover.jpg",
       "dimension": "2d",
       "orientation": "portrait",
-      "publishedAt": "2026-11-15T16:25:59.313Z"
+      "publishedAt": "2026-11-20T00:25:32.600Z"
     }
   ],
   "wall": null
